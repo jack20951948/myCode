@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="299" height="367" viewBox="0 0 299 367">
+    <defs>
+        <path id="b" d="M0 0h285v353H0z"/>
+        <filter id="a" width="109.1%" height="107.4%" x="-2.8%" y="-2.3%" filterUnits="objectBoundingBox">
+            <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="shadowSpreadOuter1"/>
+            <feOffset dx="5" dy="5" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.471042799 0 0 0 0 0.432617985 0 0 0 0 0.432617985 0 0 0 0.5 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#FFF" d="M-170-722h1439V744H-170z"/>
+        <path fill="#F4ECCF" d="M1269-138H-170S-22.7-27.38 168-27.38s295-46.353 593-46.353c198.667 0 368 45.911 508 137.733v-202z"/>
+        <path fill="#D4D7EE" d="M1269-138H-170s147.3 78.57 338 78.57 295-46.361 593-46.361c198.667 0 368 41.597 508 124.791v-157z"/>
+        <g>
+            <g transform="translate(2 2)">
+                <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+                <use fill="#FFF" xlink:href="#b"/>
+            </g>
+            <path fill="#8C0404" d="M2 2h285v62H2z"/>
+            <text fill="#FFF" fill-opacity=".87" font-family="PingFangTC-Medium, PingFang TC" font-size="24" font-weight="400" transform="translate(2 2)">
+                <tspan x="16" y="40">Type something</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
