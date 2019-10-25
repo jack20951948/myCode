@@ -1,7 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "sketch": "Arduino\\XL320_servo\\XL320_servo.ino",
-    "output": "../build",
-    "port": "COM13",
-    "programmer": "AVRISP mkII"
-}
