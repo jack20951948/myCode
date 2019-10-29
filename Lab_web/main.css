@@ -41,18 +41,42 @@ body
 {
   color:grey;
 }
-
 #navigator_bar .selected_page
 {
   color: rgb(85, 96, 194);
 }
-
 #page_body
 {
   margin: 0px;
   padding:0px;
   width:99vw;
 }
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top:8vh;
+  left:3vh;
+  background-color: #f1f1f1;
+  width: 50vh;
+  height: 29vh;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content p {
+  color: black;
+  margin:0px;
+  padding: 2vh 2vw;
+  font-size: 1.3vw;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content p:hover {background-color: #ddd;}
+.dropdown:hover .dropdown-content {display: block;}
+
 /*home*/
 #home
 {
@@ -206,3 +230,256 @@ body
   font-size: 7vh;
   color: white;
 }
+/* publication and project*/
+#reffered_journal_papers
+{
+  display:none;
+  padding:0px;
+  margin: 0px;
+  width: 99vw;
+}
+#reffered_journal_papers_body
+{
+  margin:0px;
+  padding: 0px;
+  width: 99vw;
+  height: 100vh;
+  background-color: white;
+  background-size: contain;
+  background-image: url("material/pic/06.png");
+  background-repeat: no-repeat;
+  background-size: 100vw 30vh;
+}
+#reffered_journal_papers_body_header h1
+{
+  margin: 0px;
+  padding: 5vh 0vw 0vh 3vw;
+  height: 25vh;
+  font-size: 7vh;
+  color: white;
+}
+#conference_papers
+{
+  display:none;
+  padding:0px;
+  margin: 0px;
+  width: 99vw;
+}
+#conference_papers_body
+{
+  margin:0px;
+  padding: 0px;
+  width: 99vw;
+  height: 100vh;
+  background-color: white;
+  background-size: contain;
+  background-image: url("material/pic/06.png");
+  background-repeat: no-repeat;
+  background-size: 100vw 30vh;
+}
+#conference_papers_body_header h1
+{
+  margin: 0px;
+  padding: 5vh 0vw 0vh 3vw;
+  height: 25vh;
+  font-size: 7vh;
+  color: white;
+}
+#patents
+{
+  display:none;
+  padding:0px;
+  margin: 0px;
+  width: 99vw;
+}
+#patents_body
+{
+  margin:0px;
+  padding: 0px;
+  width: 99vw;
+  height: 100vh;
+  background-color: white;
+  background-size: contain;
+  background-image: url("material/pic/06.png");
+  background-repeat: no-repeat;
+  background-size: 100vw 30vh;
+}
+#patents_body_header h1
+{
+  margin: 0px;
+  padding: 5vh 0vw 0vh 3vw;
+  height: 25vh;
+  font-size: 7vh;
+  color: white;
+}
+#projects
+{
+  display:none;
+  padding:0px;
+  margin: 0px;
+  width: 99vw;
+}
+#projects_body
+{
+  margin:0px;
+  padding: 0px;
+  width: 99vw;
+  height: 100vh;
+  background-color: white;
+  background-size: contain;
+  background-image: url("material/pic/06.png");
+  background-repeat: no-repeat;
+  background-size: 100vw 30vh;
+}
+#projects_body_header h1
+{
+  margin: 0px;
+  padding: 5vh 0vw 0vh 3vw;
+  height: 25vh;
+  font-size: 7vh;
+  color: white;
+}
+/* research area*/
+#research_area
+{
+  display:none;
+  padding:0px;
+  margin: 0px;
+  width: 99vw;
+}
+#research_area_body
+{
+  margin:0px;
+  padding: 0px;
+  width: 99vw;
+  height: 350vh;
+  background-color: rgba(255, 255, 255, 0);
+  background-size: contain;
+  background-image: url("material/pic/06.png");
+  background-repeat: no-repeat;
+  background-size: 100vw 30vh;
+  
+}
+#research_area_header h1
+{
+  margin: 0px;
+  padding: 5vh 0vw 0vh 3vw;
+  height: 10vh;
+  font-size: 7vh;
+  color: white;
+}
+#research_area_ai
+{
+  margin: 0vh;
+  padding: 0vh;
+}
+#research_area_ai img
+{
+  margin: 0vh;
+  padding: 0vh;
+  position: absolute;
+  z-index: -1;
+}
+#research_area_ai_context
+{
+  font-size: 5vh;
+  color: #ddd;
+  letter-spacing: 5vh;
+  position: absolute;
+  top:70%;
+  left: 10%;
+}
+#research_area_deep_learning
+{
+  margin: 0px;
+  padding: 119vh 0vw 101vh;
+}
+#research_area_deep_learning img
+{
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  z-index: -1;
+}
+#research_area_deep_learning_context
+{
+  font-size: 5vh;
+  color: #ddd;
+  letter-spacing: 5vh;
+  position: absolute;
+  top:180%;
+  left: 10%;
+}
+#research_area_intelligent_control
+{
+  margin: 0px;
+  padding: 0vh 0vw;
+}
+#research_area_intelligent_control img
+{
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  z-index: -1;
+}
+#research_area_intelligent_control_context
+{
+  font-size: 5vh;
+  color: #ddd;
+  letter-spacing: 5vh;
+  position: absolute;
+  top:285%;
+  left: 10%;
+}
+#research_area_smart_grid
+{
+  margin: 0px;
+  padding: 101vh 0vw;
+}
+#research_area_smart_grid img
+{
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  z-index: -1;
+}
+#research_area_smart_grid_context
+{
+  font-size: 5vh;
+  color: #ddd;
+  letter-spacing: 5vh;
+  position: absolute;
+  top:390%;
+  left: 20%;
+}
+/* latest research*/
+#latest_research
+{
+  display:none;
+  padding:0px;
+  margin: 0px;
+  width: 99vw;
+}
+#latest_research_body
+{
+  margin:0px;
+  padding: 0px;
+  width: 99vw;
+  height: 100vh;
+  background-color: white;
+  background-size: contain;
+  background-image: url("material/pic/06.png");
+  background-repeat: no-repeat;
+  background-size: 100vw 30vh;
+}
+#latest_research_body_header h1
+{
+  margin: 0px;
+  padding: 5vh 0vw 0vh 3vw;
+  height: 25vh;
+  font-size: 7vh;
+  color: white;
+}
+
+
+

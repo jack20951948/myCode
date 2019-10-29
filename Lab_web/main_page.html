@@ -11,12 +11,20 @@
       <h1>Intelligent Control Lab</h1>
     </div>
     <div id="navigator_bar">
-      <h1 onclick="page(0)" class="selected_page">HOME</h1>
-      <h1 onclick="page(1)" class="unselect_page">LATEST NEWS</h1>
-      <h1 onclick="page(2)" class="unselect_page">PROFESSOR</h1>
-      <h1 onclick="page(3)" class="unselect_page">PUBLICATION AND PROJECT</h1>
-      <h1 onclick="page(4)" class="unselect_page">RESEARCH AREA</h1>
-      <h1 onclick="page(5)" class="unselect_page">LATEST RESEARCH</h1>
+      <h1 onclick="page(0,0)" class="selected_page">HOME</h1>
+      <h1 onclick="page(1,1)" class="unselect_page">LATEST NEWS</h1>
+      <h1 onclick="page(2,2)" class="unselect_page">PROFESSOR</h1>
+      <div class="dropdown" style="float:left;">
+        <h1>PUBLICATION AND PROJECT</h1>
+        <div class="dropdown-content">
+          <p onclick="page(3,3)" >Referred Journal Papers</p>
+          <p onclick="page(4,3)" >Conference Papers</p>
+          <p onclick="page(5,3)" >Patents</p>
+          <p onclick="page(6,3)" >Projucts</p>
+        </div>
+      </div>
+      <h1 onclick="page(7,4)" class="unselect_page">RESEARCH AREA</h1>
+      <h1 onclick="page(8,5)" class="unselect_page">LATEST RESEARCH</h1>
     </div>
   </div>
   <div id="page_body">
@@ -72,12 +80,12 @@
           <h3>Prof. Leehter Yao</h3>
         </div>
         <div id="professor_current_post">
-          <span>現職 (Current Post)</span><br>
+          現職 (Current Post)<br>
           國立台北科技大學電機系講座教授<br>
           Chair Professor, Dept. of Electrical Engineering, National Taipei University of Technology
         </div>
         <div id="professor_education">
-          <span>學歷 (Education)</span><br>
+          學歷 (Education)<br>
           美國威斯康辛大學(麥迪遜校區)電機博士<br>
           Ph.D., Dept. of Electrical and Computer Engineering, University of Wisconsin-Madison
         </div>
@@ -137,11 +145,1327 @@
         </div>
       </div>
     </div>
-    <div id="publication_and_project">
+
+    <div id="reffered_journal_papers">
+        <div id="reffered_journal_papers_body">
+            <div id="reffered_journal_papers_body_header">
+              <h1>Publications and Projects</h1>
+            </div>
+
+            <div>
+              <div>
+                <div><b>(A)&nbsp;Referred Journal Papers</b></div>
+              </div>
+                <ol>
+                  <li>L. Yao,<b> </b>W. A. Sethares and D. C. Kammer, “Sensor placement for on-orbit modal identification of large space structures via a genetic algorithm,” <i>AIAA Journal,</i> vol. 31, No. 10, pp. 1922-1928, Oct. 1993. </li>
+                  <li>L. Yao<b> </b>and W. A. Sethares, “Nonlinear parameter estimatin via the genetic algorithm,” <i>IEEE Trans. Signal Processing,</i> Vol. 42, No. 4, pp. 927-935, April 1994.</li>
+                  <li>D. C. Kammer and L. Yao, “Enhancement of on-orbit modal identification of large sapce structures through sensor placement,” <i>Journal of Sound and Vibration,</i> Vol. 177, pp. 119-139, March, 1994. </li>
+                  <li>L. Yao, “Kernal estimation of a sparse Volterra series,” <i>Journal of Taipei Institute of Technology,</i> Vol. 27-1, pp. 87-109, March 1994.</li>
+                  <li>L. Yao, R.-L. Yen and G.-W. Huang, “Design of air-conditioning load shedding system via radio,” <i>Energy</i>, vol. 24, no. 2, pp. 92-105, Apr. 1994.</li>
+                  <li>L. Yao, W.-P. Wang, R.-L. Yen, G.-W. Huang and S.-D. Tu, “Management of air-conditioning system by Radio controlled load management system,” <i>Journal of Taipower’s Engineering</i>, vol. 551, pp. 44-53, Jul. 1994.</li>
+                  <li>L. Yao, W.-P. Wang, R.-L. Yen and W.-C. Chang,” Improve strategy for direct control of air conditioning facilities by radio controlled load management system,” <i>Journal of Taipower’s Engineering</i>, vol. 568, pp. 37-47, Dec. 1995.</li>
+                  <li>L. Yao<b>,</b> “Nonparametric learning of decision regions via the genetic algorithm,” <i>IEEE Trans. System, Man, and Cybernetics,</i> Vol. 26, No. 2, pp. 313-321, April 1996.</li>
+                  <li>L. Yao<b>, </b>“Fuzzy control of belt conveyor in the manufacturing system,” <i>Journal of Taipei Institute of Technology,</i> Vol. 29-1, pp. 49-67, March 1996.</li>
+                  <li>L. Yao, R.-L. Yen and W.-C. Chang, “Strategy of selecting customers for direct load control,” <i>Energy</i>, vol. 26, no. 4, pp. 87-104, Oct. 1996.</li>
+                  <li>L. Yao, J.-H. Lin, R.-L. Yen and W.-C. Chang, “Design of expanding coverage of direct load control,” <i>Journal of Taipower’s Engineering</i>, vol. 583, pp. 95-105, Mar. 1997. </li>
+                  <li>L. Yao, “Existence of time optimal control of a DC motor,” <i>Journal of Taipei Institute of Technology,</i> Vol. 30-1, pp. 83-96, 1997.</li>
+                  <li>L. Yao, R.-L. Yen and W.-C. Chang, “Design of improving monitoring system for radio-controlled direct load control system,” <i>Journal of Technology</i>, vol. 12, no. 4, pp. 689-695, Dec. 1997.  </li>
+                  <li>L. Yao, W.-P. Wang, J.-H. Lin, R.-L. Yen and W.-C. Chang, “Direct control of air-conditioning load in Chung-Ho and Yung-Ho districts by radio-controlled load management system,” <i>Journal of Taipower’s Engineering</i>, vol. 589, pp. 84-93, Sep. 1997.</li>
+                  <li>L. Yao, “Edge detection by encoded edge patterns,” <i>Journal of Taipei Institute of Technology,</i> Vol. 30-2, pp. 47-59, 1997.</li>
+                  <li>L. Yao, K.-C. Hsieh, W.-P. Wang, R.-L. Yen and W.-C. Chang, “Studies of periodic direct control of air conditioning load,” <i>Journal of Refrigeration and Air Conditioning,</i> vol. 6, no. 3, pp. 50-62, 1997.</li>
+                  <li>L. Yao, “Genetic algorithm based identification of nonlinear systems by sparse Volterra filters,” <i>IEEE Trans. Signal Processing,</i> Vol. 47, No. 12, pp. 3433-3435, Dec. 1999.</li>
+                  <li>S.-D. Cheng, L. Yao, R.-L. Yen, W.-C. Chang, T.-G. Lu and J.-H. Lin, “Cost and schedule analysis for building radio-controlled load management system in Taipei metropolitan area,” <i>Journal of Taipower’s Engineering,</i> vol. 589, pp. 36-50, Jun. 1998.</li>
+                  <li>S.-D. Cheng, L. Yao, R.-L. Yen, W.-C. Chang, “Application of modulated side-band to direct control of air-conditioning load,” <i>Energy,</i> vol. 7, no. 2, pp. 26-40, 1998.</li>
+                  <li>L. Yao, J.-C. Feng, W.-P. Wang, W.-H. Chao, L.-C. Wang and G.-C. Lee, “Economic analysis and promotion strategies for absorption chillers,” <i>Journal of Taipower’s Engineering,</i> vol. 600, pp. 51-64, Aug. 1998.</li>
+                  <li>L. Yao, C.-C. Tu, M.-H. Huang, C.-H. Yang, “Application of trunking radio and multi-address radio systems to feeder automation,” <i>Journal of Taipower’s Engineering,</i> vol. 600, pp. 51-64, Aug. 1998.</li>
+                  <li>L. Yao, C.-C. Lin, C.-C. Tu, M.-H. Huang and Y.-C. Yang, “Application of radio broadband network to feeder automation,” <i>Journal of Taipower’s Engineering,</i> vol. 618, pp. 27-36, Feb. 2000.</li>
+                  <li>J.-H. Lin, L. Yao and R.-L. Yen, “Direct control of air-conditioning load,” <i>Journal of Electrical Engineering,</i> pp. 18-23, Mar. 1999.</li>
+                  <li>L. Yao and J.-H. Lin, “Customer solicitation strategy and customer response analysis for remote control of central chillers,” <i>Journal of Taipower’s Engineering,</i> vol. 628, pp. 85-97, Dec. 2000.</li>
+                  <li>L. Yao and W.-C. Chang, “Coordination of building automation and Taipower’s remote load shedding,” <i>Refrigeration and Air-conditioning,</i> vol. 5, pp. 141-150, Oct. 2000.</li>
+                  <li>L. Yao and G.-W. Chang, “Application of radio spectrum network to feeder automation,” Journal of Taipower’s Engineering, vol. 625, pp. 86-97, Sep. 2000.</li>
+                  <li>L. Yao and S.-D. Cheng, “Feasibility studies of direct load control via radio paging system with specific communication codes,” <i>Journal of Taipower’s Engineering,</i> vol. 627, pp. 107-118, Nov. 2000.</li>
+                  <li>L. Yao and G.-W. Chang, “Application of radio network to switching of capacitor bank,” <i>Journal of Taipower’s Engineering,</i> vol. 641, pp. 31-42, Jan. 2002.</li>
+                  <li>T.-B. Huang and L. Yao, “Software system design for two-way load control via broadband networks,” <i>Journal of Taipower’s Engineering,</i> vol. 648, pp. 44-56, Aug. 2002.</li>
+                  <li>L. Yao and W.-C. Chang, “Analysis of load shedding strategy for central chillers,” <i>Journal of Taipower’s Engineering,</i> vol. 649, pp. 24-33, Sep. 2002.</li>
+                  <li>L. Yao, “Linear load shedding control for centrifugal chillers,” <i>Engineering Technology,</i> vol. 64, pp. 31-34, Oct. 2002.</li>
+                  <li>W.-C. Chang and L. Yao, “Direct control of air-conditioning load for convenient stores via radio paging system,” <i>Journal of Taipower’s Engineering,</i> vol. 654, pp. 68-76, Feb. 2003.</li>
+                  <li>H.-Y. Pan and L. Yao, “Design of data distributor for broadband network based wide-area monitoring and control system,” <i>Journal of Taipower’s Engineering,</i> vol. 655, pp. 122-133, Mar. 2003.</li>
+                  <li>Y.-C. Chen and L. Yao, “Design of outage detection system in broadband network based multi-services system,” <i>Journal of Taipower’s Engineering,</i> vol. 656, pp. 31-40, Apr. 2003.</li>
+                  <li>L. Yao, “Direct control of split-type air conditioners for convenient stores,” <i>Engineering Technology,</i> vol. 71, pp. 42-47, Dec. 2003.</li>
+                  <li>Y.-W. Huang and L. Yao, “Design of fault detection system for broadband network based multi-services system,” <i>Journal of Taipower’s Engineering,</i> vol. 665, pp. 31-45, Jan. 2004. </li>
+                  <li>L. Yao and Y.-C. Chen, “Design of electricity tariff calculation mechanism in demand exchange system,” <i>Energy,</i> vol. 34, no. 1, pp. 41-55, Jan. 2004.</li>
+                  <li>T.-R. Lin and L. Yao, “Design of customer information system for broadband network based multi-services system,” <i>Journal of Taipower’s Engineering,</i> vol. 666, pp. 96-105, Feb. 2004.</li>
+                  <li>L. Yao and W.-C. Chan, “Design of both exchange message broadcasting mechanism and demand bidding mechanism in demand exchange system,” <i>Energy,</i> vol. 34, no. 2, pp. 25-40, Apr. 2004.</li>
+                  <li>L. Yao and Chin-chin Lin, “Learning of class membership values by ellipsoidal decision regions,” <i>International Journal of Computational Intelligence,</i> vol. 1, no. 3, pp. 225-230, 2004.</li>
+                  <li>L. Yao<b>,</b> W.-C. Chang and R.-L. Yen, “An iterative deepening genetic algorithm for scheduling of direct load control,” <i>IEEE Trans. Power System,</i> vol. 20, no. 3, pp. 1414-1421, Aug. 2005.</li>
+                  <li>L. Yao and H.-R. Lu, “Application of demand subscription system to energy saving,” <i>Journal of Taipower’s Engineering,</i> vol. 687, pp. 29-39, Nov. 2005. </li>
+                  <li>L. Yao, “Two-way direct load control system via public broadband networks,” <i>Engineering Technology, </i>vol. 83, pp. 141-145, Dec. 2005. </li>
+                  <li>L. Yao<b> </b>and Chih-Heng Fang, “A hardness measuring method based on Hough fuzzy vertices detection algorithm,” <i>IEEE Trans. Industrial Electronics,</i> vol. 53, no. 3,<i> </i>pp. 950-962, June 2006. </li>
+                  <li>G.-Y. Chen and L. Yao, “Distribution transformer monitoring and assessment system,” <i>Journal of Taipower’s Engineering,</i> vol. 702, pp. 1-17, Feb. 2007.  </li>
+                  <li>G.-Y. Chen and L. Yao, “Design and implementation of sensing recorder for distribution transformer,” <i>Journal of Taipower’s Engineering,</i> vol. 703, pp. 44-58, Mar. 2007.</li>
+                  <li>S.-J. Lin and L. Yao, “Design and implementation of surveillance recorder for secondary substation,” <i>Journal of Taipower’s Engineering,</i> vol. 715, pp. 32-47, Mar. 2008.</li>
+                  <li>S.-J. Lin and L. Yao, “Facility inspection and surveillance system for secondary substations,” <i>Journal of Taipower’s Engineering,</i> vol. 716, pp. 30-43, Apr. 2008.</li>
+                  <li>L. Yao and P.-Z. Huang, “Learning of hybrid fuzzy controller for optical data storage device,” <i>IEEE/ASME Trans. Mechatronics,</i> vol. 13, no.1, pp. 3-13, Feb. 2008. </li>
+                  <li>L. Yao and Hao-Ren Lu, “A two-way direct control of central air-conditioning load via Internet,” <i>IEEE Trans. Power Delivery,</i> vol. 24, no. 1, pp. 240-248, Jan. 2009. </li>
+                  <li>L. Yao<b> </b>and Chin-chin Lin, “Identification of nonlinear systems by the genetic programming based Volterra filter,” <i>IET Signal Processing, </i>vol. 3, no. 2, pp. 93-105, 2009.</li>
+                  <li>L. Yao, J.-K. Huang and Y.-H. Chen, “Write strategy learning for optical dye recording,” <i>IEEE/ASME Trans. Mechatronics,</i> vol. 24, no. 5, pp. 555-563, Oct. 2009. </li>
+                  <li>R.-W. Chang and<b> </b>L. Yao<b>, </b>“Clustering of incomplete data based on ellipsoids with adaptive volumes,” <i>ICIC Express Letters,</i> vol. 3, no. 4(A), pp. 1037-1042, Dec. 2009. </li>
+                  <li>K.-S. Weng and<b> </b>L. Yao<b>, </b>“Fuzzy modeling based on self learning of adaptive ellipsoids,” <i>ICIC Express Letters,</i> vol. 3, no. 4(A), pp. 1043-1048, Dec. 2009. </li>
+                  <li>L. Yao and Chin-chin Lin, “On a genetic algorithm based gain scheduled fuzzy PID controller,” <i>Int. Journal of Innovative Computing, Information and Control,</i> vol. 5, no. 10(B), pp. 3593-3602, Oct. 2009. </li>
+                  <li>L. Yao and Yuan-Shiu Chen, “A Type-2 fuzzy controller for automatic guided vehicle wall-Following control,” <i>ICIC Express Letters Part-B: Applications,</i> vol. 1, no. 1, pp. 77-83, Sep. 2010. </li>
+                  <li>L. Yao<b> </b>and Y.-S. Chen, “Type-2 fuzzy control of an automatic guided vehicle for wall following,” Book Chapter in <i>Fuzzy Controllers, Theory and Applications,</i> edited by Lucian Grigorie, Chap. 13, pp. 243-252, InTech, Feb. 2011. </li>
+                  <li>L. Yao, Yin-Chieh Chou, and Chin-chin Lin, “Scheduling of direct load control using genetic programming,” <i>Int. Journal of Innovative Computing, Information and Control,</i> vol. 7, no. 5, pp. 2515-2528, May 2011. </li>
+                  <li>L. Yao and T.-Y. Pan, “Feature selection and classification of SELDI-TOF mass spectra of hepatoma using gene weighted Genetic Algorithm,” <i>Int. Journal of Innovative Computing</i>, <i>Information and Control,</i> vol. 8, no. 1, pp. 989-1000, Jan. 2012.<i> </i></li>
+                  <li>L. Yao and H.-K. Wen, “Design of observer based adaptive PID controller for nonlinear system,” <i>Int. Journal of Innovative Computing</i>, <i>Information and Control</i>, vol. 9, no. 2, pp. 667-677, Feb. 2013.</li>
+                  <li>L. Yao and K.-S. Weng, “Learning decision regions based on adaptive ellipsoids,”<i> International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems</i>, vol. 22, no. 1, pp. 41-73, Feb. 2014<i>.</i> </li>
+                  <li>L. Yao, T.-S. Tsai, and R.-C. Chang, “Identification of high risk feature regions for transmission towers,” <i>Advanced Materials Research,</i> vol. 955-959, pp. 4104-4109, 2014. </li>
+                  <li>L. Yao, T.-S. Tsai, and R.-C. Chang, “Precipitation estimation at the site of transmission tower using geographic information system,” <i>Advanced Materials Research,</i> vol. 955-959, pp. 3869-3874, 2014. </li>
+                  <li>B. Thirumalraj, S. Palanisamy, S.-M. Chen, P.-S. Wu, L. Yao and B.-S. Lou, “Electrochemical sensing of SF6 decomposition products based on a screen printed carbon electrode,” <i>Int. J. Electrochem. Sci.</i>, vol. 10, pp. 3098-3105, Feb. 2015.</li>
+                  <li>S. Sakthinathan, S. Palanisamy, S.-M. Chen, P.-S. Wu, L. Yao and B.-S. Lou, “Electrochemical detection of phenol in industrial pollutant absorbed molecular sieves by electrochemically activated screen printed carbon electrode,” <i>Int. J. Electrochem. Sci.</i>, vol. 10, pp. 3319-3328, Feb. 2015. </li>
+                  <li>C.-H. Liu, S. Palanisamy, S.-M. Chen, P.-S. Wu, L. Yao, and B.-S. Lou, “Mechanism of Formation of SF6 Decomposition Gas Products and its Identification by GC-MS and Electrochemical methods: A mini Review,” <i>Int. J. Electrochem. Sci.</i>, vol. 10, pp. 4223-4231, Mar. 2015. </li>
+                  <li>L. Yao and K.-S. Weng, “Imputation of incomplete data using adaptive ellipsoids with liner regression,” <i>J. Intelligent &amp; Fuzzy Systems</i>, vol. 29, pp. 253-265, 2015. </li>
+                  <li>C.-H. Liu, T.-B. Lin, L. Yao, and S.-Y. Wang, “Integrated Power Transformer Diagnosis Using Hybrid Fuzzy Dissolved Gas Analysis,” <i>IEEJ Trans. Electrical and Electronic Engr.,</i> no. 10, pp. 689-698, Oct. 2015. </li>
+                  <li>A. Garg, V. Vijayaraghavan, C. H. Wong, K. Tai, K. Sumithra, S. S. Mahapatra, P. M. Singru, L. Yao, “Application of artificial intelligence technique for modelling elastic properties of 2D nanoscale material, “ <i>Molecular Simulation</i>, vol. 41, no. 14, pp. 1143-1152, Sep. 2015.</li>
+                  <li>L. Yao, K.-S. Weng, and M.-S. Wu, “Evolutionary learning of classifiers for disc discrimination,” <i>IEEE/ASME Trans. Mechatronics,</i> vol. 20, no. 6, pp. 3194-3203, Dec. 2015.</li>
+                  <li>L. Yao, K.-S. Weng, and T.-B. Lin, “Observer based adaptive fuzzy controller with modulated membership functions for nonlinear system,” <i>International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems</i>, vol. 24, no. 1, pp. 137-159, 2016<i>.</i> </li>
+                  <li>L. Yao,<b> </b>W. H. Lim, and T. S. Tsai, “A real-time charging scheme for demand response in electric vehicle parking station,” <i>IEEE Trans. Smart Grid</i>, vol. 8, no. 1, pp. 52-62, Jan. 2017.</li>
+                  <li>L. Yao, Z. Damiran, and W. H. Lim, “Optimal charging and discharging scheduling for electric vehicles in a parking station with photovoltaic system and energy storage system,” <i>Energies, </i>vol. 10, no. 4, 550, pp. 1-20, April 2017. (doi:10.3390/en10040550)</li>
+                  <li>L. Yao, Lei Yao and W. H. Lim, “A soft curtailment of wide-area central air conditioning load,” <i>Energies</i>, vol. 11, no. 3, 492, pp. 1-15, March 2018. (doi: 10.3390/en11030492)</li>
+                  <li>C.-M. Lai, Y.-J. Lin, Y.-H. Cheng and L. Yao, “Development of a modular single-phase grid-tie inverter system for fuel-cell power generation,” <i>Journal of the Chinese Institute of Engineers</i>, vol. 41, no. 2, pp. 112-123, 2018. (doi.org/10.1080/02533839.2018.1437365) </li>
+                  <li>L. Yao and W. H. Lim, “Optimal purchase strategy for demand bidding,” <i>IEEE Trans. Power System,</i> vol. 33, no. 3, pp. 2754-2762, May 2018.</li>
+                  <li>L. Yao and J.-K. Huang, “On-line learning of write strategy for ultra-speed CD-RW optical recorder,” <i>Sensors</i>, vol. 18, no. 7, 2070, July 2018. (doi:10.3390/s18072070)</li>
+                  <li>L. Yao, W. H. Lim, S. S. Tiang, T. H. Tan, C. H. Wong, and J. Y. Pang, “Demand bidding optimization for an aggregator with a Genetic Algorithm,” <i>Energies</i>, vol. 11, no. 10, 2498, pp. 1-24, Oct. 2018. (doi: 10.3390/en11102498)</li>
+                  <li>L. Yao and J.-H. Huang, “Multi-objective optimization of energy saving control for air conditioning system of data center,” to be published in <i>Energies</i>, 2019.</li>
+                </ol>
+                <p>&nbsp;</p>
+              </div>
+        </div>
     </div>
+    <div id="conference_papers">
+      <div id="conference_papers_body">
+          <div id="conference_papers_body_header">
+            <h1>Publications and Projects</h1>
+          </div>
+              <div>
+                <div><b>(B1)&nbsp;International Conference Papers</b></div>
+              </div>
+                <ol>
+                  <li>Kammer, D. C. and L. Yao, "Placement of limited number of sensors for\ modal identification of photovoltaic array," in <i>Proc. ADPA/AIAA/ASME/SPIE Conf. on Active Material and Adaptive Structures, Alexendria, VI,</i> pp. 261-266, Dec. 1991.</li>
+                  <li>L. Yao, W. A. Sethares and Y. H. Hu, "Identification of a nonlinear system modeled by a sparse Volterra series," in <i>Proc. IEEE Int. Conf. System Engr., Kobe, Japan,</i> pp. 624-627, Sep. 17-19, 1992.</li>
+                  <li>L. Yao, W. A. Sethares and D. C. Kammmer, "Sensor placement for on-orbit modal identification of large space structures via a genetic algorithm," in <i>Proc. IEEE Int. Conf. System Engr., Kobe, Japan,</i> pp. 332-335, Sep. 17-19, 1992.</li>
+                  <li>L. Yao, "Application of the Genetic Algorithm to parameter estimation of nonlinear filters," in <i>Proc. IASTED International Conf. on Modelling and Simulation, Pittsburgh, PA,</i> pp. 205-208, May 10-12, 1993.</li>
+                  <li>L. Yao, "Learning of Decision regions based on the genetic algorithm," in <i>Proc. IEEE symposium on emerging technologies and factory automation, Tokyo, Japan,</i> pp. 438-445, Nov. 6-10, 1994.</li>
+                  <li>L. Yao, "Fuzzy control of belt conveyor in the manufacturing system," in <i>Proc. IEEE International Conference on Industrial Automation and Control,</i> Taipei, Taiwan, R.O.C., pp. 748-754, May 2-7, 1995, Taipei, Taiwan, R. O. C.</li>
+                  <li>L. Yao, “Edge detection by encoded edge patterns,” in <i>Proc. IASTED International Conf. Signal and Image Processing, Orlando, Florida,</i> pp. 335-339, Nov. 11-14, 1996.</li>
+                  <li>L. Yao, “Genetic algorithm based identification of nonlinear systems by sparse Volterra Filters,” in <i>Proc. IEEE Conf. Emerging Technologies and Factory Automation, Hawaii,</i> pp. 327-333, Nov. 18-21, 1996.</li>
+                  <li>L. Yao and Kai-Chin Hsieh, “Scheduling of direct load control by a recursive Genetic Algorithm, in <i>Proc. IEEE Conf. System, Man, and Cybernetics, San Diego,</i> <i>California,</i> pp. 2460-2465, Oct. 11-14, 1998.</li>
+                  <li>L. Yao, An-Min Wang and Yung-Fu Cheng, “Track seeking hybrid fuzzy Controller for the Compact Disc Player,” in <i>Proc. 10</i><sup>th</sup><i> IEEE Int. Conf. On Fuzzy Systems, Melbourne, Australia,</i> pp. 1589-1593, Dec. 2-5, 2001.</li>
+                  <li>L. Yao and Chin-Chin Lin, “Learning of Fuzzy Decision Regions by Genetic Algorithm Based Hyperellipsoids,”<i> </i>in <i>Proc. 10</i><sup>th</sup><i> IEEE Int. Conf. On Fuzzy Systems, Melbourne, Australia,</i> pp. 837-841, Dec. 2-5, 2001.</li>
+                  <li>L. Yao and Chih-Heng Fang, “An automatic hardness measuring method using Hough transform and fuzzy c-means algorithm,”<i> </i>in <i>Proc. 10</i><sup>th</sup><i> IEEE Int. Conf. On Fuzzy Systems, Melbourne, Australia,</i> pp.842-847, Dec. 2-5, 2001.</li>
+                  <li>L. Yao, Chin-chin Lin and Chi-cheng Feng, “Learning of the gain adjusted fuzzy PID controller by accumulated genetic algorithms,” in<i> Proc. 2002 IEEE International Conf. On Industrial Technology, Bangkok, Thailand,</i> pp. 649-654, Dec. 11-14, 2002.</li>
+                  <li>L. Yao and K.-S. Wong, “Modeling of Fuzzy Systems by Ellipsoidal Partitions of Input/Output Space,” in <i>Proc. IEEE IECON 2003, Virginia,</i> pp. 2399-2404, Nov. 2-6, 2003.</li>
+                  <li>L. Yao and K.-S. Weng and C.-D. Huang, “A fuzzy classifier with evolutionary design of ellipsoidal decision regions,” in <i>Proc. International Conference on Computational Intelligence, 2004, </i>Istanbul, Turkey, pp. 449-453, Dec. 17-19, 2004.</li>
+                  <li>L. Yao and Chin-chin Lin, “Design of gain scheduled fuzzy PID controller,” in  <i>Proc. International Conference on Computational Intelligence, </i>Istanbul, Turkey, pp. 432-436, Dec. 17-19, 2004.</li>
+                  <li>L. Yao and Chin-chin Lin, “Learning of class membership values by ellipsoidal decision regions,” in <i>Proc. International Conference on Computational Intelligence, </i>Istanbul, Turkey, pp. 60-64, Dec. 17-19, 2004.</li>
+                  <li>Chin-Chin Lin, L. Yao and Chien-Hsing Chou, “A Gain-adjusted Fuzzy PI/PD Adaptive Controller based on the Accumulated Genetic Algorithm,” in <i>Proc. 13th IEEE Int. Conf. On Fuzzy Systems,</i> Reno, Nevada, pp. 513-518, May 22-25, 2005.</li>
+                  <li>L. Yao, Kuei-Song Weng and Cherng-Dir Huang, “Evolutionary Design of Fuzzy Classifier with Ellipsoidal Decision Regions,” in <i>Proc. 2005 IEEE Int. Conf. Systems, Man, and Cybernetics, </i>The Big Island, Hawaii, pp.785-790, Oct. 10-12, 2005.</li>
+                  <li>L. Yao and Chin-chin Lin, “Genetic programming based multichannel identification of nonlinear systems by Volterra Filters,” in <i>Proc. 2006 IEEE Congress on Evolutionary Computation,</i> Vancouver, Canada, pp. 9769-9776, July 16-21, 2006.</li>
+                  <li>L. Yao and Po-Zhao Huang, “Automatic learning of hybrid fuzzy controller for the optical data storage device,” in <i>Proc. 2006 IEEE Int. Conf. Systems, Man, and Cybernetics, </i>Taipei, Taiwan, pp. 1810-1815, <i>Oct. 8-11, 2006</i>.</li>
+                  <li>H.-R. Lu and L. Yao, “On-line load optimization for two way load management system,” in <i>Proc. 2006 IEEE Int. Conf. Systems, Man, and Cybernetics, </i>Taipei, Taiwan, pp. 3250-3255, Oct. 8-11, 2006.</li>
+                  <li>L. Yao and Kuei-Sung Weng, “Evolutionary learning of adaptive fuzzy classifier,” in <i>Proc. 2006 IEEE Int. Conf. Systems, Man, and Cybernetics, </i>Taipei, Taiwan, pp. 5124-5129, Oct. 8-11, 2006.</li>
+                  <li>Tze Yang and L. Yao, “A fuzzy classifier with adaptive learning of norm inducing matrix,” in <i>Proc. 2007 IEEE Int. Conf. Networking, Sensing and Control, </i>London, U.K., pp. 362-367, Apr. 15-17, 2007.</li>
+                  <li>L. Yao, Tsong-Hai Hsu, Chin-Chin Lin and Chen-Han Lin, “A block deepening genetic programming for scheduling of direct load control,” in <i>Proc. 2007 IEEE Int. Conf. Networking, Sensing and Control, </i>London, U.K., pp. 821-827, Apr. 15-17, 2007.</li>
+                  <li>Hau-Ren Lu and L. Yao, “Design and implementation of distribution transformer outage detection system,” in <i>Proc. IEEE Int. Conf. Industrial Informatics</i>, Vienna, Austria, pp. 323-328, July 23-27, 2007.</li>
+                  <li>M.-S. Wu, G.-W. Weng and L. Yao, “Disc discrimination for car used optical disc drive by fuzzy clustering with adaptive ellipsoids,” in <i>Proc. Int. Conf. Information Technology,</i> Taichung, pp. 182.1-182.7, May 12-13, 2008.</li>
+                  <li>L. Yao and Hau-Ren Lu, “Optimization of two-way direct load control based on fuzzy linear programming,” in <i>Proc. IEEE Int. Conf. Fuzzy Systems,</i> Hong Kong, pp. 1894-1901, June 1-6, 2008. </li>
+                  <li>L. Yao, J. N. Jiang, and W.-Y. Wang, “An observer based adaptive fuzzy controller with modulated membership function,” in<i> Proc. 2008 CACS Int. Automatic Control Conf.,</i> Taiwan, pp. FA04.87.1-6, Nov. 21-23, 2008.</li>
+                  <li>L. Yao, H.-K. Wen, and W.-Y. Wang, “A GA tuned adaptive PID controller with observer,” in <i>Proc. 2008 CACS Int. Automatic Control Conf.,</i> Taiwan, pp. FB05.118.1-6, Nov. 21-23, 2008.</li>
+                  <li>L. Yao and C.-C. Lin, “On a Genetic-Algorithm based gain scheduled fuzzy PID controller,” in <i>Proc. 2008 Int. Symp. Intelligent Informatics,</i> Japan, pp. A305.1-6, Dec. 12-13, 2008.</li>
+                  <li>L. Yao, C.-K. Huang, and Y.-H. Chen, “Write strategy optimization for optical disc recording,” in <i>Proc. IEEE Int. Conf. Consumer Electronics,</i> Las Vegas, NV, pp. 1.3-2.1 &ndash; 1.3-2.2, Jan. 10-14, 2009.</li>
+                  <li>L. Yao, K.-S. Weng, and R.-W. Chang, “Fuzzy Classification of Incomplete Data with Adaptive Volume,” in <i>Proc. 2009 Asian Conf. Intelligent Information and Database,</i> Quang Binh, Vietnam, pp. S4C.3.1- S4C.3.6, Apr. 1-3, 2009.</li>
+                  <li>L. Yao, K.-S. Weng, and R.-W. Chang, “A fuzzy classifier with directed initialization adaptive learning of norm inducing matrix,” in <i>Proc. 2009 Asian Conf. Intelligent Information and Database,</i> Quang Binh, Vietnam, pp. S4C.4.1- S4C.4.6, Apr. 1-3, 2009.</li>
+                  <li>R.-W. Chang and L. Yao, “Clustering of incomplete data based on ellipsoids with adaptive volumes,” in <i>Proc.</i> 2009<i> Int. Symp. Intelligent Informatics, </i>QinHuangDao, China, pp. 1037-1042, Sep. 13-15, 2009. </li>
+                  <li>K.-S. Weng and L. Yao, “Fuzzy modeling based on self learning of adaptive ellipsoids,” in <i>Proc.</i> 2009<i> Int. Symp. Intelligent Informatics, </i>QinHuangDao, China, pp. 1043-1048, Sep. 13-15, 2009.</li>
+                  <li>H. S. Yang, J. S. Chen and L. Yao, “A Navigation System Based on Real-Time Visual Localization and Mapping,” in Proc. Int. Automatic Control Conf. Autonomous/Intelligent Robots, Taipei, Taiwan, pp. SuA10. 1-6, Nov. 27-29, 2009.</li>
+                  <li>C. C. Lin, S. S. Xue, and L. Yao, “Position Calculating and Path Tracking of Three Dimensional Location System based on Different Wave Velocities,” in <i>Proc.</i> <i>The 8th Int. Conf. Pervasive Intelligence and Computing</i>, Chengdu, China, pp. 436-441, Dec. 12-14, 2009.</li>
+                  <li>W. J. Pan, C. C. Lin, and L. Yao, “Adaptive Fuzzy Control with Modulated Membership Function Applies to Path Tracking Based on Location System,” in <i>Proc. The 8th International Conference on Pervasive Intelligence and Computing (PICOM 2009)</i>, Chengdu, China, pp. 215-220, Dec. 12-14, 2009.</li>
+                  <li>Y. C. Chou and L. Yao, “Automatic Diagnostic System of Electrical Equipment using Infrared Thermography,“ in <i>Proc. 2009 Int. Conf. Soft Computing and Pattern Recognition</i>, Malacca, Malaysia, pp. 155-160, Dec. 4-7, 2009.</li>
+                  <li>Y. S. Chen and L. Yao, “Robust Type-2 Fuzzy Control of an Automatic Guided Vehicle for Wall-Following,” in <i>Proc. 2009 Int. Conf. Soft Computing and Pattern Recognition</i>, Malacca, Malaysia, pp. 172-177, Dec. 4-7, 2009.</li>
+                  <li>L. Yao and W.-J. Pan, “Fuzzy Adaptive Controller with Modulated Membership Function for a MIMO Uncertain Nonlinear System,” in <i>Proc. Int. Conf. Innovative Computing, Information and Control</i>, Kaohsiung, Taiwan, B10-09.1-6, Dec. 7-9, 2009.</li>
+                  <li>L. Yao and K.-L. Lim, “Design of Adaptive Fuzzy PID Controller for Nonlinear System,” in <i>Proc. Int. Conf. Innovative Computing, Information and Control</i>, Kaohsiung, Taiwan, B12-09.1-6, Dec. 7-9, 2009.</li>
+                  <li>L. Yao and T.-Y. Pan, “Feature Selection and Classification of SELDI-TOF Mass Spectra of Hepatoma Using Gene-weighted Genetic Algorithm,” in <i>Proc. 23 Annual Conf. of Biomedical Fuzzy Association,</i> Kitakyushu, Japan, pp. 267-272, Oct. 9-10, 2010.</li>
+                  <li>L. Yao and H.-K. Wen, “An Observer based adaptive PID controller,” in <i>Proc. Int. Conf. Modeling, Identification, and Control, </i>Shanghai, China, pp. TueB03.5.1-6, Jun. 26-29, 2011.</li>
+                  <li>L. Yao and J.-N. Jiang, “Design of adaptive fuzzy controller with observer using modulated membership function,” in <i>Proc. Int. Conf. Modeling, Identification, and Control, </i>Shanghai, China, pp. TueB03.4.1-6, Jun. 26-29, 2011. </li>
+                  <li>C. Liu, L. Yao, T. Chen, T. Lin and W. Wang, “Fault diagnosis for power transformers based on hybrid fuzzy dissolved gas analysis,” in <i>Proc. 2011 Eighth Int. Conf. Fuzzy Systems and Knowledge Discovery,</i> Shanghai, China, pp. 857-861, Jul. 26-28, 2011. </li>
+                  <li>Y.-C. Chou and L. Yao, “Adaptive Fuzzy Sliding-Mode Controller with Gaussian Modulated Membership Function on Tracking Trajectory,” in <i>Proc. 2012 IEEE/ASME Int. Conf. Advanced Intelligent Mechatronics,</i> Kaohsiung, Taiwan, pp. 1017-1022, Jul. 11-14, 2012. </li>
+                  <li>L. Yao and K.-S. Weng, “A type-2 fuzzy clustering algorithm,” in <i>Proc. The Fourth International Conf. Pervasive Patterns and Applications, Patterns 2012, </i>Nice, France, pp. 45-50, Jul. 22-27, 2012.</li>
+                  <li>L. Yao and K.-S. Weng, “Combined probabilistic and possibilistic membership functions for a type-2 fuzzy clustering algorithm model ,” in <i>Proc. Int. Conf. Engineering and Technology Innovation, ICETI 2012, </i>Kaohsiung, Taiwan, Nov. 2-6, 2012, pp. N1020.1-4.</li>
+                  <li>T. S. Tsai and L. Yao, “An approach to calculating rainfall for each transmission tower in geographic information system,” in <i>Proc. Int. Conf. on Geological and Environmental Sciences (ICGES),</i> Hong Kong, vol. 52, pp. 45-49, Jul. 2013.</li>
+                  <li>T. B. Lin and L. Yao, “A real Time lightning locating approach for the transmission system in geographic information system,” in <i>Proc. Int. Conf. on Geological and Environmental Sciences (ICGES),</i> Hong Kong, vol. 52, pp. 50-54, Jul. 2013.</li>
+                  <li>L. Yao, T.-S. Tsai, and R.-C. Chang, “Identification of high risk feature regions for transmission towers,” in <i>Proc. 3</i><sup>rd</sup><i> International Conf. Energy and Environmental Protection,</i> Xi’An, China, Apr. 26-28, 2014, pp. 4104-4109.</li>
+                  <li>L. Yao, T.-S. Tsai, and R.-C. Chang, “Precipitation estimation at the site of transmission tower using geographic information system,” in <i>Proc. 3</i><sup>rd</sup><i> International Conf. Energy and Environmental Protection,</i> Xi’An, China, Apr. 26-28, 2014, pp. 3869-3874.</li>
+                  <li>L. Yao, C.-J. Huang and W.-H. Lim, “An intelligent electric vehicle charging strategy for the hybrid type parking station,” in <i>Proc. International Conf. Environmental Science and Energy Engineering,</i> Phuket, Thailand, July 26-27, 2015, pp. 63-67.</li>
+                  <li>L. Yao, C.-C. Lai, and W. H. Lim, “Home energy management system based on photovoltaic system,” in <i>Proc. 2015 IEEE International Conference on Data Science and Data Intensive Systems</i>, Sydney, Australia, Dec. 11-13, 2015, pp. 644-650.</li>
+                  <li>L. Yao, Y.-Q. Chen, and W. H. Lim, “Internet of Things for Electric Vehicle: An improved decentralized charging scheme,” in <i>Proc. 2015 IEEE International Conference on Data Science and Data Intensive Systems</i>, Sydney, Australia, Dec. 11-13, 2015, pp. 651-658.</li>
+                  <li>L. Yao, Z. Damiran, and W. H. Lim, “Direct load control of central air conditioning systems using fuzzy optimization,” in <i>Proc. 16</i><sup>th</sup><i> IEEE Int. Conf. Environment and Electrical and Engineering,</i> Florence, Italy, Jun. 7-10, 2016, pp. E3-TS5 660.1-660.6.</li>
+                  <li>L. Yao, Z. Damiran, and W. H. Lim, “A Fuzzy Logic Based Charging Scheme for Electric Vechicle Parking Station” in <i>Proc. 16</i><sup>th</sup><i> IEEE Int. Conf. Environment and Electrical and Engineering,</i> Florence, Italy, Jun. 7-10, 2016, pp. E3-TS5 662.1-662.6.</li>
+                  <li>L. Yao, J.-Y. Shen, and W. H. Lim, “Real-time energy management optimization for smart household,” in <i>Proc. The 9</i><sup>th</sup><i> IEEE Int. Conf. Internet of Things,</i> Chengdu, China, Dec. 16-19, 2016, pp. 09.4.1-0.4.6.</li>
+                  <li>L. Yao, W. H. Lim, and C.-C. Lai, “Self-learning fuzzy controller-based energy management for smart home,” in <i>Proc.</i> <i>The 9</i><sup>th</sup><i> IEEE Int. Conf. Internet of Things,</i> Chengdu, China, Dec. 16-19, 2016, pp. 12.1.1-12.1.6.</li>
+                  <li>L. Yao and T.-S. Tsai, “Novel hybrid scheme of solar energy forecasting for home energy management system,” in <i>Proc.</i> <i>The 9</i><sup>th</sup><i> IEEE Int. Conf. Internet of Things,</i> Chengdu, China, Dec. 16-19, 2016, pp. 12.4.1-12.4.6.</li>
+                  <li>L. Yao, Z. Damiran, and W. H. Lim, “Energy management optimization scheme for smart home considering different types of appliances” in <i>Proc. 17</i><sup>th</sup><i> IEEE Int. Conf. Environment and Electrical Engineering,</i> Milan, Italy, Jun. 6-9, 2017, pp. A1-TS6 256.1-256.6.</li>
+                  <li>L. Yao<b> </b>and Kebba Jaiteh, “Multi-objective control of central air conditioning system” in <i>Proc. 17</i><sup>th</sup><i> IEEE Int. Conf. Environment and Electrical Engineering,</i> Milan, Italy, Jun. 6-9, 2017, pp. A1-TS6 274.1-274.6.</li>
+                  <li>L. Yao, Y.-W. Wu, L. Yao, and Z. Z. Liao, “An integrated IMU and UWB sensor based indoor positioning system,” in <i>Proc. Int. Conf. Indoor Positioning and Indoor Navigation</i>, Sapporo, Japan, Sep. 18-21, 2017, pp. 1-8.</li>
+                  <li>L. Yao, R. Nirati, K. W. Chien, and Z. Damiran, “Integrated energy management of photovoltaic panels and fuel cells for residential houses,," Proc. IEEE Int. Conf. Recent Innovations In Electrical, Electronic and Communication Engineering, Odisha, India, July 27-28, 2018, pp. 1-8. </li>
+                  <li>L. Yao and Jin-Hao Huang, “Optimization of Energy Saving Control for Air Conditioning System in Data Center,” in Proc. Eighth International Conference on Advances in Computing, Communication and Information Technology - CCIT 2019, Birmingham, United Kingdom, April 23-24, 2019, pp. 1-6.</li>
+                  <li>Fazida H. Hashim and L. Yao, “An optimal load scheduling approach considering user preference and convenience level for smart homes,” in <i>Proc. 19</i><sup>th</sup><i> IEEE Int. Conf. Environment and Electrical Engineering,</i> Genoa, Italy, Jun. 11-14, 2019, pp. M3-TS4 229.1-229.6.</li>
+                </ol>
+                <p>&nbsp;</p>
+              <div>
+                  <div><b>(B2)&nbsp;National Conference Papers</b></div>
+              </div>
+                <ol>
+                  <li>L. Yao, “Optimal sensor placement for modal identification of large space structure,” in <i>Proc. Conf. First National Defense Technology,</i> Taoyuan, Taiwan, pp. 103-109, Nov. 7-8, 1992.</li>
+                  <li>L. Yao, “Application of the Genetic Algorithm to the parameter estimation of nonlinear filters,” in <i>Proc. 8-th National Conf. Technological and Vocational,</i> Pintung, Taiwan, pp. 165-174, March 19-20, 1993.</li>
+                  <li>L. Yao, R.-L. Yen and G.-W. Huang, “Design of air-conditioning load control system via radio,” in <i>Proc. 14-th National Conf. Power Engineering,</i> Chung-Li, Taiwan, pp. 146-151, Dec. 17-18, 1993.</li>
+                  <li>L. Yao, “Pattern recognition based on the Genetic Algorithm,” in <i>Proc. 9th National Conf. Technological and Vocational,</i> Yun-Lin, Taiwan, pp. 249-258, March 18-19, 1994.</li>
+                  <li>L. Yao, R.-L. Yen and C.-W. Huang, “Studies on air-conditioning load control via radio load management system,” in <i>Proc. National Conf. Energy Saving</i>, Jia-Yi, Taiwan, pp. 37-54, May, 1994.</li>
+                  <li>L. Yao, W.-P. Wang, R.-L. Yen and J.-H. Lin, “Strategy improvement of air-conditioning load control via radio system,” in <i>Proc. 16-th National Conf. Power Engineering,</i> Kaosiung, Taiwan, pp. 658-662, Nov. 24-25, 1995. </li>
+                  <li>L. Yao and W.-P. Wang, “Improvement of direct control of air-conditioning facilities via radio load management system,” in <i>Proc. 2-nd National Conf. on Cross-strait Air-conditioning Technology,</i> Taipei, Taiwan, pp. 7.1-7.8, Dec. 8-9, 1995.</li>
+                  <li>L. Yao, W.-P. Wang, J.-H. Lin, R.-L. Yen and W.-C. Chang, “Improving monitoring system for radio load management system via public telephone system,” in <i>Proc. National Conf. Energy Saving, </i>Kaosiung, Taiwan, pp. 35-45, May 9, 1996. </li>
+                  <li>L. Yao, W.-P. Wang, J.-H. Lin, R.-L. Yen and W.-C. Chang, “Customer solicitation strategy for direct load control,” in <i>Proc. National Conf. Energy Saving</i>, Kaosiung, Taiwan, pp. 76-88, May 9, 1996.</li>
+                  <li>L. Yao, J.-H. Lin, R.-L. Yen and W.-C. Chang, “Monitoring of radio load management system,” in Proc. 17-th National Conf. Power Engineering, Hsin-Chu, Taiwan, pp. 512-516, Nov. 8-9, 1996.</li>
+                  <li>L. Yao, W.-P. Wang, J.-H. Lin, R.-L. Yen and W.-C. Chang, “Direct control of air-conditioning load in Chung-Ho and Yung-Ho districts via radio load management system,” in <i>Proc. National Conf. Energy Saving,</i> pp. 40-58, Jun. 12, 1997.</li>
+                  <li>L. Yao, K.-C. Hsieh, R.-L. Yen, W.-C. Chang and J.-H. Lin, “Analysis of direct load control strategies,” in <i>Proc. 18-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 48-52, Nov. 8-9, 1997.</li>
+                  <li>L. Yao, S.-T. Cheng, R.-L. Yen, W.-C. Chang and J.-H. Lin, “Direct control of air-conditioning load in metropolitan area,” in <i>Proc. 18-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 48-52, Nov. 8-9, 1997.</li>
+                  <li>L. Yao, J.-C. Feng, W.-P. Wang, W.-H. Chao, L.-C. Wang and G.-J. Lee, “Economic analysis and promotion strategies of absorption chillers,” in <i>Proc. National Conf. Energy Saving,</i> Taoyuan, Taiwan, pp. 22-35, May 14, 1998.</li>
+                  <li>S.-T. Cheng, L. Yao, R.-L. Yen, W.-C. Chang, T.-G. Lu, J.-H. Lin, “Cost and scheduling analyses of direct control system for air-conditioning load in Taipei Metropolitan area,” in <i>Proc. National Conf. Energy Saving,</i> Taoyuan, Taiwan, pp. 121-137, May 14, 1998.</li>
+                  <li>L. Yao, J.-S. Lu, C.-C. Lin, G.-C. Tu, M.-H. Huang and C.-H. Yang, “Application of radio wide-area network to feeder automation,” in <i>Proc. 19-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 238-242, Nov. 21-22, 1998.</li>
+                  <li>S.-T. Cheng, L. Yao, R.-L. Yen, W.-C. Chang, T.-G. Lu and J.-H. Lin, “Improving control effect of radio load management system via cable system,” in <i>Proc. 19-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 586-590, Nov. 21-22, 1998.</li>
+                  <li>S.-T. Cheng, L. Yao, R.-L. Yen, W.-C. Chang, T.-G. Lu and J.-H. Lin, “Feasibility analysis of radio paging system using specific coding formats” in <i>Proc. 19-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 253-257, Nov. 21-22, 1998.</li>
+                  <li>Y.-C. Lee and L. Yao, “Software system design of radio load management system,” in <i>Proc. 19-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 248-252, Nov. 21-22, 1998.</li>
+                  <li>J.-H. Lin and L. Yao, “Hardware and firmware system design of radio load management system,” in <i>Proc. 19-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 253-257, Nov. 21-22, 1998.</li>
+                  <li>Y.-C. Lee, J.-H. Lin and L. Yao, “Application of load management via radio paging system,” in <i>Proc. 19-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 334-339, Nov. 21-22, 1998.</li>
+                  <li>S.-T. Cheng, L. Yao, W.-C. Chang, R.-L. Yen and J.-H. Lin, “Load shedding control of centrifugal chillers,” in <i>Proc. National Conf. Energy Saving,</i> Tainan, Taiwan, pp. 176-189, May 20, 1999.</li>
+                  <li>W.-P. Wang, M.-C. Ko and L. Yao “Studies on application of absorption chillers to demand side management,” in <i>Proc. National Conf. Energy Saving,</i> Tainan, Taiwan, pp. 76-95, May 20, 1999.</li>
+                  <li>Y.-C. Lee, J.-H. Lin, L. Yao and Y.-F. Cheng, “Broadcasting of real-time electricity tariffs via radio paging system” in <i>Proc. 20-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp.1205-1209, Nov. 20-21, 1999.</li>
+                  <li>W.-C. Chang, L. Yao, R.-L. Yen, T.-G. Lu and J.-H. Lin, “Load shedding control of reciprocal and screw type chillers” in <i>Proc. 20-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp.1210-1214, Nov. 20-21, 1999.</li>
+                  <li>J.-H. Lin, Y.-C. Lee, L. Yao and Y.-F. Cheng, “Broadcasting system of load shedding message for interruptible customers” in <i>Proc. 20-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp.1190-1194, Nov. 20-21, 1999.</li>
+                  <li>L. Yao and W.-C. Chang, “Satisfaction analysis of central chiller customers for direct load control,” in <i>Proc. National Conf. Energy Saving,</i> Taichung, Taiwan, pp. 112-128, May 18, 2000.</li>
+                  <li>L. Yao and W.-C. Chang, “Coordination of building automation system and direct control of central chillers” in <i>Proc. National Conf. Energy Saving,</i> Taichung, Taiwan, pp. 20-31, May 18, 2000.</li>
+                  <li>L. Yao, J.-Y. Wang and Y.-F. Cheng, “Behavior fusion of auto-guided vehicle based on back-propagated neural networks,” in <i>Proc. 5-th National Conf. Artificial Intelligence, </i>Taipei, Taiwan, pp. 283-290, Nov. 17, 2000.</li>
+                  <li>L. Yao and J.-J. Lee, “Application of radio paging system to demand control” in <i>Proc. 21-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp.228-232, Nov. 18-19, 2000.</li>
+                  <li>L. Yao and J.-W. Chang, “Application of radio networks to switching of capacitor bank” in <i>Proc. 21-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp.238-242, Nov. 18-19, 2000.</li>
+                  <li>L.-M. Chao, Y.-F. Cheng and L. Yao, “Application of Genetic Algorithm to QFT controller design,” in<i> Proc. National Conf. Automatic Control</i>, Taoyuan, Taiwan, pp. 763-768, Mar. 24, 2001.</li>
+                  <li>G.-F. Gao and L. Yao, “Application of Genetic Algorithm to focusing controller design of optical disc drive,” in<i> Proc. National Conf. Automatic Control</i>, Taoyuan, Taiwan, pp. 757-762, Mar. 24, 2001.</li>
+                  <li>L. Yao<b> </b>and Chih-Heng Fang, “Hough fuzzy vertices detection algorithm for micro indentation hardness of materials,” in<i> Proc. 2001 14</i><sup>th</sup><i> IPPR Conf. Computer Vision, Graphics and Image Processing,</i> Pintung, Taiwan, Aug. 19-21, pp. 093.1- 093.8, 2001.</li>
+                  <li>W.-C. Chang and L. Yao, “Studies on load shedding control of central chillers” in <i>Proc. 22-th National Conf. Power Engineering,</i> Kaosiung Taiwan, pp.1065-1069, Nov. 22-23, 2001.</li>
+                  <li>W.-C. Chang and L. Yao, “Energy saving model for direct control of centrifugal chillers” in <i>Proc. 22-th National Conf. Power Engineering,</i> Kaosiung, Taiwan, pp.512-516, Nov. 22-23, 2001.</li>
+                  <li>T.-B. Huang and L. Yao, “Software design of two-way load control for high-voltage customers’ broadband network based multi-services system” in <i>Proc. 22-th National Conf. Power Engineering,</i> Kaosiung, Taiwan, pp.571-575, Nov. 22-23, 2001.</li>
+                  <li>S.-L. Ning and L. Yao, “Firmware and hardware design of two-way load control for high-voltage customers’ broadband network based multi-services system” in <i>Proc. 22-th National Conf. Power Engineering,</i> Kaosiung Taiwan, pp.566-570, Nov. 22-23, 2001.</li>
+                  <li>H.-Y. Pan and L. Yao, “Distributor design of two-way load control for high-voltage customers’ broadband network based multi-services system” in <i>Proc. 22-th National Conf. Power Engineering,</i> Kaosiung Taiwan, pp.561-565, Nov. 22-23, 2001</li>
+                  <li>C.-C. Lin and L. Yao, “Fuzzy modeling based on ellipsoidal clustering,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Taoyuan, Taiwan, pp. 281-285, Nov. 23-24, 2001.</li>
+                  <li>G.-S. Weng and L. Yao, “Learning of decision regions based on fuzzy clustering and modulated ellipsoids” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Taoyuan, Taiwan, pp. 576-581, Nov. 23-24, 2001.</li>
+                  <li>J.-D. Chang and L. Yao, “Obstacle detection based on laser scanner,” in<i> Proc. National Conf. Automatic Control</i>, Tainan, Taiwan, pp. TP186.1-186.6, Mar. 26, 2002.</li>
+                  <li>C.-C. Lin and L. Yao, “Synthesis of Volterra filter by genetic programming” in<i> Proc. National Conf. Automatic Control</i>, Tainan, Taiwan, pp. TP185.1-185.6, Mar. 26, 2002.</li>
+                  <li>G.-F. Gao and L. Yao, “Position control of MP3 optical disc drive” in<i> Proc. National Conf. Automatic Control</i>, Tainan, Taiwan, pp. TP184.1-184.6, Mar. 26, 2002.</li>
+                  <li>L. Yao and W.-C. Chang, “Design of linear load shedding control of centrifugal chillers” in<i> Proc. National Conf. Automatic Control</i>, Tainan, Taiwan, pp. TP187.1-187.6, Mar. 26, 2002.</li>
+                  <li>G.-S. Weng and L. Yao, “Fuzzy modeling of Genetic Algorithm based ellipsoidal learning” in<i> Proc. National Conf. Automatic Control</i>, Tainan, Taiwan, pp. TP188.1-188.6, Mar. 26, 2002.</li>
+                  <li>R.-L. Yen, T.-G. Lu, W.-C. Chang and L. Yao, “Direct control of split-type air-conditioners in convenient stores,” in <i>Proc. National Conf. Energy Saving,</i> Tainan, Taiwan, pp. 369-389, May 30, 2002.</li>
+                  <li>Y.-G. Chen and L. Yao, “Outage detection system based on broadband networks,” in <i>Proc. 23-th National Conf. Power Engineering,</i> Taoyuan, Taiwan, pp. D3-6.1 &ndash; D3-6.5, Dec. 14-15, 2002.</li>
+                  <li>H.-Y. Pan and L. Yao, “Design of data distribution for broadband network based two-way monitoring and control system,” in <i>Proc. 23-th National Conf. Power Engineering,</i> Taoyuan, Taiwan, pp. D3-1.1 &ndash; D3-1.5, Dec. 14-15, 2002.</li>
+                  <li>W.-C. Chang and L. Yao, “Direct control of air-conditioning load in convenient stores via radio paging system,” in <i>Proc. 23-th National Conf. Power Engineering,</i> Taoyuan, Taiwan, pp. B1-5.1 &ndash; B1-5.5, Dec. 14-15, 2002.</li>
+                  <li>G.-S. Weng and L. Yao, “Weighted TSK fuzzy modeling based on Genetic Algorithm based ellipsoidal learning,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Hsinchu, Taiwan, pp. A3.07-A3.12, Dec. 5-6, 2002.</li>
+                  <li>D.-C. Liu and L. Yao, “Design of PID controller for high order or time-delayed system,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Hsinchu, Taiwan, pp. A2.30-A2.35, Dec. 5-6, 2002.</li>
+                  <li>C.-H. Wu and L. Yao, “Fuzzy modeling based on modulated membership functions,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Hsinchu, Taiwan, pp. C3.31-A3.36, Dec. 5-6, 2002.</li>
+                  <li>C.-C. Lin and L. Yao, “Fuzzy modeling based on partitions of input and output space,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Hsinchu, Taiwan, pp. C3.25-C3.30, Dec. 5-6, 2002.</li>
+                  <li>Y.-H. Chen, Y.-G. Chen and L. Yao, “Adaptive design of Long distance track seeking control for optical disc dirve,” in<i> Proc. National Conf. Automatic Control</i>, Chung-Li, Taiwan, pp. 572-577, Mar. 13-14, 2003.</li>
+                  <li>Y.-G. Chen and L. Yao, “Long distance track seeking control for DVD-ROM,” in<i> Proc. National Conf. Automatic Control</i>, Chung-Li, Taiwan, pp. 1249-1254, Mar. 13-14, 2003.</li>
+                  <li>S.-H. Chang, G.-S. Weng and L. Yao, “Design of track following controller for automatic guided vehicle,” in<i> Proc. National Conf. Automatic Control</i>, Chung-Li, Taiwan, pp. 864-869, Mar. 13-14, 2003.</li>
+                  <li>J.-S. Yang and L. Yao, “Design of home energy management system,” in<i> Proc. National Conf. Customer Electronics</i>, Tainan, Taiwan, pp. d0031.1-d0031.6, Nov. 27-28, 2003.</li>
+                  <li>C.-H. Lin and L. Yao, “Design of wide-area street lights monitoring and control” in<i> Proc. National Conf. Customer Electronics</i>, Tainan, Taiwan, pp. c0061.1-c0061.6, Nov. 27-28, 2003.</li>
+                  <li>S. H. Chang and L. Yao, “Track following and obstacle avoidance control for automatic guided vehicle,” in <i>Proc. National Conf. Artificial Intelligence, Fuzzy System and Gray System</i>, Taipei, Taiwan, B065.1-B065.6, Dec. 4-6, 2003.</li>
+                  <li>C.-C. Lin, T.-H. Hsu and L. Yao, “Application of Genetic Algorithm to optimization of electricity tariff for demand bidding,” in <i>Proc. National Conf. Artificial Intelligence, Fuzzy System and Gray System</i>, Taipei, Taiwan, A137.1-A137.6, Dec. 4-6, 2003.</li>
+                  <li>D.-C. Liu and L. Yao, “Design of PID controller for time-delayed systems,” in <i>Proc. National Conf. Artificial Intelligence, Fuzzy System and Gray System</i>, Taipei, Taiwan, B063.1-B063.6, Dec. 4-6, 2003.</li>
+                  <li>Y.-G. Chen and L. Yao, “Design electricity tariff calculation mechanism for demand exchange system,” in <i>Proc. 24-th National Conf. Power Engineering,</i> Tainan, Taiwan, pp. 208-212, Dec. 12-13, 2003.</li>
+                  <li>W.-C. Chan, T.-H. Hsu and L. Yao, “Design of demand bidding for demand exchange system,” in <i>Proc. 24-th National Conf. Power Engineering,</i> Tainan, Taiwan, pp. 213-217, Dec. 12-13, 2003.</li>
+                  <li>Y.-F. Lee and L. Yao, “Optimal design of single-loop QFT controller,” in<i> Proc. National Conf. Automatic Control</i>, Chang-Hua, Taiwan, pp. 1177-1182, Mar. 26-27, 2004.</li>
+                  <li>B.-C. Lian and L. Yao, “Obstacle avoidance based on fuzzy map for automatic guided vehicle,” in<i> Proc. National Conf. Automatic Control</i>, Chang-Hua, Taiwan, pp. 864-869, Mar. 26-27, 2004.</li>
+                  <li>B.-C. Huang and L. Yao, “Automated design of fuzzy track seeking controller for DVD-ROM,” in<i> Proc. National Conf. Automatic Control</i>, Chang-Hua, Taiwan, pp. 858-863, Mar. 26-27, 2004.</li>
+                  <li>G.-S. Yang and L. Yao, “Design and implementation of home energy management system,” in <i>Proc. National Conf. Energy Saving</i>, Taipei, Taiwan, pp. 228-237, May 19, 2004.</li>
+                  <li>C.-D. Huang and L. Yao, “Clustering of incomplete data based on Genetic Algorithm based ellipsoidal learning,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Yi-Lan, Taiwan, pp. XIII.c1381.1-6, Nov. 12-13, 2004.</li>
+                  <li>T.-H. Hsu and L. Yao, “Design of classifier by block-type Genetic Programming,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Yi-Lan, Taiwan, pp. XIII.c1383.1-6, Nov. 12-13, 2004.</li>
+                  <li>B.-C. Lian and L. Yao, “Obstacle avoidance based on fuzzy map for automatic guided vehicle,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Yi-Lan, Taiwan, pp. III.c1382.1-6, Nov. 12-13, 2004.</li>
+                  <li>H.-R. Lu and L. Yao, “Design of gateway for home energy management system,” in <i>Proc. 25-th National Conf. Power Engineering,</i> Tainan, Taiwan, pp. 238-243, Nov. 19-20, 2004.</li>
+                  <li>W.-C. Chan and L. Yao, “Design and implementation of demand bidding in demand exchange system,” in <i>Proc. 25-th National Conf. Power Engineering,</i> Tainan, Taiwan, pp. 250-254, Nov. 19-20, 2004.</li>
+                  <li>Y.-S. Ho and L. Yao, “Fuzzy tracking control for automatic guided vehicle,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Kaosiung, Taiwan, pp. c299.1-6, Sep. 30-Oct. 1, 2005.</li>
+                  <li>P.-R. Kuo and L. Yao, “Fuzzy gain controller for network control,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Kaosiung, Taiwan, pp. c106.1-6, Sep. 30-Oct. 1, 2005.</li>
+                  <li>C.-C. Lin and L. Yao, “Diagnosis of SELDI-TOF peaks by fuzzy inference,” in <i>Proc. National Conf. Fuzzy Theory and Applications,</i> Kaosiung, Taiwan, pp. c307.1-6, Sep. 30-Oct. 1, 2005.</li>
+                  <li>M.-D. Lee and L. Yao, “Design of focusing and track following roust controller for DVD-ROM,” in<i> Proc. National Conf. Automatic Control</i>, Tainan, Taiwan, pp. C00009d.1-C00009d.6, Nov. 18-19, 2005.</li>
+                  <li>F.-J. Yo and L. Yao, “Obstacle avoidance and navigation for automatic guided vehicle based on image and behavior fusion,” in<i> Proc. National Conf. Automatic Control</i>, Tainan, Taiwan, pp. F00015d.1-F00015d.6, Nov. 18-19, 2005.</li>
+                  <li>H.-R. Lu and L. Yao, “Two-way load control based on broadband network,” in <i>Proc. 26-th National Conf. Power Engineering,</i> Chung-Li, Taiwan, pp. 1050-1055, Dec. 9-10, 2005.</li>
+                  <li>W.-T. Tseng and L. Yao, “Switching of capacitor bank via mobile communication system,” in <i>Proc. 26-th National Conf. Power Engineering,</i> Chung-Li, Taiwan, pp. 1045-1049, Dec. 9-10, 2005.</li>
+                  <li>L.-H. Lu and L. Yao, “Optimal load dispatch for aggregated air-conditioning load,” in <i>Proc. National Conf. Energy Economy</i>, Taipei, Taiwan, Nov. 17, pp. 1-23, 2006.</li>
+                  <li>H.-R. Lu, L. Yao and W.-H. Kao, “Design of energy management system for demand response,” in <i>Proc. 27-th National Conf. Power Engineering,</i> Hsinchu, Taiwan, pp. PD1.10.1 - PD1.10.5, Dec. 22-23, 2006.</li>
+                  <li>H.-R. Lu, L. Yao and J.-T Yang, “Design of emergent load shedding for demand response,” in <i>Proc. 27-th National Conf. Power Engineering,</i> Hsinchu, Taiwan, pp. PD1.11.1 &ndash; PD1.11.5, Dec. 22-23, 2006.</li>
+                  <li>G.-Y. Chen, L. Yao, W.-H. Chen, R.-L. Yen, Y.-S. Chang and G.-T. Lin, “Design of load monitoring and diagnosis system for distribution transformer,” in <i>Proc. 27-th National Conf. Power Engineering,</i> Hsinchu, Taiwan, pp. OC2.3.1 - OC2.3.5, Dec. 22-23, 2006.</li>
+                  <li>Y.-S. Kuo, L. Yao, J.-N. Tsai and J.-H. Lin, “Design of remote measuring of insulation resistance for street lights,” in <i>Proc. 27-th National Conf. Power Engineering,</i> Hsinchu, Taiwan, pp. OD5.5.1 - OD5.5.5, Dec. 22-23, 2006.</li>
+                  <li>J.-C. Chen and L. Yao, “Application of Genetic Algorithm with weighted genes to classification of electric loads,” in <i>Proc. 27-th National Conf. Power Engineering,</i> Hsinchu, Taiwan, pp. PD1.9.1 - PD1.9.5, Dec. 22-23, 2006.</li>
+                  <li>K.-S. Weng and L. Yao, “An Evolutionary Type-2 Fuzzy Classifier with Adaptive Ellipsoids,” in <i>Proc. National Conf. Fuzzy Theory and Applications</i>, Taipei, Taiwan, pp. D3-3-1~D3-3-6, Dec. 14-15, 2006.&nbsp;</li>
+                  <li>P.-R. Guo and L. Yao, “A Fuzzy Gain Tuner for Networked Automatic Guided Vehicle Control System," in <i>Proc. National Conf. Fuzzy Theory and Applications</i>, Taipei, Taiwan, pp. B4-2-1~B4-2-6, Dec. 14-15, 2006.</li>
+                  <li>Z.-W. Lin and<b> </b>L. Yao, “Tracking Control for Automatic Guided Vehicle Based on Sonar Sensor Fusion,” in <i>Proc. National Conf. Fuzzy Theory and Applications</i>, Taipei, Taiwan, pp. B4-4-1~B4-4-7, Dec. 14-15, 2006.</li>
+                  <li>T. Yang and L. Yao<b>,</b> “A Fuzzy Classifier with Adaptive Learning of Norm Inducing Matrix,” in<i> Proc. National Conf. Automatic Control</i>, Taipei, Taiwan, pp. 1255-1260, Nov. 10-11, 2006.</li>
+                  <li>J.-H. Chen and L. Yao, “Design of outage detection system for distribution transformers,” in <i>Proc. 28-th National Conf. Power Engineering,</i> Kaosiung, Taiwan, pp. C14.7-1~C14.7-5, Dec. 7-8, 2007.</li>
+                  <li>W.-T. Tseng and L. Yao, “Switching of capacitor bank via mobile communication,” in <i>Proc. 28-th National Conf. Power Engineering,</i> Kaosiung, Taiwan, pp. B14.4-1~B14.4-5, Dec. 7-8, 2007.</li>
+                  <li>S.-J. Lin and L. Yao, “Surveillance and inspection system for substation transformers,” in <i>Proc. 28-th National Conf. Power Engineering,</i> Kaosiung, Taiwan, pp. B14.3-1~B14.3-5, Dec. 7-8, 2007.</li>
+                  <li>S.-J. Lin and L. Yao, “Design of recorder for substation transformers,” in <i>Proc. 28-th National Conf. Power Engineering,</i> Kaosiung, Taiwan, pp. C14.6-1~C14.6-5, Dec. 7-8, 2007.</li>
+                  <li>G.-W. Peng and L. Yao, “Gain tuning of network based PID controller,” in <i>Proc. National Conf. Fuzzy Theory and Applications</i>, Yun-Lin, Taiwan, pp. A1.1.49-A1.1.54, Dec. 14-15, 2007.</li>
+                  <li>T. Yang and L. Yao, “Fuzzy clustering of incomplete data by adaptive learning of decision regions,” in <i>Proc. National Conf. Fuzzy Theory and Applications</i>, Yun-Lin, Taiwan, pp. C1.2.427-C1.2.432, Dec. 14-15, 2007.</li>
+                  <li>L. Yao and H.-R. Lu, “Optimal load shedding of central chillers for demand response,” in <i>Proc. National Conf. Energy Saving</i>, Kaosiung, Taiwan, pp. 205-216, May 16, 2008.</li>
+                  <li>S.-S. Hsu, Suhandry Salim and L. Yao, “3D positioning system by sensor network,” in Proc. National Conf. System Science and Engineering, Yi-Lan, Taiwan, pp. P0453.1-6, Jun. 6-7, 2008.</li>
+                  <li>K.-C. Yang and L. Yao, “Improvement of focusing control for car used optical disc drive by H∞ hybrid sensitivity,” in Proc. National Conf. System Science and Engineering, Yi-Lan, Taiwan, pp. P0406.1-6, Jun. 6-7, 2008.</li>
+                  <li>J.-N. Giang, L. Yao and W.-Y. Wang, “Observer based direct adaptive controller with modulated membership functions,” in Proc. National Conf. System Science and Engineering, Yi-Lan, Taiwan, pp. P0352.1-6, Jun. 6-7, 2008.</li>
+                  <li>H.-K. Weng, L. Yao and W.-Y. Wang, “Direct adaptive PID controller for nonlinear systems,” in Proc. National Conf. System Science and Engineering, Yi-Lan, Taiwan, pp. P0545.1-6, Jun. 6-7, 2008.</li>
+                  <li>Y.-S. Kuo and L. Yao, “Design of security system for electric cable network,” in <i>Proc. 29-th National Conf. Power Engineering,</i> Tainan, Taiwan, pp. 949-953, Dec. 5-6, 2008.</li>
+                  <li>J.-M. Lin, L. Yao and S.-J. Lin, “Design of man-hole and hand-hole positioning and inspection system,” in <i>Proc. 29-th National Conf. Power Engineering,</i> Tainan, Taiwan, pp. 513-517, Dec. 5-6, 2008.</li>
+                  <li>J.-C. Yen, L. Yao and J.-H. Chen, “Outage and fault detection system for distribution system,” in <i>Proc. 29-th National Conf. Power Engineering,</i> Tainan, Taiwan, pp. 959-963, Dec. 5-6, 2008.</li>
+                  <li>H.-S. Yang and L. Yao, “Real-time positioning and map building,” in Proc. National Conf. System Science and Engineering, Taipei, Taiwan, pp. A154-159, Jun. 25-26, 2009.</li>
+                  <li>Y.-L. Chu and L. Yao, “Multi-AGV formation reconfiguration based on real-time images,” in Proc. National Conf. System Science and Engineering, Taipei, Taiwan, pp. C1058-1063, Jun. 25-26, 2009.</li>
+                  <li>J.-D. Liu and L. Yao, “Design of intelligent 3D remote control,” in Proc. National Conf. System Science and Engineering, Taipei, Taiwan, pp. C1076-1081, Jun. 25-26, 2009.</li>
+                  <li>L. Yao and T.-B. Lin, “Design of substation facility management system,” in <i>Proc. 30-th National Conf. Power Engineering,</i> Taoyuan, Taiwan, pp. O008.1-5, Nov. 28-29, 2008.</li>
+                  <li>T. Chen, G.-R. Huang and J.-S. Liu and L. Yao, “Application of data mining to transformer dissolved gas analysis,” in <i>Proc. 32-th National Conf. Power Engineering,</i> New Taipei City, Taiwan, pp. 12-16, Dec. 2-3, 2011.</li>
+                  <li>L. Yao, W.-Y. Hsu and C.-S. Chen, “Optimal load shedding control for central chillers,” in <i>Proc. 32-th National Conf. Power Engineering,</i> New Taipei City, Taiwan, pp. 7-11, Dec. 2-3, 2011.</li>
+                  <li>G.-M. Chiu, G.-Y. Ho and L. Yao, “Three dimensional positioning based on two waves with different transmission velocities,” in Proc. National Conf. System Science and Engineering, Nan-Tou, Taiwan, pp. 0315.1-5, Jun. 17-18, 2011.</li>
+                  <li>C.-G. Lin, G.-Y. Ho and L. Yao, “Track following control based on indoor positioning system,” in Proc. National Conf. System Science and Engineering, Nan-Tou, Taiwan, pp. 0125.1-5, Jun. 17-18, 2011.</li>
+                  <li>Y.-C. Chen and L. Yao, “Active ,” in Proc. National Conf. System Science and Engineering, Nan-Tou, Taiwan, pp. 0125.1-5, Jun. 17-18, 2011.</li>
+                  <li>L. Yao, G.-W. Chou and G.-K. Chang, “Energy saving system for the air-conditioners in base transceiver station,” in <i>Proc. National Conf. Fuzzy Theory and Applications</i>, Taichung, Taiwan, pp. 32-37, Nov. 16-18, 2012.</li>
+                  <li>T.-S. Tsai, L. Yao, R.-G. Chang and C.-H. Hsieh, “Rainfall estimation scheme for electrical transmission system,” in <i>Proc. 33-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 2196-2200, Dec. 7-8, 2012.</li>
+                  <li>C.-S. Chen and L. Yao, “Optimal charging strategy for electric vehicles,” in <i>Proc. 33-th National Conf. Power Engineering,</i> Taipei, Taiwan, pp. 2283-2288, Dec. 7-8, 2012.</li>
+                  <li>W.-C. Wang and L. Yao, “Time synchronization scheme for sensor network,” in Proc. National Conf. System Science and Engineering, New Taipei City, Taiwan, pp. 562-566, Jun. 8-9, 2013.</li>
+                  <li>L. Yao and C.-J. Hong, “Moving control of robot fish,” in Proc. National Conf. System Science and Engineering, New Taipei City, Taiwan, pp. 458-463, Jun. 8-9, 2013.</li>
+                  <li>J.-R. Huang, C.-S. Chen and L. Yao, “Optimal charging scheduling for electric vehicles,” in Proc. National Conf. System Science and Engineering, New Taipei City, Taiwan, pp. 525-529, Jun. 8-9, 2013.</li>
+                  <li>L. Yao, Y.-H. Lin, J.-H. Chang, and G.-C. Lai, “Energy management system for real-time price,” in Proc. National Conf. Power Electronics, Taipei, Taiwan, pp. 104-108, Sep. 4, 2014.</li>
+                  <li>L. Yao, C.-K. Chang, and P.-H. Huang, “Integrated control of air conditioning and lighting,” in Proc. National Conf. Power Electronics, Taipei, Taiwan, pp. 487-491, Sep. 4, 2014.</li>
+                  <li>L. Yao and Y.-H. Lee, “Energy management for combined heat, cooling and power system,” in Proc. National Conf. Power Electronics, Taipei, Taiwan, pp. 515-519, Sep. 4, 2014.</li>
+                  <li>L. Yao and R.-W. Chou, “Indoor positioning and navigation based on KINECT,” in <i>Proc. National Conf. Smart Life Technology,</i> Kaosiung, Taiwan, pp. 142-149, June 20-21, 2014.</li>
+                  <li>L. Yao and H.-W. Cheng, “Optimal control of charging and discharging for electric vehicles in the smart grid,” in <i>Proc. National Conf. Smart Life Technology,</i> Kaosiung, Taiwan, pp. 135-141, June 20-21, 2014.</li>
+                  <li>L. Yao and Y.-C. Chen, “Optimization of charging scheduling for electric vehicles using dispersed computation approach,” in Proc. National Conf. System Science and Engineering, Taipei, Taiwan, pp. C1076-1081, Jul. 29-30, 2015.</li>
+                  <li>L. Yao and H.-J. Lin, “Analysis of lighting locations in Taiwan based on DBSCAN and Google Earth,” in Proc. Conf. Taiwan Geographic Information, Taichung, Taiwan, Jun. 29-30, 2015.</li>
+                  <li>L. Yao and Y.-C. Chen, “Charging management for electric vehicles using distributed optimization approach,” in Proc. National Conf. System Science and Engineering, Taipei, Taiwan, Jul. 29-30, 2015.</li>
+                  <li>L. Yao and H.-Z. Lin, “Lighting analysis in Taiwan using DBSCAN and Google Earth,” in Proc. National Conf. Geography Information System, Taichung, Taiwan, Jun. 29-30, 2015.</li>
+                  <li>L. Yao, C.-C. Lai and J.-Y. Shen, “Smart home energy conservation and management system for dynamic pricing,” in <i>Proc. 37-th National Conf. Power Engineering,</i> Taichung, Taiwan, Dec. 10-11, 2016.</li>
+                  <li>T.-B. Lin and L. Yao, “Risk assessment of lightning flashover for transmission lines based on genetic algorithm,” in <i>Proc. 37-th National Conf. Power Engineering,</i> Taichung, Taiwan, Dec. 10-11, 2016.</li>
+                </ol>
+                <p>&nbsp;</p>
+          </div>
+        </div>
+      <div id="patents">
+        <div id="patents_body">
+            <div id="patents_body_header">
+              <h1>Publications and Projects</h1>
+            </div>
+              <div>
+                  <div><b>(C)&nbsp;Patents</b></div>
+              </div>
+                <ol>
+                  <li>L. Yao, <i>Structure of receiving device that receives signals from radio paging system for the load management in power system,</i> Utility Model Patent, Patent number 164194, Nov. 11, 2000 to Nov. 19, 2018.</li>
+                  <li>L. Yao, Methods and systems for load management in power system, Invention Patent, Patent number 411649, Nov. 11, 2000 to Nov. 19, 2018.</li>
+                  <li>L. Yao, Y.-C. Lee and J.-H. Lin, Methods and devices transmitting load shedding message from power supply side to demand side, Invention Patent, Patent number 136707, Jun. 23, 2001 to Nov. 18, 2019.</li>
+                  <li>L. Yao, Y.-C. Lee and J.-H. Lin, Methods and devices transmitting electricity tariffs, Invention Patent, Patent number 137326, Aug. 1, 2001 to Nov. 18, 2019.</li>
+                  <li>L. Yao, A.-M. Wang and L.-M. Chao, Method and system for long distance track seeking in optical disc drive, Invention Patent, Patent number 151603, Mar. 11, 2002 to Dec. 18, 2020.</li>
+                  <li>L. Yao and J.-H. Fang, Edge detection scheme for hardness calculation, Invention Patent, Patent number 159290, Jun. 11, 2002 to Aug. 18, 2021.</li>
+                  <li>L. Yao, T.-B. Huang and S.-L. Nin, Remote data acquisition schemes and device via radio paging system, Invention Patent, Patent number 169827, Jan. 1, 2003 to Sep. 12, 2021.</li>
+                  <li>L. Yao and R.-L. Yen, A scheme remotely adjusting temperature setting to air conditioners, Invention Patent, Patent number 173893, Mar. 21, 2003 to Apr. 17, 2022.</li>
+                  <li>L. Yao and R.-L. Yen, A load management scheme using demand controllers, Invention Patent, Patent number 190145, Nov. 11, 2003 to Apr. 24, 2022.</li>
+                  <li>L. Yao and W.-C. Chang, Scheme and system for demand side two-way load control, Invention Patent, Patent number I237169, Aug. 1, 2005 to Sep. 16, 2024.</li>
+                  <li>L. Yao and C.-W. Wang, Control device for switching oil breaker and street light breaker, Utility Model Patent, Patent number M268178, Jun. 21, 2005 to Dec. 23, 2024.</li>
+                  <li>L. Yao and C.-H. Lin, Scheme and system for wide area street light monitoring, Invention Patent, Patent number 253028, Apr. 11, 2007 to Mar. 23, 2024.</li>
+                  <li>L. Yao and C.-H. Lin, Scheme and system for measuring wide area street light insulation resistance, Invention Patent, Patent number I264546, Oct. 21, 2006 to Mar. 23, 2024.</li>
+                  <li>L. Yao and T. Wang, Structure of covering box for placing RFID tag, Utility Model Patent, Patent number M312430, Sep. 18, 2006 to Apr. 18, 2025.</li>
+                  <li>L. Yao, C.-W. Wang and C.-S. Shen, Inspection and maintenance scheme for man holes and hand holes, Invention Patent, Patent number I263723, Oct. 11, 2006 to Jan. 17, 2025.</li>
+                  <li>L. Yao and W.-C. Chang, Device for sensing and notifying power supplying status, Invention Patent, Patent number I280719, May. 1, 2007 to Sep. 16, 2024.</li>
+                  <li>L. Yao and H.-R. Lu, Silent ring device, Invention Patent, Patent number I271093, Jan. 11, 2007 to Feb. 22, 2025.</li>
+                  <li>L. Yao and B.-C. Huang, Scheme and system for automatic learning control parameters for optical disc drives, Invention Patent, Patent number I270757, Jan. 11, 2007 to Apr. 18, 2025.</li>
+                  <li>L. Yao and H.-Y. Pan, Scheme and system for sensing status of regional power supply, Invention Patent, Patent number I256187, Jun. 1, 2007 to Sep. 16, 2024.</li>
+                  <li>L. Yao and H.-R. Lu, Optimization scheme for load shedding, Invention Patent, Patent number I272465, Feb. 1, 2007 to Dec. 14, 2025.</li>
+                  <li>L. Yao and G.-F. Chang, Structure of man hole cover for the convenience of inspection and maintenance, Invention Patent, Patent number I350331, Oct. 11, 2011 to Dec. 14, 2029.</li>
+                  <li>L. Yao, G.-H. Chen and H.-R. Lu, Scheme and system for automatic outage detection, Invention Patent, Patent number I354238, Dec. 11, 2011 to Nov. 21, 2027.</li>
+                  <li>L. Yao and Y.-S. Kuo, Scheme and system for power grid fault detection and monitoring, Invention Patent, Patent number I358544, Feb. 21, 2012 to Jan. 29, 2028.</li>
+                  <li>H.-B. Cheng and L. Yao, Scheme and system for temperature control and load shedding in cooling space, Invention Patent, Patent number I358544, Aug. 21, 2013 to Apr. 7, 2031.</li>
+                  <li>L. Yao and G.-W. Chou, Scheme for temperature control in mobile communication base station, Patent pending, Apply number 101120266.</li>
+                  <li>L. Yao, J.-M. Chiu, and G.-Y. Ho, Distance measurement scheme and system, Invention Patent, Patent number I432761, Apr. 1, 2014 to Mar. 21, 2031.</li>
+                  <li>H.-B. Cheng, C.-R. Wu, F.-H. Chen, and L. Yao, Monitoring scheme and system for refrigeration facilities, Invention Patent, Patent number I432686, Apr. 1, 2014 to Aug. 2, 2031.</li>
+                  <li>L. Yao, Y.-C. Wang, J.-H. Chen, and Y.-S. Wang, Control of networking rights and Internet system, Invention Patent, Patent number I615002, Feb. 11, 2018 to Nov. 1, 2036.</li>
+                  <li>L. Yao, S.-H. Wang, C.-K. Huang, An energy saving control approach and system in a medium or large space, Invention Patent, Patent number I670451, Sep. 1, 2019 to Aug. 30, 2038.</li>
+                </ol>
+                <p>&nbsp;</p>
+            </div>
+          </div>
+      <div id="projects">
+        <div id="projects_body">
+            <div id="projects_body_header">
+              <h1>Publications and Projects</h1>
+            </div>
+              <div>
+                  <div><b>(D)&nbsp;Projects</b></div>
+              </div>
+                <ol>
+                  <li>Principal Investigator, “Taiwan High Speed Rail Power Facility Maintenance and Management System II,” Grant of Taiwan High Speed Rail Corporation, Grant No. C4-19-001, Aug. 2019 to Jul. 2021.</li>
+                  <li>Principal Investigator, “Optimal shedding control of large quantity of small air conditioners in wide area for demand response,” Grant of Ministry of Science and Technology, Grant No. MOST 107-2221-E-027-086-MY3, Aug. 2018 to Jul. 2021.</li>
+                  <li>Principal Coinvestigator, “Studies of impacts to unbalanced distribution system with a large quantities of renewable energy and load demands,” Grant of Ministry of Science and Technology, MOST 107-2221-E-110-062, Aug. 2018 to Jul. 2019.</li>
+                  <li>Principal Investigator, “Customer flow detection, analysis and forecast using artificial intelligence,” Grant of ADE Technology Inc., Aug. 2018 to Jul. 2019. (Technology Transfer)</li>
+                  <li>Principal Investigator, “Control of small flying drone,” Grant of ADE Technology Inc., Mar. 2018 to Jul. 2018. (Technology Transfer)</li>
+                  <li>Principal Investigator, “Intelligent cloud for energy saving,” Grant of APEX International, Nov. 2017 to Jun. 2018.</li>
+                  <li>Principal Investigator, “Energy saving control,” Grant of ADE Technology Inc., Sep. 2017 to Aug. 2018. </li>
+                  <li>Principal Investigator, “Optimal demand solicitation and control strategy for aggregator in demand bidding,” Grant of Ministry of Science and Technology, Grant No. MOST 106-2221-E-027-089, Aug. 2017 to Jul. 2018.</li>
+                  <li>Principal Coinvestigator, “Development of commercial demand and adjustment of unbalanced networks in new frame of generation,” Grant of Ministry of Science and Technology, Grant No. MOST 106-2221-E-110-063, Aug. 2017 to Jul. 2018.</li>
+                  <li>Principal Investigator, “Intelligent campus and energy saving system in Taipei Tech.,” Ministry of Interior Affairs, Jan. 2017 to Dec. 2017.</li>
+                  <li>Principal Investigator, “Taiwan High Speed Rail Power Facility Maintenance and Management System,” Grant of Taiwan High Speed Rail Corporation, Grant No. C4-16-008, Nov. 2016 to Apr. 2018.</li>
+                  <li>Principal Investigator, “Planning and installation of energy saving system for data center and computer networks on university campus (3/3),” Grant of Ministry of Science and Technology, Grant No. MOST 106-3113-E-027-003, Jan. 2017 to Dec. 2017.</li>
+                  <li>Principal Investigator, “Planning and installation of energy saving system for data center and computer networks on university campus (2/3),” Grant of Ministry of Science and Technology, Grant No. MOST 105-3113-E-027-004, Jan. 2016 to Dec. 2016.</li>
+                  <li>Principal Investigator, “Planning and installation of energy saving system for data center and computer networks on university campus (1/3),” Grant of Ministry of Science and Technology, Grant No. MOST 104-3113-E-027-001, Jan. 2015 to Dec. 2015.</li>
+                  <li>Principal Investigator, “Smart home energy management system for real-time pricing” Grant of Ministry of Science and Technology, Grant No. MOST 103-2221-E-027-050-MY3, Aug. 2014 to Jul. 2017.</li>
+                  <li>Principal Investigator, “Smart distribution and energy management for micro grid,” Grant of Ministry of Science and Technology, Grant No. MOST 103-2221-E-110-046-MY3, Aug. 2014 to Jul. 2017.</li>
+                  <li>Principal Investigator, “Development of surveillance system for transmission system using buffering analysis of geometry information system,” Grant of Taiwan Power Company, Sep. 2013 to Feb. 2015.</li>
+                  <li>Principal Investigator, “Design and implementation of campus energy saving system for Taipei Tech.,” Grant of Ministry of Science and Technology, Grant No. MOST 102-3113-P-027-005, Jul. 2013-Jun. 2014.</li>
+                  <li>Principal Investigator, “Studies and implementation of intelligent charging management system of electric vehicles for parking lot,” Grant of Ministry of Science and Technology, Grant No. MOST 102-2221-E-027-036, Aug. 2013 to Jul. 2014.</li>
+                  <li>Principal Investigator, “Intelligent energy monitoring and control system for centrifugal chillers,” Grant of Dong-Jo Energy Technology Company, Jan. 2013 to Dec. 2013.</li>
+                  <li>Principal Investigator, “Study of a solid oxide fuel cell based adsorption chiller composite system,” Grant of Ministry of Science and Technology, Grant No. MOST 102-3113-P-027-003, Jan. 2013 to Dec. 2013.</li>
+                  <li>Principal Investigator, “Studies on micro wireless transducer,” Grant of Nippon Aleph Company, Jan. 2012 to Dec. 2012.</li>
+                  <li>Principal Investigator, “Design and implementation of air-conditioning energy saving system for base transceiver station,” Grant of Ministry of Science and Technology, Grant No. MOST 101-2623-E-027-001-ET, Jan. 2012 to Dec. 2012.</li>
+                  <li>Principal Coinvestigator, “Studies on energy saving carbon-dioxide reduction for power system (3/3),” Grant of Ministry of Science and Technology, Jan. 2012 to Dec. 2012.</li>
+                  <li>Principal Investigator, “Studies on energy saving and carbon-dioxide reduction for regional air conditioning load (3/3),” Grant of Ministry of Science and Technology, Jan. 2012 to Dec. 2012.</li>
+                  <li>Principal Investigator, “Design and implementation of transmission facility maintenance and management system,” Grant of Taiwan Power Company, Sep. 2011 to Feb. 2013.</li>
+                  <li>Principal Coinvestigator, “Studies on energy saving carbon-dioxide reduction for power system (2/3),” Grant of Ministry of Science and Technology, Jan. 2011 to Dec. 2011.</li>
+                  <li>Principal Investigator, “Studies on energy saving and carbon-dioxide reduction for regional air conditioning load (2/3),” Grant of Ministry of Science and Technology, Jan. 2011 to Dec. 2011.</li>
+                  <li>Principal Investigator, “Development of university regional 3C academia-industry cooperation,” Grant of Ministry of Education, Jan. 2011 to Dec. 2011.</li>
+                  <li>Principal Coinvestigator, “Design, analysis, and implementation of a micro grid (2/2),” Grant of Ministry of Science and Technology, Jan. 2011 to Dec. 2011.</li>
+                  <li>Principal Investigator, “Design and implementation of communication and control networks for a micro grid, (2/2)” Grant of Ministry of Science and Technology, Jan. 2011 to Dec. 2011.</li>
+                  <li>Principal Investigator, “Monitoring and control system for a commercial energy saving system,” Grant of Dong-Jo Energy Technology Company, Jul. 2010 to Apr. 2011.</li>
+                  <li>Principal Investigator, “Design of substation fault classifier based on classification belief,” Grant of Ministry of Science and Technology, Grant No. NSC 99-2221-E-027-112-MY3, Aug. 2010 to Jul. 2013.</li>
+                  <li>Principal Investigator, “Automatic Diagnosis System of Electrical Equipment using Infrared Thermography,” Grant of Ministry of Science and Technology, Grant No. NSC 99-2622-E-027-009-CC3, Jul. 2010 to Jun. 2011.</li>
+                  <li>Principal Coinvestigator, “Integration of database and design of expert system for the substation facility maintenance and management system,” Grant of Taiwan Power Company, Jul. 1010 to Dec. 2011.</li>
+                  <li>Principal Investigator, “Development of university regional 3C academia-industry cooperation,” Grant of Ministry of Education, Jan. 2010 to Dec. 2010.</li>
+                  <li>Principal Investigator, “Design of energy saving for enterprise headquarter based on Web Access,” Grant of Advantech Company, Apr. 2010 to Nov. 2010.</li>
+                  <li>Principal Coinvestigator, “Studies on energy saving carbon-dioxide reduction for power system (1/3),” Grant of National Science Council, Grant No. NSC 98-2221-E-110-079, Nov. 2009 to Dec. 2010.</li>
+                  <li>Principal Investigator, “Studies on energy saving and carbon-dioxide reduction for regional air conditioning load (1/3),” Grant of National Science Council, Grant No. NSC 98-3114-P-110-002, Nov. 2009 to Dec. 2010.</li>
+                  <li>Principal Coinvestigator, “Design, analysis, and implementation of a micro grid (1/2),” Grant of National Science Council, Grant No. NSC 98-3114-E-007-004, Nov. 2009 to Dec. 2010.</li>
+                  <li>Principal Investigator, “Design and implementation of communication and control networks for a micro grid, (1/2)” Grant of National Science Council, Grant No. NSC 98-3114-E-007-004, Nov. 2009 to Dec. 2010.</li>
+                  <li>Principal Investigator, “Design and implementation of fault locator for underground electric distribution networks,” Grant of National Science Council, Grant No. NSC 98-2262-E-027-015-CC3, Jul. 2009 to Jun. 2010.</li>
+                  <li>Principal Investigator, “Design and implementation of highway electric wires anti-theft system,” Grant of Ministry of Education, Jan. 2009 to Dec. 2009.</li>
+                  <li>Principal Investigator, “Development of university regional 3C academia-industry cooperation,” Grant of Ministry of Education, Aug. 2008 to Jul. 2009.</li>
+                  <li>Principal Investigator, “Design of demand response system for a smart grid,” Grant of National Science Council, Grant No. NSC 97-2221-E-027-109, Aug. 2008 to Jul. 2009.</li>
+                  <li>Principal Investigator, “Diagnosis system based on infrared thermography for distribution facilities” Grant of National Science Council, Grant No. NSC 97-2622-E-027-015-CC3, Aug. 2008 to Jul. 2009.</li>
+                  <li>Principal Investigator, “Integration of substation facility maintenance and management system with important electric facility inspection system,” Grant of Taiwan Power Company, Aug. 2008 to Jan. 2010.</li>
+                  <li>Principal Investigator, “Design and implementation of primary substation facility surveillance system” Grant of Ministry of Education, Jun. 2008 to Jan. 2009.</li>
+                  <li>Principal Investigator, “Design of Intelligent Energy Saving System for Central Chillers,” Grant of Ministry of Education, Grant No. E-02-316, Dec. 2007 to Aug. 2008.</li>
+                  <li>Principal Investigator, “Man Hole Locating and Inspection System (II),” Grant of National Science Council (NSC), NSC Grant No. NSC 96-2622-E-027-055-CC3, Nov. 2007 to Oct. 2008.</li>
+                  <li>Principal Investigator, “Improving Distribution Automation System by GPRS Mobile Communication System (3/3),” Grant of National Science Council (NSC), NSC Grant No. NSC 96-2221-E-027-069, Aug. 2007 to Jul. 2008.</li>
+                  <li>Principal Investigator, “Man Hole Locating and Inspection System,” Grant of National Science Council (NSC), NSC Grant No. NSC 95-2622-E-027-050-CC3, Nov. 2006 to Oct. 2007.</li>
+                  <li>Principal Investigator, “Improving Distribution Automation System by GPRS Mobile Communication System (2/3),” Grant of National Science Council (NSC), NSC Grant No. NSC 95-2221-E-027-128, Aug. 2006 to Jul. 2007.</li>
+                  <li>Principal Co-Investigator, “Design of Substation Facility Management System,“ Grant of Taiwan Power Co., July 2006 to June 2007.</li>
+                  <li>Principal Investigator, “Control System of Switched Capacitor Bank Based On Mobile Communication System (II),” Grant of NSC, NSC Grant No. NSC 94-2622-E-027-053-CC3, Nov. 2005 to Oct. 2006.</li>
+                  <li>Principal Investigator, “Improving Distribution Automation System by GPRS Mobile Communication System (1/3),” Grant of National Science Council (NSC), NSC Grant No. NSC 94-2213-E-027-055, Aug. 2005 to Jul. 2006.</li>
+                  <li>Co-Investigator, “Design of Demand Response System,” Bureau of Energy, Ministry of Economic Affairs, “Dec. 2004 to May 2006.</li>
+                  <li>Principal Investigator, “Design of Monitoring and Diagnostic System for Distribution Transformers,” Grant of Taiwan Power Co., Nov. 2004 to Apr. 2006.</li>
+                  <li>Principal Investigator, “Study of Distribution Operation Strategy &ndash; Subproject II: Two-way load control system based on public service broadband networks (3/3),” Grant of National Science Council (NSC), NSC Grant No. NSC 93-2213-E027-001, Aug. 2004 to Jul. 2005.</li>
+                  <li>Principal Investigator, “Control System of Switched Capacitor Bank Based On Mobile Communication System,” Grant of NSC, NSC Grant No. NSC 93-2622-E-027-024-CC3, May 2004 to Apr. 2005.</li>
+                  <li>Principal Investigator, “Remote Air Conditioning Control System,” Grant of Arima Communication, Jan. 2004 to Mar. 2004.</li>
+                  <li>Principal Investigator, “Design and Implementation of Mechanical and Electrical Education in the University of Technology (3/3),“ Grant of NSC, NSC Grant No. NSC 92-2516-S-027-003, Oct. 2003 to Sep. 2004.</li>
+                  <li>Principal Investigator, “Study of Distribution Operation Strategy &ndash; Subproject II: Two-way load control system based public service broadband networks (2/3),“ Grant of NSC, NSC Grant No. NSC 92-2516-S-027-002, Oct. 2003 to Sep. 2004.</li>
+                  <li>Principal Investigator, “Automated Design System of Track Seeking Controller for DVD-ROM“ Grant of NSC &amp; Lian-Ya Tech., NSC Grant No. NSC 92-2622-E-027-021-CC3, June 2003 to May 2004.</li>
+                  <li>Principal Co-Investigator, “Promotion and Cost Effectiveness Evaluation of Demand Side Management (2/2),“ Grant of Bureau of Energy, Ministry of Economic Affairs, Grant, July 2003 to June 2004.</li>
+                  <li>Principal Co-Investigator, “Feasibility Study of Demand Exchange in the Deregulated Electricity Market,“ Grant of Taiwan Power Co., July 2003 to June 2004.</li>
+                  <li>Principal Investigator, “Development of Linux Operation System in Secom IPS Bridge,“ Grant of SeCom Co., May 2003 to Oct. 2004.</li>
+                  <li>Principal Investigator, “Design of Broadband Network Based Home Energy Management System,“ Grant of Taiwan Power Co., May 2003 to Apr. 2005.</li>
+                  <li>Principal Investigator, “Design and Implementation of Mechanical and Electrical Education in the University of Technology (2/3),“ Grant of NSC, NSC Grant No. NSC 91-2516-S-027-004, Oct. 2002 to Sep. 2003.</li>
+                  <li>Principal Investigator, “Study of Distribution Operation Strategy &ndash; Subproject II: Two-way load control system based public service broadband networks (1/3), “ Grant of NSC, NSC Grant No. NSC 91-2213-E-027-024, Aug. 2002 to July 2003.</li>
+                  <li>Principal Investigator, “Enhanced Development of Semiconductor Education in College of Mechanical and Electrical Engineering, National Taipei University of Technology,“ Grant of Ministry of Education, Aug. 2002 to July 2003.</li>
+                  <li>Principal Investigator, “Automated Hardness Measurement Based on Hough Transform,“ Grant of NSC and UTECHZONE Co., NSC Grant No. NSC 91-2622-E-027-016-CC3, June 2002 to May 2003.</li>
+                  <li>Principal Co-Investigator, “Promotion and Cost Effectiveness Evaluation of Demand Side Management (1/2), “Grant of Bureau of Energy, Ministry of Economic Affairs, June 2002 to June 2003.</li>
+                  <li>Principal Investigator, “Design of Outage Detection Management System,“ Grant of Taiwan Power Co., Apr. 2002 to Apr. 2003.</li>
+                  <li>Principal Investigator, “Design of Broadband Information Receiver,“ Grant of KoSeng Co., Apr. 2002 to Apr. 2003.</li>
+                  <li>Principal Investigator, “Design of Power Information Management System,“ Grant of Taiwan Power Co., Apr. 2002 to Apr. 2003.</li>
+                  <li>Principal Investigator, “Design and Implementation of Mechanical and Electrical Education in the University of Technology (1/3),” Grant of NSC, NSC Grant No. NSC 90-2511-S-027-004, Oct. 2001 to Sep. 2002.</li>
+                  <li>Principal Investigator, “Study of Direct Control of Split Type Air Conditioners in Convenient Store,“ Grant of NSC, NSC Grant No. NSC 90-2213-E-027-024, Aug. 2001 to July 2002.</li>
+                  <li>Principal Investigator, “Load Monitoring Device for Broadband Networks,“ Grant of DAE Instrument, July 2001 to June 2002.</li>
+                  <li>Principal Investigator, “Design of Control Center for Air Conditioning Load Management,“ Grant of Taiwan Power Co., June 2001 to June 2002.</li>
+                  <li>Principal Investigator, “Design and Improvement of MP3 Decoding Mechanism for Optical Disc Drive“ Grant of Hanpin Electron Co., Jan. 2001 to Aug. 2001.</li>
+                  <li>Principal Investigator, “Design of Stepless Load Shedding Controller for Centrifugal Chiller,“ Grant of NSC, NSC Grant No. NSC 89-2213-E-027-052, Aug. 2000 to July 2001.</li>
+                  <li>Principal Investigator, “Study of Application of Broadband Networks to Utility Customer Service &ndash; System Design and Simulation,“ Grant of Taiwan Power Co., Aug. 2000 to Aug. 2001.</li>
+                  <li>Principal Investigator, “Fuzzy Track Seeking Controller for Optical Disc Drive,“ Grant of Everspring Co., Mar. 2000 &ndash; June, 2001.</li>
+                  <li>Principal Investigator, “Modeling of Central Air Conditioning Load for Direct Load Control“ Grant of NSC, NSC Grant No. NSC 89-TPC-7-027-004, Jan, 2000 to Dec. 2000.</li>
+                  <li>Principal Investigator, “Track Seeking Controller for High Speed Optical Disc Drive“ Grant of Sanya Co., Sep. 1999 to July 2000.</li>
+                  <li>Principal Investigator, “Study of Load Shedding Mechanism for Direct Control of Screw Chillers and Reciprocal Chillers,“ Grant of NSC, NSC Grant No. NSC 89-2213-E-027-022, Aug. 1999 to July 2000.</li>
+                  <li>Principal Investigator, “Design of Load Shedding Controller for Central Air Conditioner“ Grant of MEA Co., MEA Grant No. P188037, Apr. 1999 to Mar. 2000.</li>
+                  <li>Principal Investigator, “Direct Load Control by Radio Paging System in Northern Taiwan,“ Grant of Taiwan Power Co., May 1998 to June 2000.</li>
+                  <li>Principal Co-Investigator, “Design of Thunder Arrestor and Intelligent Demand Controller,“ Grant of MEA, MEA Grant No. 187006, Apr. 1998 to Mar. 2000.</li>
+                  <li>Principal Co-Investigator, “Life Support System After-quake Investigation &ndash; 921 Earth Quake Disaster,“ Grant of National Center for Research on Earthquake Engineering (NCREE), Grant No. NCREE-99-056, Sep 1999 to Nov. 1999.</li>
+                  <li>Principal Investigator, “Switching Control of Capacitor Banks by Radio,“ Grant of Taiwan Power Co, Jan. 1999 to Dec. 1999.</li>
+                  <li>Principal Investigator, “Coordination of Building Automation System and Direct Control of Central Air Conditioners,“ Grant of NSC, NSC Grant No. NSC 88-PAG004, Jan. 1999 to Dec. 1999.</li>
+                  <li>Principal Investigator, “Design of Real-time Price Receiver and Message Propagation Management System,“ Grant of NSC, NSC Grant No. NSC 88-2213-E-027-016, Aug. 1998 to July 1999.</li>
+                  <li>Principal Investigator, “Improvement of Communication Education,“ Grant of Ministry of Education, May 1998 to Apr. 1999.</li>
+                  <li>Principal Investigator, “Design of Real-time Price Broadcasting System by Radio Paging System,“ Grant of QuaTech Co. and Ministry of Economic Affairs, Apr. 1998 to Mar. 1999.</li>
+                  <li>Principal Investigator, “Study of Promoting Gas Fueled Air Conditioners to Reduce CO<sub>2</sub> Emission in Taiwan,“ Grant of Environmental Protection Administration, EPA-87-FA11-03-G1, Jan. 1998 to June 1998.</li>
+                  <li>Principal Investigator, “Design and Implementation of Radio Paging Based Load Management System,“ Grant of NSC, NSC Grant No. NSC 87-2218-E-027-003, Aug. 1997 to July 1998.</li>
+                  <li>Principal Co-Investigator, “Promotion and Evaluation of Absorption Chillers for Demand Side Management,“ Grant of NSC, NSC Grant No. NSC 87- TPC-E-027-004, Jan. 1998 to Dec. 1998.</li>
+                  <li>Principal Investigator, “Improving Direct Load Control by Cabling System,“ Grant of NSC, NSC Grant No. NSC 87-TPC-E-027-001, Jan, 1998 to Dec. 1998.</li>
+                  <li>Principal Investigator, “Application of Radio Techniques to Feeder Automation,“ Grant of Taiwan Power Co., Sep. 1997 to June 1998.</li>
+                  <li>Principal Investigator, “Improvement of Communication Education,“ Grant of Ministry of Education, May 1997 to Apr. 1998.</li>
+                  <li>Principal Co-Investigator, “Study of Non-electric Air Conditioners,“ Grant of Taiwan Power Co., Jan. 1997 to Dec. 1997.</li>
+                  <li>Principal Co-Investigator, “National Standard of Automatic Meter Reading,“ Grant of Bureau of Standards, July 1996 to June 1997.</li>
+                  <li>Principal Investigator, “Application of Radio Paging System to Load Management,“ Grant of Taiwan Power, Feb. 1997 to July 1998.</li>
+                  <li>Principal Investigator, “Scheduling of Direct Load Control by Recursive Genetic Algorithm,“ Grant of NSC, NSC Grant No. NSC 86-2213-E-027-006, Aug. 1996 to July 1997.</li>
+                  <li>Principal Investigator, “Fuzzy Control of Robotic Cutting,“ Grant of NSC, NSC Grant No. NSC 85-2212-E-027-003, Aug. 1995 to July 1996.</li>
+                  <li>Principal Investigator, “Pilot Test for Direct Control of Air Conditioning Load via Radio,“ Grant of Taiwan Power Co., May 1995 to Apr. 1997.</li>
+                  <li>Principal Investigator, “Improvement of Communication Education,“ Grant of Ministry of Education, May 1994 to Apr. 1995.</li>
+                  <li>Principal Co-Investigator, “Improvement of Communication Education,“ Grant of Ministry of Education, May 1993 to Apr. 1994.</li>
+                  <li>Principal Investigator, “Adaptive Control of Belt Conveyor by Expert System,“ Grant of NSC, NSC Grant No. NSC 83-0117-C-027-0140E, Aug. 1993 to July 1994.</li>
+                  <li>Principal Investigator, “Feasibility Study of Controlling Air Conditioning Load Through Radio,“ Grant of Taiwan Power Co., May 1993 to Apr. 1994.</li>
+                  <li>Principal Investigator, “Nonparametric Learning of Decision Region by Genetic Algorithm,“ Grant of NSC, NSC Grant No. NSC82-0113-E-027-033-T, Feb. 1993 to Jan. 1994.</li>
+                </ol>
+                <p>&nbsp;</p>
+              </div>
+          </div>
+
     <div id="research_area">
+        <div id="research_area_body">
+            <div id="research_area_header">
+              <h1>Research Area</h1>
+            </div>
+            <div id="research_area_ai">
+              <img src="material/pic/04.png" alt="AI" width="100%">
+              <div id="research_area_ai_context">Artifitial<br><br>&nbsp;Intelligence</div>
+            </div>
+            <div id="research_area_deep_learning">
+              <img src="material/pic/01.png" alt="deep_learning" width="100%">
+              <div id="research_area_deep_learning_context">Deep<br><br>&nbsp;Learning</div>
+            </div>
+            <div id="research_area_intelligent_control">
+              <img src="material/pic/03.png" alt="intelligent_control" width="100%">
+              <div id="research_area_intelligent_control_context">Intelligent<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Control</div>
+            </div>
+            <div id="research_area_smart_grid">
+              <img src="material/pic/07.png" alt="smart_grid" width="100%">
+              <div id="research_area_smart_grid_context">Smart<br><br>&nbsp;&nbsp;Grid</div>
+            </div>
+          </div>
     </div>
+
     <div id="latest_research">
+      <div id="latest_research_body">
+          <div id="latest_research_body_header">
+            <h1>Latest Researches</h1>
+          </div>
+          <div>
+            <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
+              <tbody align="center">
+                <tr class="row0">
+                  <td class="column0 style1 s">編號</td>
+                  <td class="column1 style2 s">年</td>
+                  <td class="column2 style3 s">論文名稱</td>
+                  <td class="column3 style7 s">姓名</td>
+                </tr>
+                <tr class="row1">
+                  <td class="column0 style4 n">1</td>
+                  <td class="column1 style4 n">1998</td>
+                  <td class="column2 style6 s">無線電通訊技術於空調負載直接控制之應用<br />
+      Application of Radio Communication to Direct Control of Air Conditioning Load</td>
+                  <td class="column3 style8 s">程順德</td>
+                </tr>
+                <tr class="row2">
+                  <td class="column0 style5 n">2</td>
+                  <td class="column1 style5 n">1998</td>
+                  <td class="column2 style11 s">基因法則於智慧型控制之應用<br />
+      Application of a Genetic Algorithm to Intelligent Control</td>
+                  <td class="column3 style9 s">謝凱清</td>
+                </tr>
+                <tr class="row3">
+                  <td class="column0 style4 n">3</td>
+                  <td class="column1 style4 n">1999</td>
+                  <td class="column2 style6 s">應用無線電傳呼系統於需求面管理之硬體研製<br />
+      Hardware Design for the Application of the Radio Paging System to the Demand Side Management</td>
+                  <td class="column3 style8 s">林政煌</td>
+                </tr>
+                <tr class="row4">
+                  <td class="column0 style5 n">4</td>
+                  <td class="column1 style5 n">2000</td>
+                  <td class="column2 style11 s">無線電傳呼系統於需量控制之應用<br />
+      Application of the Radio Paging System to the Demand Subscription System</td>
+                  <td class="column3 style9 s">李枝家</td>
+                </tr>
+                <tr class="row5">
+                  <td class="column0 style4 n">5</td>
+                  <td class="column1 style4 n">2000</td>
+                  <td class="column2 style6 s">以無線電控制電容器切換之研究<br />
+      A Study on Applying Radio Techniques to Switching Control of the Capacitor Banks</td>
+                  <td class="column3 style8 s">張晉維</td>
+                </tr>
+                <tr class="row6">
+                  <td class="column0 style5 n">6</td>
+                  <td class="column1 style5 n">2000</td>
+                  <td class="column2 style11 s">基於模糊類神經網路之自動導航車反應行為融合策略<br />
+      Behaviour Fusion for Automatic Guided Vehicle Based on Neural Fuzzy Network</td>
+                  <td class="column3 style9 s">王志陽</td>
+                </tr>
+                <tr class="row7">
+                  <td class="column0 style4 n">7</td>
+                  <td class="column1 style4 n">2001</td>
+                  <td class="column2 style6 s">中央空調主機之遙控降載與建模<br />
+      Remote Shedding and Modelling of Central Air Conditioning Chillers</td>
+                  <td class="column3 style8 s">張文奇</td>
+                </tr>
+                <tr class="row8">
+                  <td class="column0 style5 n">8</td>
+                  <td class="column1 style5 n">2001</td>
+                  <td class="column2 style11 s">結合影像及紅外線感測於自動導航車避障策略之設計<br />
+      Design of Obstacle Avoidance and Navigation Strategies for an Automatic Guided Vehicle Using Camera Vision and Infrared Sensing</td>
+                  <td class="column3 style9 s">張正東</td>
+                </tr>
+                <tr class="row9">
+                  <td class="column0 style4 n">9</td>
+                  <td class="column1 style4 n">2001</td>
+                  <td class="column2 style6 s">電力用戶寬頻網路多元服務系統中雙向負載控制之韌體與硬體設計<br />
+      Firmware and Hardware Design for Two Way Direct Load Control in Broadband Network Based Utility Customer Service</td>
+                  <td class="column3 style8 s">甯校龍</td>
+                </tr>
+                <tr class="row10">
+                  <td class="column0 style5 n">10</td>
+                  <td class="column1 style5 n">2001</td>
+                  <td class="column2 style11 s">電力用戶寬頻網路多元服務系統中雙向負載控制之軟體模組研製<br />
+      Software Module Design for Two Way Direct Load Control in Broadband Network Based Utility Custormer Service System</td>
+                  <td class="column3 style9 s">黃璨葆</td>
+                </tr>
+                <tr class="row11">
+                  <td class="column0 style4 n">11</td>
+                  <td class="column1 style4 n">2001</td>
+                  <td class="column2 style6 s">基因法則於光碟機QFT控制器之應用<br />
+      Application of Genetic Algorithm to the Design of QFT Controller for Optical Disc Drives</td>
+                  <td class="column3 style8 s">趙露明</td>
+                </tr>
+                <tr class="row12">
+                  <td class="column0 style5 n">12</td>
+                  <td class="column1 style5 n">2001</td>
+                  <td class="column2 style11 s">光碟機尋軌控制器之設計<br />
+      Design of Track Seeking Controllers for Optical Disc Drives</td>
+                  <td class="column3 style9 s">王安民</td>
+                </tr>
+                <tr class="row13">
+                  <td class="column0 style4 n">13</td>
+                  <td class="column1 style4 n">2002</td>
+                  <td class="column2 style6 s">基於模糊霍夫轉換技術之自動硬度量測法<br />
+      Hough Fuzzy Vertices Detection Algorithm for Indentation Hardness of Materials</td>
+                  <td class="column3 style8 s">方志恆</td>
+                </tr>
+                <tr class="row14">
+                  <td class="column0 style5 n">14</td>
+                  <td class="column1 style5 n">2002</td>
+                  <td class="column2 style11 s">基於基因式橢圓形體學習法之模糊建模<br />
+      Fuzzy Modeling Based on Genetic Ellipsoid Learning Algorithm</td>
+                  <td class="column3 style9 s">翁桂松</td>
+                </tr>
+                <tr class="row15">
+                  <td class="column0 style4 n">15</td>
+                  <td class="column1 style4 n">2002</td>
+                  <td class="column2 style6 s">光碟機聚焦、循軌及MP3解碼控制器之設計<br />
+      Design of Focusing, Tracking and MP3 Decoding Controllers for Optical Disc Drives</td>
+                  <td class="column3 style8 s">高國峰</td>
+                </tr>
+                <tr class="row16">
+                  <td class="column0 style5 n">16</td>
+                  <td class="column1 style5 n">2003</td>
+                  <td class="column2 style11 s">自動導航車路徑追隨及避障策略之設計<br />
+      Design of Path Following and Obstacle Avoidance Strategies for Automatic Guided Vehicle</td>
+                  <td class="column3 style9 s">張世宏</td>
+                </tr>
+                <tr class="row17">
+                  <td class="column0 style4 n">17</td>
+                  <td class="column1 style4 n">2003</td>
+                  <td class="column2 style6 s">光碟燒錄機寫入策略之自動設計<br />
+      Automated Design of Writing Strategies for CD-RW Optical Drives</td>
+                  <td class="column3 style8 s">陳奕宏</td>
+                </tr>
+                <tr class="row18">
+                  <td class="column0 style5 n">18</td>
+                  <td class="column1 style5 n">2003</td>
+                  <td class="column2 style11 s">CD-ROM及DVD-ROM尋軌控制器之自動設計<br />
+      Automated Design of Track Seeking Controllers for CD-ROM and DVD-ROM</td>
+                  <td class="column3 style9 s">陳瑛哲</td>
+                </tr>
+                <tr class="row19">
+                  <td class="column0 style4 n">19</td>
+                  <td class="column1 style4 n">2003</td>
+                  <td class="column2 style6 s">需量交易系統中遠距讀表與計價機制之研製<br />
+      Design and Implementation of Remote Meter Reading and Tariff Calculation for the Demand Exchange System</td>
+                  <td class="column3 style8 s">陳昱吉</td>
+                </tr>
+                <tr class="row20">
+                  <td class="column0 style5 n">20</td>
+                  <td class="column1 style5 n">2003</td>
+                  <td class="column2 style11 s">基因法則於多迴路QFT控制器及時間最佳化控制器之設計<br />
+      Design of Multiple Loop QFT Controller and Time Optimal Controller Using Genetic Algorithm</td>
+                  <td class="column3 style9 s">李炎福</td>
+                </tr>
+                <tr class="row21">
+                  <td class="column0 style4 n">21</td>
+                  <td class="column1 style4 n">2003</td>
+                  <td class="column2 style6 s">基因法則於多迴路QFT控制器及時間最佳化控制器之設計<br />
+      Design of Multiple Loop QFT Controller and Time Optimal Controller Using Genetic Algorithm</td>
+                  <td class="column3 style8 s">李炎福</td>
+                </tr>
+                <tr class="row22">
+                  <td class="column0 style5 n">22</td>
+                  <td class="column1 style5 n">2003</td>
+                  <td class="column2 style11 s">電力公司以公共寬頻網路進行雙向監控之資料分配機制<br />
+      Data Distribution Mechanism for Utility Company's Two-way Monitoring and Control System Based on Public Service Broadband Networks.</td>
+                  <td class="column3 style9 s">潘皇毓</td>
+                </tr>
+                <tr class="row23">
+                  <td class="column0 style4 n">23</td>
+                  <td class="column1 style4 n">2004</td>
+                  <td class="column2 style6 s">廣域路燈監控管理系統之研製<br />
+      Design and Implementation of Wide Area Street lighting Monitoring and Control Management System</td>
+                  <td class="column3 style8 s">林青海</td>
+                </tr>
+                <tr class="row24">
+                  <td class="column0 style5 n">24</td>
+                  <td class="column1 style5 n">2004</td>
+                  <td class="column2 style11 s">DVD-ROM模糊尋軌控制器之自動設計<br />
+      Automated Design of Track Seeking Fuzzy Controllers for DVD-ROM</td>
+                  <td class="column3 style9 s">黃博昭</td>
+                </tr>
+                <tr class="row25">
+                  <td class="column0 style4 n">25</td>
+                  <td class="column1 style4 n">2004</td>
+                  <td class="column2 style6 s">家庭電能管理系統之研製<br />
+      Design and Implementation of Home Energy Management System</td>
+                  <td class="column3 style8 s">楊景翔</td>
+                </tr>
+                <tr class="row26">
+                  <td class="column0 style5 n">26</td>
+                  <td class="column1 style5 n">2004</td>
+                  <td class="column2 style11 s">基於模糊地圖重製之自動導航車避障策略<br />
+      Obstacle Avoidance by Fuzzy Map Building for Automatic Guided Vehicle</td>
+                  <td class="column3 style9 s">連柏菁</td>
+                </tr>
+                <tr class="row27">
+                  <td class="column0 style4 n">27</td>
+                  <td class="column1 style4 n">2004</td>
+                  <td class="column2 style6 s">適用於時延系統之模糊控制器設計<br />
+      Design a Fuzzy Controller for Time-Delay System</td>
+                  <td class="column3 style8 s">劉丁強</td>
+                </tr>
+                <tr class="row28">
+                  <td class="column0 style5 n">28</td>
+                  <td class="column1 style5 n">2004</td>
+                  <td class="column2 style11 s">需量交易管理系統中電腦通訊與競價機制之設計<br />
+      Design and Implementation of Computer Communication and Demand Bidding for Demand Exhange Management System</td>
+                  <td class="column3 style9 s">詹文昌</td>
+                </tr>
+                <tr class="row29">
+                  <td class="column0 style4 n">29</td>
+                  <td class="column1 style4 n">2005</td>
+                  <td class="column2 style6 s">光碟燒錄機最佳寫入策略之設計<br />
+      Design of Optimal Writing Strategy for CD-RW</td>
+                  <td class="column3 style8 s">黃俊凱</td>
+                </tr>
+                <tr class="row30">
+                  <td class="column0 style5 n">30</td>
+                  <td class="column1 style5 n">2005</td>
+                  <td class="column2 style11 s">積木型遺傳規畫法於最佳化組合之應用<br />
+      Application of Block Type Genetic Programming to Combinatorial Optimization</td>
+                  <td class="column3 style9 s">許聰海</td>
+                </tr>
+                <tr class="row31">
+                  <td class="column0 style4 n">31</td>
+                  <td class="column1 style4 n">2005</td>
+                  <td class="column2 style6 s">基於影像及行為融合之自動導航車避障及導航<br />
+      Obstacle Avoidance and Navigation Based on Vision and Behaviour Fusion for the Mobile Robot</td>
+                  <td class="column3 style8 s">游富傑</td>
+                </tr>
+                <tr class="row32">
+                  <td class="column0 style5 n">32</td>
+                  <td class="column1 style5 n">2005</td>
+                  <td class="column2 style11 s">需量反應中卸載最佳化之設計<br />
+      Design and Implementation of Optimal Load Shedding of the Demand Response</td>
+                  <td class="column3 style9 s">盧浩仁</td>
+                </tr>
+                <tr class="row33">
+                  <td class="column0 style4 n">33</td>
+                  <td class="column1 style4 n">2005</td>
+                  <td class="column2 style6 s">DVD-ROM聚焦及循轨控制器設計<br />
+      Design of Focusing and Tracking Controllers for DVD-ROM</td>
+                  <td class="column3 style8 s">李岷達</td>
+                </tr>
+                <tr class="row34">
+                  <td class="column0 style5 n">34</td>
+                  <td class="column1 style5 n">2005</td>
+                  <td class="column2 style11 s">基於遺傳式橢圓形體分類演算法之不完整資料模糊分群<br />
+      Fuzzy Clustering of Incomplete Data Based on Evolutionary Ellipsoid Classification Algorithm</td>
+                  <td class="column3 style9 s">黃成德</td>
+                </tr>
+                <tr class="row35">
+                  <td class="column0 style4 n">35</td>
+                  <td class="column1 style4 n">2005</td>
+                  <td class="column2 style6 s">自動導航車之模糊追随控制<br />
+      Object Following Fuzzy Control of the Automatic Guided Vehicle</td>
+                  <td class="column3 style8 s">何育昕</td>
+                </tr>
+                <tr class="row36">
+                  <td class="column0 style5 n">36</td>
+                  <td class="column1 style5 n">2006</td>
+                  <td class="column2 style11 s">權重型基因之基因法則於特徵選取之應用<br />
+      Application of Gene Weighted Genetic Algorithm to Feature Selection</td>
+                  <td class="column3 style9 s">陳肇宗</td>
+                </tr>
+                <tr class="row37">
+                  <td class="column0 style4 n">37</td>
+                  <td class="column1 style4 n">2006</td>
+                  <td class="column2 style6 s">基於行動通訊之廣域即時監控<br />
+      Wide Area Real-Time Control and Monitoring Based on the Mobile Communication System</td>
+                  <td class="column3 style8 s">曾威婷</td>
+                </tr>
+                <tr class="row38">
+                  <td class="column0 style12 n">38</td>
+                  <td class="column1 style12 n">2006</td>
+                  <td class="column2 style16 s">適用於網路型模糊控制系統之模糊增益調節器<br />
+      A Fuzzy Gain Tuner for Networked Fuzzy Control System</td>
+                  <td class="column3 style14 s">郭盼容</td>
+                </tr>
+                <tr class="row39">
+                  <td class="column0 style13 n">39</td>
+                  <td class="column1 style13 n">2007</td>
+                  <td class="column2 style17 s">電力線載波與GPRS系統整合於與遠距監控之應用<br />
+      Application of Remote Monitoring and Control Based on Power Line Carrier and GPRS Systems</td>
+                  <td class="column3 style15 s">郭垣熙</td>
+                </tr>
+                <tr class="row40">
+                  <td class="column0 style12 n">40</td>
+                  <td class="column1 style12 n">2007</td>
+                  <td class="column2 style16 s">RFID與嵌入式系統於變電所及人(手)控巡檢之應用<br />
+      Applications of RFID and Embedded System to the Inspections of Substations and Manholes  </td>
+                  <td class="column3 style14 s">林嵩哲</td>
+                </tr>
+                <tr class="row41">
+                  <td class="column0 style13 n">41</td>
+                  <td class="column1 style13 n">2007</td>
+                  <td class="column2 style17 s">具適應性體積學習之完整與不完整資料之分群與辨認<br />
+      Clustering and Classification od Complete and Incomplete Data with Adaptive Volume</td>
+                  <td class="column3 style15 s">楊梓</td>
+                </tr>
+                <tr class="row42">
+                  <td class="column0 style12 n">42</td>
+                  <td class="column1 style12 n">2007</td>
+                  <td class="column2 style16 s">遺傳規劃法於模糊建模與負載排程之應用<br />
+      Application of Genetic Programming to Fuzzy Modeling and the Schedule of Direct Load Control</td>
+                  <td class="column3 style14 s">林政翰</td>
+                </tr>
+                <tr class="row43">
+                  <td class="column0 style13 n">43</td>
+                  <td class="column1 style13 n">2007</td>
+                  <td class="column2 style17 s">基於即時影像之模糊追隨控制<br />
+      Tracking Control for Automatic Guided Vehicle Based on Real-time Image </td>
+                  <td class="column3 style15 s">林哲瑋</td>
+                </tr>
+                <tr class="row44">
+                  <td class="column0 style12 n">44</td>
+                  <td class="column1 style12 n">2007</td>
+                  <td class="column2 style16 s">權重型基因法則於肝癌質譜資料特徵選取之應用<br />
+      Application of Gene Weighted Genetic Algorithm to Feature Selection with SELDI-TOF MS Hepatoma Data</td>
+                  <td class="column3 style14 s">潘咨亦</td>
+                </tr>
+                <tr class="row45">
+                  <td class="column0 style13 n">45</td>
+                  <td class="column1 style13 n">2007</td>
+                  <td class="column2 style17 s">類神經網路於肝癌與軟巢癌質譜資料分類之應用<br />
+      Classification of Hepatocellular Carcinoma and Ovarion Cancer Spectrometry Samples Using Neural Network </td>
+                  <td class="column3 style15 s">黃琮榆</td>
+                </tr>
+                <tr class="row46">
+                  <td class="column0 style12 n">46</td>
+                  <td class="column1 style12 n">2008</td>
+                  <td class="column2 style16 s">Three Dimensional Loacating System based on Different Wave Velocities</td>
+                  <td class="column3 style14 s">Suhandry Salim </td>
+                </tr>
+                <tr class="row47">
+                  <td class="column0 style13 n">47</td>
+                  <td class="column1 style13 n">2008</td>
+                  <td class="column2 style17 s">具觀測器之適應性寬幅調變模糊控制器<br />
+      An Observer Based Adaptive Fuzzy Controller with Modulated Membership Function</td>
+                  <td class="column3 style15 s">姜政男</td>
+                </tr>
+                <tr class="row48">
+                  <td class="column0 style12 n">48</td>
+                  <td class="column1 style12 n">2008</td>
+                  <td class="column2 style16 s">具觀測器之PID基因適應型控制器<br />
+      A GA Tuned Adaptive PID Controller with Observer </td>
+                  <td class="column3 style14 s">溫宏康</td>
+                </tr>
+                <tr class="row49">
+                  <td class="column0 style13 n">49</td>
+                  <td class="column1 style13 n">2008</td>
+                  <td class="column2 style17 s">基於異波速訊號之三為定位系統位置計算與路徑追蹤<br />
+      Position Calculating and Path Tracking of Three Dimensional Locating System Based on Different Wave Velocities</td>
+                  <td class="column3 style15 s">徐旭昇</td>
+                </tr>
+                <tr class="row50">
+                  <td class="column0 style12 n">50</td>
+                  <td class="column1 style12 n">2008</td>
+                  <td class="column2 style16 s">基於影像之自動導航車追蹤控制<br />
+      Vision Based Tracking Control for Automatic Guided Vehicle </td>
+                  <td class="column3 style14 s">黃世達</td>
+                </tr>
+                <tr class="row51">
+                  <td class="column0 style13 n">51</td>
+                  <td class="column1 style13 n">2008</td>
+                  <td class="column2 style17 s">車用光碟機判片系統之研製<br />
+      Design and Implementation of Disc Discrimination System for the DVD Drive in Vehicle</td>
+                  <td class="column3 style15 s">吳孟昇</td>
+                </tr>
+                <tr class="row52">
+                  <td class="column0 style12 n">52</td>
+                  <td class="column1 style12 n">2008</td>
+                  <td class="column2 style16 s">配電網路停電即故障檢測系統之研製<br />
+      Design and Implementation of Outage and Fault Detection System for Power Distribution Network </td>
+                  <td class="column3 style14 s">陳志宏</td>
+                </tr>
+                <tr class="row53">
+                  <td class="column0 style13 n">53</td>
+                  <td class="column1 style13 n">2008</td>
+                  <td class="column2 style17 s">基因法則於車用光碟機H∞控制器設計之應用<br />
+      Application of Genetic Algorithm to the Design of H∞ Controller for DVD Drive in vehicle </td>
+                  <td class="column3 style15 s">楊凱程</td>
+                </tr>
+                <tr class="row54">
+                  <td class="column0 style12 n">54</td>
+                  <td class="column1 style12 n">2008</td>
+                  <td class="column2 style16 s">基於即時影像之多車整合策略控制<br />
+      Multiple Mobile Vehicles Control Based On Real-time Image </td>
+                  <td class="column3 style14 s">彭俊維</td>
+                </tr>
+                <tr class="row55">
+                  <td class="column0 style13 n">55</td>
+                  <td class="column1 style13 n">2008</td>
+                  <td class="column2 style17 s">變電所設備巡檢管理系統之研製<br />
+      Design and Implementation of Substation Facility Inspection and Management System</td>
+                  <td class="column3 style15 s">林士傑</td>
+                </tr>
+                <tr class="row56">
+                  <td class="column0 style12 n">56</td>
+                  <td class="column1 style12 n">2009</td>
+                  <td class="column2 style16 s">基於最近群聚與線性迴歸之完整與不完整資料模糊分群<br />
+      Fuzzy Clustering of Complete and Incomplete Data Based on Nearest Cluster and Linear Regression </td>
+                  <td class="column3 style14 s">張仁維</td>
+                </tr>
+                <tr class="row57">
+                  <td class="column0 style13 n">57</td>
+                  <td class="column1 style13 n">2009</td>
+                  <td class="column2 style17 s">即時影像定位與建置地圖<br />
+      Real-time Visual Localization and Mapping </td>
+                  <td class="column3 style15 s">楊懷新</td>
+                </tr>
+                <tr class="row58">
+                  <td class="column0 style12 n">58</td>
+                  <td class="column1 style12 n">2009</td>
+                  <td class="column2 style16 s">基於影像之多部自動導航車隊形維持控制<br />
+      Multiple Automatic Guided Vehicles Formation Control Based On Real-time Image</td>
+                  <td class="column3 style14 s">朱旻良</td>
+                </tr>
+                <tr class="row59">
+                  <td class="column0 style13 n">59</td>
+                  <td class="column1 style13 n">2009</td>
+                  <td class="column2 style17 s">智慧型頭部動作轉譯系統<br />
+      Intelligent Head Movement Interpretation System </td>
+                  <td class="column3 style15 s">劉基墩</td>
+                </tr>
+                <tr class="row60">
+                  <td class="column0 style12 n">60</td>
+                  <td class="column1 style12 n">2009</td>
+                  <td class="column2 style16 s">智慧型頭部動作轉譯系統<br />
+      Intelligent Head Movement Interpretation System </td>
+                  <td class="column3 style14 s">劉基墩</td>
+                </tr>
+                <tr class="row61">
+                  <td class="column0 style13 n">61</td>
+                  <td class="column1 style13 n">2009</td>
+                  <td class="column2 style17 s">RFID於一次變電所設備點檢及人(手)孔蓋地下化之應用98<br />
+      Application of RFID to Primary Substation Facility Inspection and Manhole Burying </td>
+                  <td class="column3 style15 s">林建銘</td>
+                </tr>
+                <tr class="row62">
+                  <td class="column0 style12 n">62</td>
+                  <td class="column1 style12 n">2010</td>
+                  <td class="column2 style16 s">變壓器油中氣體分析之故障可信度研究及設備管理系統開發<br />
+      Design of Transformer Fault Analysis and Facility Management System Based on Confidence Value</td>
+                  <td class="column3 style14 s">顏志丞</td>
+                </tr>
+                <tr class="row63">
+                  <td class="column0 style13 n">63</td>
+                  <td class="column1 style13 n">2010</td>
+                  <td class="column2 style17 s">基於寬幅調整變函數之適應性模糊滑動模式控制<br />
+      Adaptive Fuzzy Sliding-Mode Control with Modulated Membership Function </td>
+                  <td class="column3 style15 s">潘為竣</td>
+                </tr>
+                <tr class="row64">
+                  <td class="column0 style12 n">64</td>
+                  <td class="column1 style12 n">2010</td>
+                  <td class="column2 style16 s">基於寬幅調整變函數之適應性模糊滑動模式控制<br />
+      Adaptive Fuzzy Sliding-Mode Control with Modulated Membership Function </td>
+                  <td class="column3 style14 s">潘為竣</td>
+                </tr>
+                <tr class="row65">
+                  <td class="column0 style13 n">65</td>
+                  <td class="column1 style13 n">2010</td>
+                  <td class="column2 style17 s">變電設備維護管理系統之建置與變壓器油中氣體模糊分析法則之研究<br />
+      Design of Substation Facility Management and Management System Incorporated with Fault Diagnosis Method for Power Transformers Based on Hybrid Fuzzy Dissolved Gas Analysis </td>
+                  <td class="column3 style15 s">林桐斌</td>
+                </tr>
+                <tr class="row66">
+                  <td class="column0 style12 n">66</td>
+                  <td class="column1 style12 n">2011</td>
+                  <td class="column2 style16 s">台電事故案例系統之設計及群集演算法於文件搜尋之應用<br />
+      Design of Accident Case Management System and Application of Clustering Algorithm to Document Retrieval </td>
+                  <td class="column3 style14 s">劉錦興</td>
+                </tr>
+                <tr class="row67">
+                  <td class="column0 style13 n">67</td>
+                  <td class="column1 style13 n">2011</td>
+                  <td class="column2 style17 s">變壓器油中氣體分析系統之設計及資料深勘技術於油中氣體分析之應用<br />
+      Design of Dissolved Gas Analysis System and Application of Data Mining to Transformer Dissolved Gas Analysis </td>
+                  <td class="column3 style15 s">陳泰利</td>
+                </tr>
+                <tr class="row68">
+                  <td class="column0 style12 n">68</td>
+                  <td class="column1 style12 n">2011</td>
+                  <td class="column2 style16 s">中央空調系統之最佳化卸載控制<br />
+      Optimal Shedding Control of Central Airconditioning System</td>
+                  <td class="column3 style14 s">徐維遠</td>
+                </tr>
+                <tr class="row69">
+                  <td class="column0 style13 n">69</td>
+                  <td class="column1 style13 n">2011</td>
+                  <td class="column2 style17 s">區域空調負載節能減碳控制<br />
+      Energy Saving and Carbon Reduction Control for Regional Airconditioning Load</td>
+                  <td class="column3 style15 s">鍾旭浩</td>
+                </tr>
+                <tr class="row70">
+                  <td class="column0 style12 n">70</td>
+                  <td class="column1 style12 n">2011</td>
+                  <td class="column2 style16 s">基於適應性模糊滑動模式控制器之輪型行動機器人循跡控制<br />
+      Track Following Control of Wheeled Mobile Robot Based on Adaptive Fuzzy Slidding-Mode Controller </td>
+                  <td class="column3 style14 s">朱健銘</td>
+                </tr>
+                <tr class="row71">
+                  <td class="column0 style13 n">71</td>
+                  <td class="column1 style13 n">2011</td>
+                  <td class="column2 style17 s">基於室內定位系統之自動導航車路徑追隨控制<br />
+      Path Following Control for Automatic Guided Vehicle Based on Indoor Locating System</td>
+                  <td class="column3 style15 s">林志駿</td>
+                </tr>
+                <tr class="row72">
+                  <td class="column0 style12 n">72</td>
+                  <td class="column1 style12 n">2011</td>
+                  <td class="column2 style16 s">基於Homography之自動導航車定位<br />
+      Homography-Based Localization of Automatic Guided Vehicles </td>
+                  <td class="column3 style14 s">陳境陞</td>
+                </tr>
+                <tr class="row73">
+                  <td class="column0 style13 n">73</td>
+                  <td class="column1 style13 n">2011</td>
+                  <td class="column2 style17 s">基主動噪音控制於配電變壓器噪音抑制之應用<br />
+      Application of Active Noise Control to Distribution Transformers Noise Attenuation</td>
+                  <td class="column3 style15 s">陳億謙</td>
+                </tr>
+                <tr class="row74">
+                  <td class="column0 style12 n">74</td>
+                  <td class="column1 style12 n">2011</td>
+                  <td class="column2 style16 s">基於異波速測距三維定位之無線感測網路研製<br />
+      Design and Implementation of Wireless Sensor Network for Three Dimensional Locating System Based on Different Wave Velocities </td>
+                  <td class="column3 style14 s">邱志明</td>
+                </tr>
+                <tr class="row75">
+                  <td class="column0 style13 n">75</td>
+                  <td class="column1 style13 n">2011</td>
+                  <td class="column2 style17 s">變結構進化型演算法<br />
+      Evolutionary Algorithms with Variable Structure</td>
+                  <td class="column3 style15 s">林青嶔</td>
+                </tr>
+                <tr class="row76">
+                  <td class="column0 style18 n">76</td>
+                  <td class="column1 style18 n">2012</td>
+                  <td class="column2 style22 s">移動式家具之路徑規劃、追隨與避障控制<br />
+      Path Planning, Following and Obstacle Avoidance Control for Mobile Furniture</td>
+                  <td class="column3 style19 s">何恭宇</td>
+                </tr>
+                <tr class="row77">
+                  <td class="column0 style23 n">77</td>
+                  <td class="column1 style23 n">2012</td>
+                  <td class="column2 style21 s">行動通訊基地台空調節能系統之研製<br />
+      Design and Implementation of Air-Conditioning Energy Saving System For Base Transceiver Station</td>
+                  <td class="column3 style20 s">周俊葦</td>
+                </tr>
+                <tr class="row78">
+                  <td class="column0 style18 n">78</td>
+                  <td class="column1 style18 n">2012</td>
+                  <td class="column2 style22 s">行動通訊基地台空調節能系統之研製<br />
+      Design and Implementation of Air-Conditioning Energy Saving System For Base Transceiver Station</td>
+                  <td class="column3 style19 s">周俊葦</td>
+                </tr>
+                <tr class="row79">
+                  <td class="column0 style23 n">79</td>
+                  <td class="column1 style23 n">2012</td>
+                  <td class="column2 style21 s">基於平滑粒子流體動力學之群體機器人控制<br />
+      The Swarm Robots Control Based on Smoothed Particle Hydrodynamics</td>
+                  <td class="column3 style20 s">張凱勝</td>
+                </tr>
+                <tr class="row80">
+                  <td class="column0 style18 n">80</td>
+                  <td class="column1 style18 n">2012</td>
+                  <td class="column2 style22 s">具觀測器之非線性FUZZY與PID適應性控制器<br />
+      Design of Observer-Based Fuzzy Adaptive Control and PID Adaptive Control for Nonlinear Systems</td>
+                  <td class="column3 style19 s">林建隆</td>
+                </tr>
+                <tr class="row81">
+                  <td class="column0 style23 n">81</td>
+                  <td class="column1 style23 n">2013</td>
+                  <td class="column2 style21 s">結合Kinect與SURF特徵點之自走車路徑追隨系統<br />
+      Route Following System Using Kinect and SURF Features</td>
+                  <td class="column3 style20 s">黃凱琦</td>
+                </tr>
+                <tr class="row82">
+                  <td class="column0 style18 n">82</td>
+                  <td class="column1 style18 n">2013</td>
+                  <td class="column2 style22 s">智能電網中電動車充電策略之規劃<br />
+      Charging Strategy for Electric Vehicle in Smart Grid</td>
+                  <td class="column3 style19 s">陳治璿</td>
+                </tr>
+                <tr class="row83">
+                  <td class="column0 style23 n">83</td>
+                  <td class="column1 style23 n">2013</td>
+                  <td class="column2 style21 s">多關節機器魚之運動姿態實現<br />
+      Fish Swimming Motions Mimicked in a Multi-Jointed Robotic Fish</td>
+                  <td class="column3 style20 s">洪子傑</td>
+                </tr>
+                <tr class="row84">
+                  <td class="column0 style18 n">84</td>
+                  <td class="column1 style18 n">2013</td>
+                  <td class="column2 style22 s">無線感測網路在製程之應用<br />
+      An Application of Wireless Sensor Networks in Manufacturing Process</td>
+                  <td class="column3 style19 s">王文政</td>
+                </tr>
+                <tr class="row85">
+                  <td class="column0 style23 n">85</td>
+                  <td class="column1 style23 n">2013</td>
+                  <td class="column2 style21 s">運用於停車場電動車充電最佳化排程設計<br />
+      An Optimized Electric Vehicle Charging Scheduling for Parking Lot</td>
+                  <td class="column3 style20 s">黃僅仁</td>
+                </tr>
+                <tr class="row86">
+                  <td class="column0 style18 n">86</td>
+                  <td class="column1 style18 n">2014</td>
+                  <td class="column2 style22 s">熱電冷複合系統之能源管理規劃<br />
+      Energy Management in Combined Heat, Cooling and Power System</td>
+                  <td class="column3 style19 s">李奕昕</td>
+                </tr>
+                <tr class="row87">
+                  <td class="column0 style23 n">87</td>
+                  <td class="column1 style23 n">2014</td>
+                  <td class="column2 style21 s">空調及燈光整合節能控制<br />
+      Integrated Energy Saving Control of Air Conditioning and Lighting Systems</td>
+                  <td class="column3 style20 s">張鈞凱</td>
+                </tr>
+                <tr class="row88">
+                  <td class="column0 style18 n">88</td>
+                  <td class="column1 style18 n">2014</td>
+                  <td class="column2 style22 s">停車場電動車及放電最佳控制<br />
+      Optimal Charging and Discharging Control for Electric Vehicles in Parking Lot</td>
+                  <td class="column3 style19 s">鄭弘偉</td>
+                </tr>
+                <tr class="row89">
+                  <td class="column0 style23 n">89</td>
+                  <td class="column1 style23 n">2014</td>
+                  <td class="column2 style21 s">因應及時電價之智慧型家庭電能管理系統<br />
+      Smart Home Energy Management System for Real-Time Pricing</td>
+                  <td class="column3 style20 s">林謚翔</td>
+                </tr>
+                <tr class="row90">
+                  <td class="column0 style18 n">90</td>
+                  <td class="column1 style18 n">2014</td>
+                  <td class="column2 style22 s">基於適應式橢圓型體之進化型模糊辨識器之設計<br />
+      An Evolutionary Fuzzy Classifier with Adaptive Ellipsoids</td>
+                  <td class="column3 style19 s">翁桂松</td>
+                </tr>
+                <tr class="row91">
+                  <td class="column0 style23 n">91</td>
+                  <td class="column1 style23 n">2015</td>
+                  <td class="column2 style21 s">多關節機器魚之游動仿生分析與深度控制<br />
+      Biomimetic Analysis of Swimming Motion Control and Depth Control for Multi-joint Robotic Fish</td>
+                  <td class="column3 style20 s">徐伯銘</td>
+                </tr>
+                <tr class="row92">
+                  <td class="column0 style18 n">92</td>
+                  <td class="column1 style18 n">2015</td>
+                  <td class="column2 style22 s">預測控制於區域空調負載節能控制之應用<br />
+      Application of Predictive Control to Energy Saving for Regional Air-Condition System</td>
+                  <td class="column3 style19 s">黃鵬翰</td>
+                </tr>
+                <tr class="row93">
+                  <td class="column0 style23 n">93</td>
+                  <td class="column1 style23 n">2015</td>
+                  <td class="column2 style21 s">基於環境辨認技術之自走車路徑追隨控制<br />
+      Route Following Control For Automatic Guided Vehicle Based on Environment Recognition Technique</td>
+                  <td class="column3 style20 s">周芮葳</td>
+                </tr>
+                <tr class="row94">
+                  <td class="column0 style18 n">94</td>
+                  <td class="column1 style18 n">2015</td>
+                  <td class="column2 style22 s">適用於太陽能預測之多步預測即時回饋類神經網路<br />
+      Reinforced Recurrent Neural Networks for Multi-step-ahead Solar Radiation Forecasts</td>
+                  <td class="column3 style19 s">張智皓</td>
+                </tr>
+                <tr class="row95">
+                  <td class="column0 style23 n">95</td>
+                  <td class="column1 style23 n">2015</td>
+                  <td class="column2 style21 s">地理圖資系統於輸電線路屏蔽失敗閃絡率及逆閃絡率計算之應用<br />
+      Application of Geographic Information System to the Calculation of Shielding Failure Flashover Rate and Backflashover Rate of Transmission Lines</td>
+                  <td class="column3 style20 s">林鴻智</td>
+                </tr>
+                <tr class="row96">
+                  <td class="column0 style18 n">96</td>
+                  <td class="column1 style18 n">2015</td>
+                  <td class="column2 style22 s">電力變壓器油中氣體診斷策略研究<br />
+      Diagnosis Strategies of Dissolved Gas Analysis for Power Transformers</td>
+                  <td class="column3 style19 s">劉至瑄</td>
+                </tr>
+                <tr class="row97">
+                  <td class="column0 style23 n">97</td>
+                  <td class="column1 style23 n">2015</td>
+                  <td class="column2 style21 s">多關節機器魚之泛用型運動控制<br />
+      A Generalized Motion Control for Multi-Joint Robotic Fish</td>
+                  <td class="column3 style20 s">周瑛傑</td>
+                </tr>
+                <tr class="row98">
+                  <td class="column0 style18 n">98</td>
+                  <td class="column1 style18 n">2015</td>
+                  <td class="column2 style22 s">電動車於智慧電網之分散式充電調度<br />
+      Distributed Charging Scheduling Scheme for Electric Vehicles in Smart Grid Lot</td>
+                  <td class="column3 style19 s">陳宇樵</td>
+                </tr>
+                <tr class="row99">
+                  <td class="column0 style23 n">99</td>
+                  <td class="column1 style23 n">2016</td>
+                  <td class="column2 style21 s">四旋翼無人機之穩定性控制<br />
+      The Stability Control of Quadrotor Unmanned Aerial Vehicle </td>
+                  <td class="column3 style20 s">姚磊</td>
+                </tr>
+                <tr class="row100">
+                  <td class="column0 style18 n">100</td>
+                  <td class="column1 style18 n">2016</td>
+                  <td class="column2 style22 s">因應動態電價之智慧型家庭節能管理系統<br />
+      Smart Home Energy Conservation and Management Sytem for Dynamic Pricing </td>
+                  <td class="column3 style19 s">賴建圻</td>
+                </tr>
+                <tr class="row101">
+                  <td class="column0 style23 n">101</td>
+                  <td class="column1 style23 n">2016</td>
+                  <td class="column2 style21 s">中央空調系統之多目標最佳化控制<br />
+      Multi-objective Optimization for Central Air Condition System </td>
+                  <td class="column3 style20 s">盧德頤</td>
+                </tr>
+                <tr class="row102">
+                  <td class="column0 style18 n">102</td>
+                  <td class="column1 style18 n">2017</td>
+                  <td class="column2 style22 s">基於Homography定位之自走車視覺控制<br />
+      Visual Control of Automatic Guided Vehicle Via Homography-Based Localization </td>
+                  <td class="column3 style19 s">葉啟章</td>
+                </tr>
+                <tr class="row103">
+                  <td class="column0 style23 n">103</td>
+                  <td class="column1 style23 n">2017</td>
+                  <td class="column2 style21 s">電動車於智慧型停車場之充放電最佳控制<br />
+      Optimal Charging and Discharging Control for Electric Vehicles in Intelligent Parking Lot</td>
+                  <td class="column3 style20 s">林哲銘</td>
+                </tr>
+                <tr class="row104">
+                  <td class="column0 style18 n">104</td>
+                  <td class="column1 style18 n">2017</td>
+                  <td class="column2 style22 s">機器魚之胸鰭運動控制<br />
+      Pectoral Fin Motion Control for Multi-joint Robotic Fish </td>
+                  <td class="column3 style19 s">周宗彥</td>
+                </tr>
+                <tr class="row105">
+                  <td class="column0 style23 n">105</td>
+                  <td class="column1 style23 n">2017</td>
+                  <td class="column2 style21 s">DBSCAN演算法於輸電線路對地落雷密度估測之應用<br />
+      Estimation of Ground Flash Density surrounding Transmission Line using DBSCAN</td>
+                  <td class="column3 style20 s">詹佳龍</td>
+                </tr>
+                <tr class="row106">
+                  <td class="column0 style18 n">106</td>
+                  <td class="column1 style18 n">2017</td>
+                  <td class="column2 style22 s">整合慣性感測器與超寬頻感測器的室內定位系統<br />
+      An Integrated IMU and UWB Sensor Based Indoor Positioning System</td>
+                  <td class="column3 style19 s">廖哲政</td>
+                </tr>
+                <tr class="row107">
+                  <td class="column0 style23 s">106-2</td>
+                  <td class="column1 style23 n">2017</td>
+                  <td class="column2 style21 s">雲端機房空調系統之多目標最佳化節能控制<br />
+      Multi-Objective Optimal Energy Saving Control for Airconditioning System in Data Center</td>
+                  <td class="column3 style20 s">黃軍浩</td>
+                </tr>
+                <tr class="row108">
+                  <td class="column0 style18 s">106-3</td>
+                  <td class="column1 style18 n">2017</td>
+                  <td class="column2 style22 s">多目標最佳化之家庭能源管理系統<br />
+      Multi-Objective Optimization for Home Energy Management System </td>
+                  <td class="column3 style19 s">沈進益</td>
+                </tr>
+                <tr class="row109">
+                  <td class="column0 style23 n">107</td>
+                  <td class="column1 style23 n">2018</td>
+                  <td class="column2 style21 s">小型冷氣機之神經網路預測控制<br />
+      Neural Network Predictive Control for Small Size Air Conditioners</td>
+                  <td class="column3 style20 s">黃宗性</td>
+                </tr>
+                <tr class="row110">
+                  <td class="column0 style18 n">108</td>
+                  <td class="column1 style18 n">2018</td>
+                  <td class="column2 style22 s">人工智慧與物聯網於空調節能控制之應用<br />
+      Application of Internet of Things With Artificial Intelligence to Energy Saving Control of Air Conditioning </td>
+                  <td class="column3 style19 s">王思閎</td>
+                </tr>
+                <tr class="row111">
+                  <td class="column0 style23 n">109</td>
+                  <td class="column1 style23 n">2018</td>
+                  <td class="column2 style21 s">多關節機器魚之仿生游動分析及運動控制<br />
+      Biomimetic Swimming Analysis and Motion Control of Multi-joint Robotic Fish  </td>
+                  <td class="column3 style20 s">葉禮源</td>
+                </tr>
+                <tr class="row112">
+                  <td class="column0 style18 n">110</td>
+                  <td class="column1 style18 n">2019</td>
+                  <td class="column2 style22 s">使用太陽能與燃料電池最佳化之家庭電能管理系統<br />
+      Optimization of Energy Management for Residential Houses with Photovotaic Panels and Fuel Cells</td>
+                  <td class="column3 style19 s">錢國武</td>
+                </tr>
+                <tr class="row113">
+                  <td class="column0 style23 n">111</td>
+                  <td class="column1 style23 n">2019</td>
+                  <td class="column2 style21 s">太陽能之多部預測系統<br />
+      Multi-Step Solar Energy Prediction </td>
+                  <td class="column3 style20 s">蘇鉉</td>
+                </tr>
+                <tr class="row114">
+                  <td class="column0 style18 n">112</td>
+                  <td class="column1 style18 n">2019</td>
+                  <td class="column2 style22 s">仿生多關節機器魚之轉彎運動模型建立與實現<br />
+      Modeling and Implementation of Turning Posture for Biomimetic Multi-Joint Robotic Fish </td>
+                  <td class="column3 style19 s">張凌榕</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
     </div>
   </div>
 </body>

@@ -1,10 +1,10 @@
-function page(id)
+function page(id,tag)
 {
-  document.getElementById("navigator_bar").getElementsByTagName("h1")[id].setAttribute("class","selected_page");
+  document.getElementById("navigator_bar").getElementsByTagName("h1")[tag].setAttribute("class","selected_page");
 
   for(var i=0;i<document.getElementById("navigator_bar").getElementsByTagName("h1").length;i++)
   {
-     if(i != id)
+     if(i != tag)
      {
        document.getElementById("navigator_bar").getElementsByTagName("h1")[i].setAttribute("class","unselect_page");
      }
@@ -15,7 +15,10 @@ function page(id)
     document.getElementById("home").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_news").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("professor").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
-    document.getElementById("publication_and_project").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("research_area").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_research").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
   }
@@ -24,7 +27,10 @@ function page(id)
     document.getElementById("home").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_news").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("professor").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
-    document.getElementById("publication_and_project").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("research_area").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_research").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
   }
@@ -33,7 +39,10 @@ function page(id)
     document.getElementById("home").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_news").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("professor").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
-    document.getElementById("publication_and_project").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("research_area").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_research").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
   }
@@ -42,7 +51,10 @@ function page(id)
     document.getElementById("home").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_news").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("professor").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
-    document.getElementById("publication_and_project").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("research_area").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_research").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
   }
@@ -51,8 +63,11 @@ function page(id)
     document.getElementById("home").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_news").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("professor").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
-    document.getElementById("publication_and_project").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
-    document.getElementById("research_area").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("research_area").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_research").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
   }
   else if(id==5)
@@ -60,7 +75,46 @@ function page(id)
     document.getElementById("home").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_news").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("professor").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
-    document.getElementById("publication_and_project").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("research_area").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("latest_research").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+  }
+  else if(id==6)
+  {
+    document.getElementById("home").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("latest_news").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("professor").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("research_area").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("latest_research").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+  }
+  else if(id==7)
+  {
+    document.getElementById("home").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("latest_news").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("professor").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("research_area").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("latest_research").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+  }
+  else if(id==8)
+  {
+    document.getElementById("home").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("latest_news").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("professor").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("research_area").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_research").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
   }
@@ -69,7 +123,10 @@ function page(id)
     document.getElementById("home").setAttribute("style","display:block; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_news").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("professor").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
-    document.getElementById("publication_and_project").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("reffered_journal_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("conference_papers").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("patents").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
+    document.getElementById("projects").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("research_area").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
     document.getElementById("latest_research").setAttribute("style","display:none; padding:0px; margin: 0px; width: 99vw;");
   }
