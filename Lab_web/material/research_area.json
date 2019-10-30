@@ -1,0 +1,692 @@
+[
+  {
+    "編號": "編號",
+    "年": "年",
+    "論文名稱": "論文名稱",
+    "姓名": "姓名"
+  },
+  {
+    "編號": 1.0,
+    "年": 1998.0,
+    "論文名稱": "無線電通訊技術於空調負載直接控制之應用\nApplication of Radio Communication to Direct Control of Air Conditioning Load",
+    "姓名": "程順德"
+  },
+  {
+    "編號": 2.0,
+    "年": 1998.0,
+    "論文名稱": "基因法則於智慧型控制之應用\nApplication of a Genetic Algorithm to Intelligent Control",
+    "姓名": "謝凱清"
+  },
+  {
+    "編號": 3.0,
+    "年": 1999.0,
+    "論文名稱": "應用無線電傳呼系統於需求面管理之硬體研製\nHardware Design for the Application of the Radio Paging System to the Demand Side Management",
+    "姓名": "林政煌"
+  },
+  {
+    "編號": 4.0,
+    "年": 2000.0,
+    "論文名稱": "無線電傳呼系統於需量控制之應用\nApplication of the Radio Paging System to the Demand Subscription System",
+    "姓名": "李枝家"
+  },
+  {
+    "編號": 5.0,
+    "年": 2000.0,
+    "論文名稱": "以無線電控制電容器切換之研究\nA Study on Applying Radio Techniques to Switching Control of the Capacitor Banks",
+    "姓名": "張晉維"
+  },
+  {
+    "編號": 6.0,
+    "年": 2000.0,
+    "論文名稱": "基於模糊類神經網路之自動導航車反應行為融合策略\nBehaviour Fusion for Automatic Guided Vehicle Based on Neural Fuzzy Network",
+    "姓名": "王志陽"
+  },
+  {
+    "編號": 7.0,
+    "年": 2001.0,
+    "論文名稱": "中央空調主機之遙控降載與建模\nRemote Shedding and Modelling of Central Air Conditioning Chillers",
+    "姓名": "張文奇"
+  },
+  {
+    "編號": 8.0,
+    "年": 2001.0,
+    "論文名稱": "結合影像及紅外線感測於自動導航車避障策略之設計\nDesign of Obstacle Avoidance and Navigation Strategies for an Automatic Guided Vehicle Using Camera Vision and Infrared Sensing",
+    "姓名": "張正東"
+  },
+  {
+    "編號": 9.0,
+    "年": 2001.0,
+    "論文名稱": "電力用戶寬頻網路多元服務系統中雙向負載控制之韌體與硬體設計\nFirmware and Hardware Design for Two Way Direct Load Control in Broadband Network Based Utility Customer Service",
+    "姓名": "甯校龍"
+  },
+  {
+    "編號": 10.0,
+    "年": 2001.0,
+    "論文名稱": "電力用戶寬頻網路多元服務系統中雙向負載控制之軟體模組研製\nSoftware Module Design for Two Way Direct Load Control in Broadband Network Based Utility Custormer Service System",
+    "姓名": "黃璨葆"
+  },
+  {
+    "編號": 11.0,
+    "年": 2001.0,
+    "論文名稱": "基因法則於光碟機QFT控制器之應用\nApplication of Genetic Algorithm to the Design of QFT Controller for Optical Disc Drives",
+    "姓名": "趙露明"
+  },
+  {
+    "編號": 12.0,
+    "年": 2001.0,
+    "論文名稱": "光碟機尋軌控制器之設計\nDesign of Track Seeking Controllers for Optical Disc Drives",
+    "姓名": "王安民"
+  },
+  {
+    "編號": 13.0,
+    "年": 2002.0,
+    "論文名稱": "基於模糊霍夫轉換技術之自動硬度量測法\nHough Fuzzy Vertices Detection Algorithm for Indentation Hardness of Materials",
+    "姓名": "方志恆"
+  },
+  {
+    "編號": 14.0,
+    "年": 2002.0,
+    "論文名稱": "基於基因式橢圓形體學習法之模糊建模\nFuzzy Modeling Based on Genetic Ellipsoid Learning Algorithm",
+    "姓名": "翁桂松"
+  },
+  {
+    "編號": 15.0,
+    "年": 2002.0,
+    "論文名稱": "光碟機聚焦、循軌及MP3解碼控制器之設計\nDesign of Focusing, Tracking and MP3 Decoding Controllers for Optical Disc Drives",
+    "姓名": "高國峰"
+  },
+  {
+    "編號": 16.0,
+    "年": 2003.0,
+    "論文名稱": "自動導航車路徑追隨及避障策略之設計\nDesign of Path Following and Obstacle Avoidance Strategies for Automatic Guided Vehicle",
+    "姓名": "張世宏"
+  },
+  {
+    "編號": 17.0,
+    "年": 2003.0,
+    "論文名稱": "光碟燒錄機寫入策略之自動設計\nAutomated Design of Writing Strategies for CD-RW Optical Drives",
+    "姓名": "陳奕宏"
+  },
+  {
+    "編號": 18.0,
+    "年": 2003.0,
+    "論文名稱": "CD-ROM及DVD-ROM尋軌控制器之自動設計\nAutomated Design of Track Seeking Controllers for CD-ROM and DVD-ROM",
+    "姓名": "陳瑛哲"
+  },
+  {
+    "編號": 19.0,
+    "年": 2003.0,
+    "論文名稱": "需量交易系統中遠距讀表與計價機制之研製\nDesign and Implementation of Remote Meter Reading and Tariff Calculation for the Demand Exchange System",
+    "姓名": "陳昱吉"
+  },
+  {
+    "編號": 20.0,
+    "年": 2003.0,
+    "論文名稱": "基因法則於多迴路QFT控制器及時間最佳化控制器之設計\nDesign of Multiple Loop QFT Controller and Time Optimal Controller Using Genetic Algorithm",
+    "姓名": "李炎福"
+  },
+  {
+    "編號": 21.0,
+    "年": 2003.0,
+    "論文名稱": "基因法則於多迴路QFT控制器及時間最佳化控制器之設計\nDesign of Multiple Loop QFT Controller and Time Optimal Controller Using Genetic Algorithm",
+    "姓名": "李炎福"
+  },
+  {
+    "編號": 22.0,
+    "年": 2003.0,
+    "論文名稱": "電力公司以公共寬頻網路進行雙向監控之資料分配機制\nData Distribution Mechanism for Utility Company's Two-way Monitoring and Control System Based on Public Service Broadband Networks.",
+    "姓名": "潘皇毓"
+  },
+  {
+    "編號": 23.0,
+    "年": 2004.0,
+    "論文名稱": "廣域路燈監控管理系統之研製\nDesign and Implementation of Wide Area Street lighting Monitoring and Control Management System",
+    "姓名": "林青海"
+  },
+  {
+    "編號": 24.0,
+    "年": 2004.0,
+    "論文名稱": "DVD-ROM模糊尋軌控制器之自動設計\nAutomated Design of Track Seeking Fuzzy Controllers for DVD-ROM",
+    "姓名": "黃博昭"
+  },
+  {
+    "編號": 25.0,
+    "年": 2004.0,
+    "論文名稱": "家庭電能管理系統之研製\nDesign and Implementation of Home Energy Management System",
+    "姓名": "楊景翔"
+  },
+  {
+    "編號": 26.0,
+    "年": 2004.0,
+    "論文名稱": "基於模糊地圖重製之自動導航車避障策略\nObstacle Avoidance by Fuzzy Map Building for Automatic Guided Vehicle",
+    "姓名": "連柏菁"
+  },
+  {
+    "編號": 27.0,
+    "年": 2004.0,
+    "論文名稱": "適用於時延系統之模糊控制器設計\nDesign a Fuzzy Controller for Time-Delay System",
+    "姓名": "劉丁強"
+  },
+  {
+    "編號": 28.0,
+    "年": 2004.0,
+    "論文名稱": "需量交易管理系統中電腦通訊與競價機制之設計\nDesign and Implementation of Computer Communication and Demand Bidding for Demand Exhange Management System",
+    "姓名": "詹文昌"
+  },
+  {
+    "編號": 29.0,
+    "年": 2005.0,
+    "論文名稱": "光碟燒錄機最佳寫入策略之設計\nDesign of Optimal Writing Strategy for CD-RW",
+    "姓名": "黃俊凱"
+  },
+  {
+    "編號": 30.0,
+    "年": 2005.0,
+    "論文名稱": "積木型遺傳規畫法於最佳化組合之應用\nApplication of Block Type Genetic Programming to Combinatorial Optimization",
+    "姓名": "許聰海"
+  },
+  {
+    "編號": 31.0,
+    "年": 2005.0,
+    "論文名稱": "基於影像及行為融合之自動導航車避障及導航\nObstacle Avoidance and Navigation Based on Vision and Behaviour Fusion for the Mobile Robot",
+    "姓名": "游富傑"
+  },
+  {
+    "編號": 32.0,
+    "年": 2005.0,
+    "論文名稱": "需量反應中卸載最佳化之設計\nDesign and Implementation of Optimal Load Shedding of the Demand Response",
+    "姓名": "盧浩仁"
+  },
+  {
+    "編號": 33.0,
+    "年": 2005.0,
+    "論文名稱": "DVD-ROM聚焦及循轨控制器設計\nDesign of Focusing and Tracking Controllers for DVD-ROM",
+    "姓名": "李岷達"
+  },
+  {
+    "編號": 34.0,
+    "年": 2005.0,
+    "論文名稱": "基於遺傳式橢圓形體分類演算法之不完整資料模糊分群\nFuzzy Clustering of Incomplete Data Based on Evolutionary Ellipsoid Classification Algorithm",
+    "姓名": "黃成德"
+  },
+  {
+    "編號": 35.0,
+    "年": 2005.0,
+    "論文名稱": "自動導航車之模糊追随控制\nObject Following Fuzzy Control of the Automatic Guided Vehicle",
+    "姓名": "何育昕"
+  },
+  {
+    "編號": 36.0,
+    "年": 2006.0,
+    "論文名稱": "權重型基因之基因法則於特徵選取之應用\nApplication of Gene Weighted Genetic Algorithm to Feature Selection",
+    "姓名": "陳肇宗"
+  },
+  {
+    "編號": 37.0,
+    "年": 2006.0,
+    "論文名稱": "基於行動通訊之廣域即時監控\nWide Area Real-Time Control and Monitoring Based on the Mobile Communication System",
+    "姓名": "曾威婷"
+  },
+  {
+    "編號": 38.0,
+    "年": 2006.0,
+    "論文名稱": "適用於網路型模糊控制系統之模糊增益調節器\nA Fuzzy Gain Tuner for Networked Fuzzy Control System",
+    "姓名": "郭盼容"
+  },
+  {
+    "編號": 39.0,
+    "年": 2007.0,
+    "論文名稱": "電力線載波與GPRS系統整合於與遠距監控之應用\nApplication of Remote Monitoring and Control Based on Power Line Carrier and GPRS Systems",
+    "姓名": "郭垣熙"
+  },
+  {
+    "編號": 40.0,
+    "年": 2007.0,
+    "論文名稱": "RFID與嵌入式系統於變電所及人(手)控巡檢之應用\nApplications of RFID and Embedded System to the Inspections of Substations and Manholes  ",
+    "姓名": "林嵩哲"
+  },
+  {
+    "編號": 41.0,
+    "年": 2007.0,
+    "論文名稱": "具適應性體積學習之完整與不完整資料之分群與辨認\nClustering and Classification od Complete and Incomplete Data with Adaptive Volume",
+    "姓名": "楊梓"
+  },
+  {
+    "編號": 42.0,
+    "年": 2007.0,
+    "論文名稱": "遺傳規劃法於模糊建模與負載排程之應用\nApplication of Genetic Programming to Fuzzy Modeling and the Schedule of Direct Load Control",
+    "姓名": "林政翰"
+  },
+  {
+    "編號": 43.0,
+    "年": 2007.0,
+    "論文名稱": "基於即時影像之模糊追隨控制\nTracking Control for Automatic Guided Vehicle Based on Real-time Image ",
+    "姓名": "林哲瑋"
+  },
+  {
+    "編號": 44.0,
+    "年": 2007.0,
+    "論文名稱": "權重型基因法則於肝癌質譜資料特徵選取之應用\nApplication of Gene Weighted Genetic Algorithm to Feature Selection with SELDI-TOF MS Hepatoma Data",
+    "姓名": "潘咨亦"
+  },
+  {
+    "編號": 45.0,
+    "年": 2007.0,
+    "論文名稱": "類神經網路於肝癌與軟巢癌質譜資料分類之應用\nClassification of Hepatocellular Carcinoma and Ovarion Cancer Spectrometry Samples Using Neural Network ",
+    "姓名": "黃琮榆"
+  },
+  {
+    "編號": 46.0,
+    "年": 2008.0,
+    "論文名稱": "Three Dimensional Loacating System based on Different Wave Velocities",
+    "姓名": "Suhandry Salim "
+  },
+  {
+    "編號": 47.0,
+    "年": 2008.0,
+    "論文名稱": "具觀測器之適應性寬幅調變模糊控制器\nAn Observer Based Adaptive Fuzzy Controller with Modulated Membership Function",
+    "姓名": "姜政男"
+  },
+  {
+    "編號": 48.0,
+    "年": 2008.0,
+    "論文名稱": "具觀測器之PID基因適應型控制器\nA GA Tuned Adaptive PID Controller with Observer ",
+    "姓名": "溫宏康"
+  },
+  {
+    "編號": 49.0,
+    "年": 2008.0,
+    "論文名稱": "基於異波速訊號之三為定位系統位置計算與路徑追蹤\nPosition Calculating and Path Tracking of Three Dimensional Locating System Based on Different Wave Velocities",
+    "姓名": "徐旭昇"
+  },
+  {
+    "編號": 50.0,
+    "年": 2008.0,
+    "論文名稱": "基於影像之自動導航車追蹤控制\nVision Based Tracking Control for Automatic Guided Vehicle ",
+    "姓名": "黃世達"
+  },
+  {
+    "編號": 51.0,
+    "年": 2008.0,
+    "論文名稱": "車用光碟機判片系統之研製\nDesign and Implementation of Disc Discrimination System for the DVD Drive in Vehicle",
+    "姓名": "吳孟昇"
+  },
+  {
+    "編號": 52.0,
+    "年": 2008.0,
+    "論文名稱": "配電網路停電即故障檢測系統之研製\nDesign and Implementation of Outage and Fault Detection System for Power Distribution Network ",
+    "姓名": "陳志宏"
+  },
+  {
+    "編號": 53.0,
+    "年": 2008.0,
+    "論文名稱": "基因法則於車用光碟機H∞控制器設計之應用\nApplication of Genetic Algorithm to the Design of H∞ Controller for DVD Drive in vehicle ",
+    "姓名": "楊凱程"
+  },
+  {
+    "編號": 54.0,
+    "年": 2008.0,
+    "論文名稱": "基於即時影像之多車整合策略控制\nMultiple Mobile Vehicles Control Based On Real-time Image ",
+    "姓名": "彭俊維"
+  },
+  {
+    "編號": 55.0,
+    "年": 2008.0,
+    "論文名稱": "變電所設備巡檢管理系統之研製\nDesign and Implementation of Substation Facility Inspection and Management System",
+    "姓名": "林士傑"
+  },
+  {
+    "編號": 56.0,
+    "年": 2009.0,
+    "論文名稱": "基於最近群聚與線性迴歸之完整與不完整資料模糊分群\nFuzzy Clustering of Complete and Incomplete Data Based on Nearest Cluster and Linear Regression ",
+    "姓名": "張仁維"
+  },
+  {
+    "編號": 57.0,
+    "年": 2009.0,
+    "論文名稱": "即時影像定位與建置地圖\nReal-time Visual Localization and Mapping ",
+    "姓名": "楊懷新"
+  },
+  {
+    "編號": 58.0,
+    "年": 2009.0,
+    "論文名稱": "基於影像之多部自動導航車隊形維持控制\nMultiple Automatic Guided Vehicles Formation Control Based On Real-time Image",
+    "姓名": "朱旻良"
+  },
+  {
+    "編號": 59.0,
+    "年": 2009.0,
+    "論文名稱": "智慧型頭部動作轉譯系統\nIntelligent Head Movement Interpretation System ",
+    "姓名": "劉基墩"
+  },
+  {
+    "編號": 60.0,
+    "年": 2009.0,
+    "論文名稱": "智慧型頭部動作轉譯系統\nIntelligent Head Movement Interpretation System ",
+    "姓名": "劉基墩"
+  },
+  {
+    "編號": 61.0,
+    "年": 2009.0,
+    "論文名稱": "RFID於一次變電所設備點檢及人(手)孔蓋地下化之應用98\nApplication of RFID to Primary Substation Facility Inspection and Manhole Burying ",
+    "姓名": "林建銘"
+  },
+  {
+    "編號": 62.0,
+    "年": 2010.0,
+    "論文名稱": "變壓器油中氣體分析之故障可信度研究及設備管理系統開發\nDesign of Transformer Fault Analysis and Facility Management System Based on Confidence Value",
+    "姓名": "顏志丞"
+  },
+  {
+    "編號": 63.0,
+    "年": 2010.0,
+    "論文名稱": "基於寬幅調整變函數之適應性模糊滑動模式控制\nAdaptive Fuzzy Sliding-Mode Control with Modulated Membership Function ",
+    "姓名": "潘為竣"
+  },
+  {
+    "編號": 64.0,
+    "年": 2010.0,
+    "論文名稱": "基於寬幅調整變函數之適應性模糊滑動模式控制\nAdaptive Fuzzy Sliding-Mode Control with Modulated Membership Function ",
+    "姓名": "潘為竣"
+  },
+  {
+    "編號": 65.0,
+    "年": 2010.0,
+    "論文名稱": "變電設備維護管理系統之建置與變壓器油中氣體模糊分析法則之研究\nDesign of Substation Facility Management and Management System Incorporated with Fault Diagnosis Method for Power Transformers Based on Hybrid Fuzzy Dissolved Gas Analysis ",
+    "姓名": "林桐斌"
+  },
+  {
+    "編號": 66.0,
+    "年": 2011.0,
+    "論文名稱": "台電事故案例系統之設計及群集演算法於文件搜尋之應用\nDesign of Accident Case Management System and Application of Clustering Algorithm to Document Retrieval ",
+    "姓名": "劉錦興"
+  },
+  {
+    "編號": 67.0,
+    "年": 2011.0,
+    "論文名稱": "變壓器油中氣體分析系統之設計及資料深勘技術於油中氣體分析之應用\nDesign of Dissolved Gas Analysis System and Application of Data Mining to Transformer Dissolved Gas Analysis ",
+    "姓名": "陳泰利"
+  },
+  {
+    "編號": 68.0,
+    "年": 2011.0,
+    "論文名稱": "中央空調系統之最佳化卸載控制\nOptimal Shedding Control of Central Airconditioning System",
+    "姓名": "徐維遠"
+  },
+  {
+    "編號": 69.0,
+    "年": 2011.0,
+    "論文名稱": "區域空調負載節能減碳控制\nEnergy Saving and Carbon Reduction Control for Regional Airconditioning Load",
+    "姓名": "鍾旭浩"
+  },
+  {
+    "編號": 70.0,
+    "年": 2011.0,
+    "論文名稱": "基於適應性模糊滑動模式控制器之輪型行動機器人循跡控制\nTrack Following Control of Wheeled Mobile Robot Based on Adaptive Fuzzy Slidding-Mode Controller ",
+    "姓名": "朱健銘"
+  },
+  {
+    "編號": 71.0,
+    "年": 2011.0,
+    "論文名稱": "基於室內定位系統之自動導航車路徑追隨控制\nPath Following Control for Automatic Guided Vehicle Based on Indoor Locating System",
+    "姓名": "林志駿"
+  },
+  {
+    "編號": 72.0,
+    "年": 2011.0,
+    "論文名稱": "基於Homography之自動導航車定位\nHomography-Based Localization of Automatic Guided Vehicles ",
+    "姓名": "陳境陞"
+  },
+  {
+    "編號": 73.0,
+    "年": 2011.0,
+    "論文名稱": "基主動噪音控制於配電變壓器噪音抑制之應用\nApplication of Active Noise Control to Distribution Transformers Noise Attenuation",
+    "姓名": "陳億謙"
+  },
+  {
+    "編號": 74.0,
+    "年": 2011.0,
+    "論文名稱": "基於異波速測距三維定位之無線感測網路研製\nDesign and Implementation of Wireless Sensor Network for Three Dimensional Locating System Based on Different Wave Velocities ",
+    "姓名": "邱志明"
+  },
+  {
+    "編號": 75.0,
+    "年": 2011.0,
+    "論文名稱": "變結構進化型演算法\nEvolutionary Algorithms with Variable Structure",
+    "姓名": "林青嶔"
+  },
+  {
+    "編號": 76.0,
+    "年": 2012.0,
+    "論文名稱": "移動式家具之路徑規劃、追隨與避障控制\nPath Planning, Following and Obstacle Avoidance Control for Mobile Furniture",
+    "姓名": "何恭宇"
+  },
+  {
+    "編號": 77.0,
+    "年": 2012.0,
+    "論文名稱": "行動通訊基地台空調節能系統之研製\nDesign and Implementation of Air-Conditioning Energy Saving System For Base Transceiver Station",
+    "姓名": "周俊葦"
+  },
+  {
+    "編號": 78.0,
+    "年": 2012.0,
+    "論文名稱": "行動通訊基地台空調節能系統之研製\nDesign and Implementation of Air-Conditioning Energy Saving System For Base Transceiver Station",
+    "姓名": "周俊葦"
+  },
+  {
+    "編號": 79.0,
+    "年": 2012.0,
+    "論文名稱": "基於平滑粒子流體動力學之群體機器人控制\nThe Swarm Robots Control Based on Smoothed Particle Hydrodynamics",
+    "姓名": "張凱勝"
+  },
+  {
+    "編號": 80.0,
+    "年": 2012.0,
+    "論文名稱": "具觀測器之非線性FUZZY與PID適應性控制器\nDesign of Observer-Based Fuzzy Adaptive Control and PID Adaptive Control for Nonlinear Systems",
+    "姓名": "林建隆"
+  },
+  {
+    "編號": 81.0,
+    "年": 2013.0,
+    "論文名稱": "結合Kinect與SURF特徵點之自走車路徑追隨系統\nRoute Following System Using Kinect and SURF Features",
+    "姓名": "黃凱琦"
+  },
+  {
+    "編號": 82.0,
+    "年": 2013.0,
+    "論文名稱": "智能電網中電動車充電策略之規劃\nCharging Strategy for Electric Vehicle in Smart Grid",
+    "姓名": "陳治璿"
+  },
+  {
+    "編號": 83.0,
+    "年": 2013.0,
+    "論文名稱": "多關節機器魚之運動姿態實現\nFish Swimming Motions Mimicked in a Multi-Jointed Robotic Fish",
+    "姓名": "洪子傑"
+  },
+  {
+    "編號": 84.0,
+    "年": 2013.0,
+    "論文名稱": "無線感測網路在製程之應用\nAn Application of Wireless Sensor Networks in Manufacturing Process",
+    "姓名": "王文政"
+  },
+  {
+    "編號": 85.0,
+    "年": 2013.0,
+    "論文名稱": "運用於停車場電動車充電最佳化排程設計\nAn Optimized Electric Vehicle Charging Scheduling for Parking Lot",
+    "姓名": "黃僅仁"
+  },
+  {
+    "編號": 86.0,
+    "年": 2014.0,
+    "論文名稱": "熱電冷複合系統之能源管理規劃\nEnergy Management in Combined Heat, Cooling and Power System",
+    "姓名": "李奕昕"
+  },
+  {
+    "編號": 87.0,
+    "年": 2014.0,
+    "論文名稱": "空調及燈光整合節能控制\nIntegrated Energy Saving Control of Air Conditioning and Lighting Systems",
+    "姓名": "張鈞凱"
+  },
+  {
+    "編號": 88.0,
+    "年": 2014.0,
+    "論文名稱": "停車場電動車及放電最佳控制\nOptimal Charging and Discharging Control for Electric Vehicles in Parking Lot",
+    "姓名": "鄭弘偉"
+  },
+  {
+    "編號": 89.0,
+    "年": 2014.0,
+    "論文名稱": "因應及時電價之智慧型家庭電能管理系統\nSmart Home Energy Management System for Real-Time Pricing",
+    "姓名": "林謚翔"
+  },
+  {
+    "編號": 90.0,
+    "年": 2014.0,
+    "論文名稱": "基於適應式橢圓型體之進化型模糊辨識器之設計\nAn Evolutionary Fuzzy Classifier with Adaptive Ellipsoids",
+    "姓名": "翁桂松"
+  },
+  {
+    "編號": 91.0,
+    "年": 2015.0,
+    "論文名稱": "多關節機器魚之游動仿生分析與深度控制\nBiomimetic Analysis of Swimming Motion Control and Depth Control for Multi-joint Robotic Fish",
+    "姓名": "徐伯銘"
+  },
+  {
+    "編號": 92.0,
+    "年": 2015.0,
+    "論文名稱": "預測控制於區域空調負載節能控制之應用\nApplication of Predictive Control to Energy Saving for Regional Air-Condition System",
+    "姓名": "黃鵬翰"
+  },
+  {
+    "編號": 93.0,
+    "年": 2015.0,
+    "論文名稱": "基於環境辨認技術之自走車路徑追隨控制\nRoute Following Control For Automatic Guided Vehicle Based on Environment Recognition Technique",
+    "姓名": "周芮葳"
+  },
+  {
+    "編號": 94.0,
+    "年": 2015.0,
+    "論文名稱": "適用於太陽能預測之多步預測即時回饋類神經網路\nReinforced Recurrent Neural Networks for Multi-step-ahead Solar Radiation Forecasts",
+    "姓名": "張智皓"
+  },
+  {
+    "編號": 95.0,
+    "年": 2015.0,
+    "論文名稱": "地理圖資系統於輸電線路屏蔽失敗閃絡率及逆閃絡率計算之應用\nApplication of Geographic Information System to the Calculation of Shielding Failure Flashover Rate and Backflashover Rate of Transmission Lines",
+    "姓名": "林鴻智"
+  },
+  {
+    "編號": 96.0,
+    "年": 2015.0,
+    "論文名稱": "電力變壓器油中氣體診斷策略研究\nDiagnosis Strategies of Dissolved Gas Analysis for Power Transformers",
+    "姓名": "劉至瑄"
+  },
+  {
+    "編號": 97.0,
+    "年": 2015.0,
+    "論文名稱": "多關節機器魚之泛用型運動控制\nA Generalized Motion Control for Multi-Joint Robotic Fish",
+    "姓名": "周瑛傑"
+  },
+  {
+    "編號": 98.0,
+    "年": 2015.0,
+    "論文名稱": "電動車於智慧電網之分散式充電調度\nDistributed Charging Scheduling Scheme for Electric Vehicles in Smart Grid Lot",
+    "姓名": "陳宇樵"
+  },
+  {
+    "編號": 99.0,
+    "年": 2016.0,
+    "論文名稱": "四旋翼無人機之穩定性控制\nThe Stability Control of Quadrotor Unmanned Aerial Vehicle ",
+    "姓名": "姚磊"
+  },
+  {
+    "編號": 100.0,
+    "年": 2016.0,
+    "論文名稱": "因應動態電價之智慧型家庭節能管理系統\nSmart Home Energy Conservation and Management Sytem for Dynamic Pricing ",
+    "姓名": "賴建圻"
+  },
+  {
+    "編號": 101.0,
+    "年": 2016.0,
+    "論文名稱": "中央空調系統之多目標最佳化控制\nMulti-objective Optimization for Central Air Condition System ",
+    "姓名": "盧德頤"
+  },
+  {
+    "編號": 102.0,
+    "年": 2017.0,
+    "論文名稱": "基於Homography定位之自走車視覺控制\nVisual Control of Automatic Guided Vehicle Via Homography-Based Localization ",
+    "姓名": "葉啟章"
+  },
+  {
+    "編號": 103.0,
+    "年": 2017.0,
+    "論文名稱": "電動車於智慧型停車場之充放電最佳控制\nOptimal Charging and Discharging Control for Electric Vehicles in Intelligent Parking Lot",
+    "姓名": "林哲銘"
+  },
+  {
+    "編號": 104.0,
+    "年": 2017.0,
+    "論文名稱": "機器魚之胸鰭運動控制\nPectoral Fin Motion Control for Multi-joint Robotic Fish ",
+    "姓名": "周宗彥"
+  },
+  {
+    "編號": 105.0,
+    "年": 2017.0,
+    "論文名稱": "DBSCAN演算法於輸電線路對地落雷密度估測之應用\nEstimation of Ground Flash Density surrounding Transmission Line using DBSCAN",
+    "姓名": "詹佳龍"
+  },
+  {
+    "編號": 106.0,
+    "年": 2017.0,
+    "論文名稱": "整合慣性感測器與超寬頻感測器的室內定位系統\nAn Integrated IMU and UWB Sensor Based Indoor Positioning System",
+    "姓名": "廖哲政"
+  },
+  {
+    "編號": "106-2",
+    "年": 2017.0,
+    "論文名稱": "雲端機房空調系統之多目標最佳化節能控制\nMulti-Objective Optimal Energy Saving Control for Airconditioning System in Data Center",
+    "姓名": "黃軍浩"
+  },
+  {
+    "編號": "106-3",
+    "年": 2017.0,
+    "論文名稱": "多目標最佳化之家庭能源管理系統\nMulti-Objective Optimization for Home Energy Management System ",
+    "姓名": "沈進益"
+  },
+  {
+    "編號": 107.0,
+    "年": 2018.0,
+    "論文名稱": "小型冷氣機之神經網路預測控制\nNeural Network Predictive Control for Small Size Air Conditioners",
+    "姓名": "黃宗性"
+  },
+  {
+    "編號": 108.0,
+    "年": 2018.0,
+    "論文名稱": "人工智慧與物聯網於空調節能控制之應用\nApplication of Internet of Things With Artificial Intelligence to Energy Saving Control of Air Conditioning ",
+    "姓名": "王思閎"
+  },
+  {
+    "編號": 109.0,
+    "年": 2018.0,
+    "論文名稱": "多關節機器魚之仿生游動分析及運動控制\nBiomimetic Swimming Analysis and Motion Control of Multi-joint Robotic Fish  ",
+    "姓名": "葉禮源"
+  },
+  {
+    "編號": 110.0,
+    "年": 2019.0,
+    "論文名稱": "使用太陽能與燃料電池最佳化之家庭電能管理系統\nOptimization of Energy Management for Residential Houses with Photovotaic Panels and Fuel Cells",
+    "姓名": "錢國武"
+  },
+  {
+    "編號": 111.0,
+    "年": 2019.0,
+    "論文名稱": "太陽能之多部預測系統\nMulti-Step Solar Energy Prediction ",
+    "姓名": "蘇鉉"
+  },
+  {
+    "編號": 112.0,
+    "年": 2019.0,
+    "論文名稱": "仿生多關節機器魚之轉彎運動模型建立與實現\nModeling and Implementation of Turning Posture for Biomimetic Multi-Joint Robotic Fish ",
+    "姓名": "張凌榕"
+  }
+]
