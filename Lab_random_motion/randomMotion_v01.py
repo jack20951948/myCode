@@ -1,5 +1,7 @@
+# from vpython import *
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import animation
 from mpl_toolkits.mplot3d import Axes3D
 import sympy
 import math
@@ -7,9 +9,29 @@ from scipy import signal
 import sys
 import time
 import statistics
+import random
+import array
+
+random.seed(time.time())
 
 Nowfile = 2 ###從幾號檔案開始import
 fileTotal = 5 ###import幾組資料
+
+######################simulation parameter##########
+g = 9.8            #重力加速度 9.8 m/s^2
+size = 0.5         #球半徑 0.5 m
+m = np.array([1, 1, 1])            #球質量1kg
+air_drag_coe = 0.2  #水中阻力(與速率成正比)
+
+vel_x = 0.0
+vel_y = 0.0
+vel_z = 0.0
+pos_x = 0.0
+pos_y = 0.0
+pos_z = 0.0
+
+dt = 1.0     #時間間隔 1 秒
+####################################################
 
 def dataConbining():
     u_data = None
@@ -346,68 +368,127 @@ def speed_probabilities(data):
             N[i][2] = M[i][2]/sum(M[i][:])
     return N
 
+def MotionAnimation(a, b, c):
+    # rate(1/dt)    #每一秒跑 1000 次
+    # ti += dt    #計時器
+    global air_drag_coe, dt, vel_x, vel_y, vel_z, pos_x, pos_y, pos_z
 
-def motionForecast(steps, transitionName, transitionMatrix):   ####馬爾可夫鏈預測模型
+    vel_x += a*dt - air_drag_coe*vel_x*dt
+    vel_y += b*dt - air_drag_coe*vel_y*dt
+    vel_z += c*dt - air_drag_coe*vel_z*dt
+
+    pos_x += vel_x*dt
+    pos_y += vel_y*dt
+    pos_z += vel_z*dt
+
+    vel = np.array([vel_x, vel_y, vel_z])
+    pos = np.array([pos_x, pos_y, pos_z])
+    print("vel: ", vel)
+    print("pos: ", pos)
+    return pos
+
+def update_line(hl, new_data):
+	xdata, ydata, zdata = hl._verts3d
+	hl.set_xdata(list(np.append(xdata, new_data[0])))
+	hl.set_ydata(list(np.append(ydata, new_data[1])))
+	hl.set_3d_properties(list(np.append(zdata, new_data[2])))
+	plt.draw()
+
+def Avoidance():
+    global pos_x, pos_y, pos_z, vel_x, vel_y, vel_z
+    if pos_x < -0.59:
+        return 11, 2
+    if pos_x > 0.53:
+        return 15, 2
+    if pos_y < -0.26:
+        return 9, 2
+    if pos_y > 0.22:
+        return 13, 2
+    if pos_z < -0.368:
+        return 1, 2
+    if pos_z > 0.368:
+        return 17, 2
+    
+
+def motionForecast(transitionMatrixM, transitionMatrixS):   ####馬爾可夫鏈預測模型
+
+    map = plt.figure()
+    # 動作量化
+    acceleration = [[0, 0, 0],
+                    [0, 1, 1], 
+                    [1, 1, 1],
+                    [1, 0, 1],
+                    [1, -1, 1],
+                    [0, -1, 1],
+                    [-1, -1, 1],
+                    [-1, 0, 1],
+                    [-1, 1, 1],
+                    [0, 1, 0], 
+                    [1, 1, 0],
+                    [1, 0, 0],
+                    [1, -1, 0],
+                    [0, -1, 0],
+                    [-1, -1, 0],
+                    [-1, 0, 0],
+                    [-1, 1, 0],
+                    [0, 1, -1], 
+                    [1, 1, -1],
+                    [1, 0, -1],
+                    [1, -1, -1],
+                    [0, -1, -1],
+                    [-1, -1, -1],
+                    [-1, 0, -1],
+                    [-1, 1, -1],
+                    [0, 0, 1],
+                    [0, 0, -1]]
+    map_ax = Axes3D(map)
+    map_ax.autoscale(enable=True, axis='both', tight=True)
+    # # # Setting the axes properties
+    map_ax.set_xlim3d([-0.64, 0.58])
+    map_ax.set_ylim3d([-0.31, 0.27])
+    map_ax.set_zlim3d([-0.418, 0.418])
+
+    hl, = map_ax.plot3D([0], [0], [0])
+
     # 選擇初始狀態 
-    activityToday = "Sleep" 
-    print("Start state: " + activityToday) 
+    current_action = random.randint(0,24)  #25,26動作沒有直
+    speed = 0
+    while current_action >= 0 and current_action != 23 and current_action != 7: # 7, 23動作沒有直
+        if pos_x >= -0.59 and pos_x <= 0.53 and pos_y >= -0.26 and pos_y <= 0.22 and pos_z >= -0.368 and pos_z <= 0.368:
+            Random = random.randint(0,99)
+            Prob = 0
+            for NA in range(len(transitionMatrixM)):
+                if transitionMatrixM[current_action][NA] > 0:
+                    Prob = Prob + transitionMatrixM[current_action][NA]*100
+                    if Random < Prob:
+                        current_action = NA
+                        break
+            
+            Random = random.randint(0,99)
+            Prob = 0
+            for speed in range(3):
+                if transitionMatrixS[current_action][speed]*100 > 0:
+                    Prob = Prob + transitionMatrixS[current_action][speed]*100
+                    if Random < Prob:
+                        print("Action: ", current_action, "Speed: ", speed)
+                        break
+        else:
+            current_action, speed = Avoidance()
+            print("Action: ", current_action, "Speed: ", speed, "Avoidance............................................................................................")
 
-    # 應該記錄選擇的狀態序列。這裡現在只有初始狀態。 
-    activityList = [activityToday] 
-    i = 0 
+        a = acceleration[current_action][0] * (speed+1) * 0.0015
+        b = acceleration[current_action][1] * (speed+1) * 0.0015
+        c = acceleration[current_action][2] * (speed+1) * 0.0015
 
-    # 計算 activityList 的機率 
-    prob = 1 
-    while i != steps: 
-        if activityToday == "Sleep": 
-            change = np.random.choice(transitionName[0],replace=True,p=transitionMatrix[0]) 
-            if change == "SS": 
-                prob = prob * 0.2 
-                activityList.append("Sleep") 
-                pass 
-            elif change == "SR": 
-                prob = prob * 0.6 
-                activityToday = "Run" 
-                activityList.append("Run") 
-            else: 
-                prob = prob * 0.2 
-                activityToday = "Icecream" 
-                activityList.append("Icecream") 
-        elif activityToday == "Run": 
-            change = np.random.choice(transitionName[1],replace=True,p=transitionMatrix[1]) 
-            if change == "RR": 
-                prob = prob * 0.5 
-                activityList.append("Run") 
-                pass 
-            elif change == "RS": 
-                prob = prob * 0.2 
-                activityToday = "Sleep" 
-                activityList.append("Sleep") 
-            else: 
-                prob = prob * 0.3 
-                activityToday = "Icecream" 
-                activityList.append("Icecream") 
-        elif activityToday == "Icecream": 
-            change = np.random.choice(transitionName[2],replace=True,p=transitionMatrix[2]) 
-            if change == "II": 
-                prob = prob * 0.1 
-                activityList.append("Icecream") 
-                pass 
-            elif change == "IS": 
-                prob = prob * 0.2 
-                activityToday = "Sleep" 
-                activityList.append("Sleep") 
-            else: 
-                prob = prob * 0.7 
-                activityToday = "Run" 
-                activityList.append("Run") 
-        i += 1 
-    print("Possible states: " + str(activityList)) 
-    print("End state after "+ str(steps) + " steps: " + activityToday) 
-    print("Probability of the possible sequence of states: " + str(prob)) 
-    # 預測 2 天后的可能狀態 
+        now_pos = MotionAnimation(a, b, c)
+        now_pos = list(now_pos)
 
-    return activityList
+        update_line(hl, (now_pos[0],now_pos[1],now_pos[2]))
+        plt.show(block=False)
+        plt.pause(1)
+
+    print("Action is nill")
+
 
 if __name__ == "__main__":
     data = dataConbining()
@@ -447,19 +528,12 @@ if __name__ == "__main__":
     for row in m: print(' '.join('{0:.2f}'.format(x) for x in row))
     # print(m)
 
-    n = speed_probabilities(action)
+    s = speed_probabilities(action)
     print("speed_Posibitity:")
-    for row in n: print(' '.join('{0:.2f}'.format(x) for x in row))
+    for row in s: print(' '.join('{0:.2f}'.format(x) for x in row))
 
-
-
-#############################################馬爾可夫鏈範例#####################################
-    # states = ["Sleep","Icecream","Run"]
-    # # 可能的事件序列 
-    # transitionName = [["SS","SR","SI"],["RS","RR","RI"],["IS","IR","II"]] 
-    # # 機率矩陣（轉移矩陣） 
-    # transitionMatrix = [[0.2,0.6,0.2],[0.1,0.6,0.3],[0.2,0.7,0.1]] #    transitionMatrix = m
-    # activityList = motionForecast(2, transitionName, transitionMatrix)
+    print("\nAction-predict begin......")
+    motionForecast(m, s)
 
 
 #############################################驗證馬爾可夫鏈#####################################

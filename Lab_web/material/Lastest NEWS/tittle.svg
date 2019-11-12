@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="302" viewBox="0 0 1440 302">
-    <g fill="none" fill-rule="evenodd">
-        <path fill="#837A7A" d="M0 251.146c171.86 33.389 398.671 16.694 680.436-50.083C962.2 134.285 1215.72 167.84 1441 301.73V23H1L0 251.146z"/>
-        <path fill="#8C0404" d="M0 228.146c171.86 33.389 398.671 16.694 680.436-50.083C962.2 111.285 1215.72 144.84 1441 278.73V0H1L0 228.146z"/>
-        <text fill="#FFF" font-family="Roboto-Bold, Roboto" font-size="60" font-weight="bold" letter-spacing="4.167">
-            <tspan x="56" y="111">LATEST NEWS</tspan>
-        </text>
-    </g>
-</svg>
