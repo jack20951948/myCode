@@ -111,26 +111,12 @@ def filter(data, axix, fs=1000, fc=30, order=5 ,plotData=False ,returnValue=True
     else:
         pass
 
-def gradient1by1(data):
-    data_li = []
-    for i in range(len(data)):
-        data_li.append(data[i])
-    data_n = np.asarray(data_li)
-    dataDiff = np.gradient(data_n)
-    return dataDiff
-
 def Gradient(data):
-    dataDiff = gradient1by1(data[:,1])
-    dataDiff2 = gradient1by1(data[:,2])
-    dataDiff3 = gradient1by1(data[:,3])
-    difData = conbine3toOne(dataDiff, dataDiff2, dataDiff3)
+    difData = conbine3toOne(np.gradient(data[:,1]), np.gradient(data[:,2]), np.gradient(data[:,3]))
     return difData
 
 def filteTheData(data):
-    filtedDataX = filter(data, 1, fc=70)
-    filtedDataY = filter(data, 2, fc=70)
-    filtedDataZ = filter(data, 3, fc=70)
-    filtedData = conbine3toOne(filtedDataX, filtedDataY, filtedDataZ)
+    filtedData = conbine3toOne(filter(data, 1, fc=70), filter(data, 2, fc=70), filter(data, 3, fc=70))
     return filtedData
 
 def conbine3toOne(data1, data2, data3):
@@ -485,7 +471,7 @@ def motionForecast(transitionMatrixM, transitionMatrixS):   ####馬爾可夫鏈�
 
         update_line(hl, (now_pos[0],now_pos[1],now_pos[2]))
         plt.show(block=False)
-        plt.pause(1)
+        plt.pause(0.0001)
 
     print("Action is nill")
 

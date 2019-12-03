@@ -1,11 +1,13 @@
 from urllib.request import urlopen
 from urllib.parse import urlparse
+from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 import re
 import datetime
 import random
 
-pages = set()
+startpage = 'http://oreilly.com'
+pages = []
 random.seed(datetime.datetime.now())
 
 #Retrieves a list of all Internal links found on a page
@@ -34,21 +36,38 @@ def getExternalLinks(bs, excludeUrl):
     return externalLinks
 
 def getRandomExternalLink(startingPage):
-    html = urlopen(startingPage)
+    html = testUrl(startingPage)
     bs = BeautifulSoup(html, 'html.parser')
     externalLinks = getExternalLinks(bs, urlparse(startingPage).netloc)
     if len(externalLinks) == 0:
         print('No external links, looking around the site for one')
         domain = '{}://{}'.format(urlparse(startingPage).scheme, urlparse(startingPage).netloc)
         internalLinks = getInternalLinks(bs, domain)
-        return getRandomExternalLink(internalLinks[random.randint(0,
+
+        if len(internalLinks) != 0:
+            return getRandomExternalLink(internalLinks[random.randint(0,
                                     len(internalLinks)-1)])
+        else:
+            print("No internal links, try the last page!")
+            return pages[-2]
     else:
         return externalLinks[random.randint(0, len(externalLinks)-1)]
     
 def followExternalOnly(startingSite):
     externalLink = getRandomExternalLink(startingSite)
+    pages.append(externalLink)
     print('Random external link is: {}'.format(externalLink))
     followExternalOnly(externalLink)
-            
-followExternalOnly('http://oreilly.com')
+
+def testUrl(url):
+    try:
+        html = urlopen(url)
+    except HTTPError as e:
+        print(e)
+        return pages[-2]
+    else:
+        return html
+
+
+pages.append(startpage)            
+followExternalOnly(pages[-1])
