@@ -1,4 +1,3 @@
-//使用python複寫定義的函式庫
 //-------- Control motor -----------------------------------------------------------------------------------------
 #include "XL320.h"
 #include <math.h>
@@ -6,7 +5,10 @@
 #define DepthPin 32
 XL320 robot;
 TaskHandle_t Task1; //Task 2 runs on core 1 which runs by default in Loop()
-char rgb[] = "rgbypcwo";
+
+//------- variabls for blinking an LED with Millis------------------------------------
+const int led = 2; // ESP32 Pin to which onboard LED is connected
+
 //--------- OTA Web Updater ----------------------------------------------------------------------------------
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -15,15 +17,26 @@ char rgb[] = "rgbypcwo";
 #include <Update.h>
 
 const char* host = "esp32";
-const char* ssid = "fishisgood";
+
+// For Lab Wifi
+const char* ssid = "fishisgood";//10.1.1.30
 const char* password = "fishisgood";
+// Set your Static IP address
+IPAddress local_IP(10, 1, 1, 40);
+// Set your Gateway IP address
+IPAddress gateway(10, 1, 1, 1);
+
+/*// For Laptop Hotspot
+const char* ssid = "qwertyuiop";//192.168.137.70
+const char* password = "qwertyuiop";
+// Set your Static IP address
+IPAddress local_IP(192, 168, 137, 70);
+// Set your Gateway IP address
+IPAddress gateway(192, 168, 137, 1);
+*/
 
 WebServer server(80);
 
-// Set your Static IP address
-IPAddress local_IP(10, 1, 1, 28);
-// Set your Gateway IP address
-IPAddress gateway(10, 1, 1, 1);
 IPAddress subnet(255, 255, 0, 0);
 IPAddress primaryDNS(8, 8, 8, 8); 
 IPAddress secondaryDNS(8, 8, 4, 4); 
@@ -40,7 +53,7 @@ String style =
 /* Login page */
 String loginIndex = 
 "<form name=loginForm>"
-"<h1>AUTO FISH</h1>"
+"<h1>Project OTA</h1>" //TITLE
 "<input name=userid placeholder='User ID'> "
 "<input name=pwd placeholder=Password type=Password> "
 "<input type=submit onclick=check(this.form) class=btn value=Login></form>"
@@ -98,30 +111,28 @@ String serverIndex =
 "});"
 "</script>" + style;
 
-//--------------------撠暸鬼擐祇? tailmotor -------------------------------------------------------------------------------------------------------------------------------------
+//--------------------尾鰭馬達 tailmotor -------------------------------------------------------------------------------------------------------------------------------------
 int ID1 = 1;//body
 int ID2 = 2;//tail
 int ID  = 3;//head
 int M_ID_[3]  =  {ID, ID1, ID2}; //HEAD To TAIL
 
-//------------------ Parameter -----------------------------------------------------------------------------------------------------------------------
-double Data_RF[4] = {1,0.0,0.0,3};// {movement type, amplitude, frequency, shifts} Amplitude 1.5-2, Frequency 0.6-0.9
-short current_action = 0;//0-26 action, for row
+//------------------無線接收 wireless signal receiving -----------------------------------------------------------------------------------------------------------------------
+char mymessage[255];
+char * p_buf;
+double Data_RF[4] = {0.0,0.0,0.0,0.0};// Data_RF[0]:第幾個動作 which action  Data_RF[1]:Ampplitude Data_RF[2]:W(velocity of angle)
+SoftwareSerial mySerial(18, 19); // (RX, TX)
+
 //---------mode------------------------------------------------------------------------------------------------------------------------------------------------------------
 boolean Tail_bool_turn_Left = false;
 boolean Tail_bool_turn_Right = false;
 boolean Tail_bool_straight = false;
-boolean DONE = true;
-//--------------------------SENSER definition--------------------------------------------------------------------------------------------------------------------------------
-int IRsensorPin[3]={};
-double IRsensorValue[3]={0.0,0.0,0.0}; 
-long previousTimeCminvert = 0;
-//--------------------------?Variable?-----------------------------------------------------------------------------------------------------------------------------------
-int const A = 10; //蝮賣 total
-int i; //index???蝝Ｗ? action index
+
+//--------------------------　Variable　-----------------------------------------------------------------------------------------------------------------------------------
+int const A = 10; //總數 total
+int i; //index　動作索引 action index
 int n = 0;
 int N;
-int timer=1000;
 int OG_pos=0;
 int G_pos=0;
 int Height;
@@ -132,7 +143,7 @@ double t;
 double w_1;
 double w_2;
 double amppt = 0.0;
-double w = 1; //w?銋 multiplier
+double w = 1; //w　之倍數 multiplier
 double delay_t = 80;
 double theta_last_1=0;
 double theta_last_2=0;
@@ -140,7 +151,7 @@ double v=0;
 double init_V; //initial voltage reading 
 double final_V;// final voltage reading
 
-//-------------------???????fourier number  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------　傅立葉參數 fourier number  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 double Period[9] = {1,1.4,1.2,1,1.4,1.2};//Cycle time
 double Turn_1[7][17] = {
 {0,-2,-11.9,-17.8,-18.8,-18.8,-18.8,-18.8,-18.8,-18.8,0,0},
@@ -170,18 +181,18 @@ double Period_S[1] = {1.4};
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void setup() {
+  mySerial.begin(57600);
   Serial.begin(1000000);
+  pinMode(led,  OUTPUT);
+  digitalWrite(led,HIGH);
   OTA();
+  digitalWrite(led,LOW);
   robot.begin(Serial);
   robot.moveJoint(ID2, 512);
   robot.moveJoint(ID1, 512);
   //G_pos=1;
-  randomSeed(analogRead(0));
   delay(3000);
   init_V=analogRead(DepthPin)/4059.0*3.3;
-  for(short i=0;i<=3;i++){
-  //IRsensorValue[i] = analogRead(IRsensorPin)/4059.0*3.3;
-  }
   xTaskCreatePinnedToCore(
                     Task1code,   // Task function. 
                     "Task1",     // name of task. 
@@ -194,28 +205,12 @@ void setup() {
 
 //-------------- Core 1 loop -----------------------------
 void loop() {
-  for(short i=0;i<=3;i++){
-  IRsensorValue[i] = analogRead(IRsensorPin[i]);
-  }
-  //float  cm=0;
- // cm = cm_invert();
-  
-  if (DONE == true){ //?冽銋??臬??芋撘???
-    MARKOV();
-  } 
-  else{
-    robot.moveJoint(ID2, 512);
-    robot.moveJoint(ID1, 512);
-  }
-  
-  
-  //撌埋R?楛摨??葫??
+  RF_xSerial();  //接收指令 receiving signal data    
   delay(10);
-  //check if there' s obstacle 
   if(Tail_bool_turn_Left == true)  {Tail_control_turn_Left();}
   else if(Tail_bool_turn_Right == true)  {Tail_control_turn_Right();}
   else if(Tail_bool_straight == true)  {Tail_control_straight();}
-  else{Do_nothing();}
+  empty();
 }
 
 //--------------- Core 0 loop ------------------------------
@@ -224,283 +219,161 @@ void Task1code( void * pvParameters ){
     server.handleClient();
     Read_Height();
     delay(100);
-    U_D();
+    
+    if (OG_pos>2){
+      OG_pos=2;
+    }
+    else if (OG_pos<0){
+      OG_pos=0;
+    }
+
+    if (G_pos>2){
+      G_pos=2;
+    }
+    else if (G_pos<0){
+      G_pos=0;
+    }
+    
+    if (OG_pos<G_pos){ // DOWN
+      digitalWrite(led,HIGH);
+      robot.setJointSpeed(ID, 2047);
+      delay(530);
+      robot.setJointSpeed(ID, 1024);
+      delay(100);
+      digitalWrite(led,LOW);
+      ++OG_pos;
+    }
+    else if (OG_pos>G_pos){ //UP
+      digitalWrite(led,HIGH);
+      robot.setJointSpeed(ID, 1023);
+      delay(530);
+      robot.setJointSpeed(ID, 0);
+      delay(100);
+      digitalWrite(led,LOW);
+      --OG_pos;
+    }
+    else if (OG_pos==G_pos){
+      robot.setJointSpeed(ID, 0);
+    }
   }
 }
 
-//---------------------- ?∠??唾撓 wireless transmiting------------------------------------------------------------------------------------------------------------------------------------------
-void MARKOV(void)
+//---------------------- 無線傳輸 wireless transmiting------------------------------------------------------------------------------------------------------------------------------------------
+void RF_xSerial(void)
 {
- int Random=random(1,100);
- double Prob=0;
-  
- const int Action_prob[27][27] = {
-  
- //  0,  1,  2,  3,  4,  5,  6, -7,  8,  9, 10, 11, 12, 13, 14,-15, 16, 17, 18, 19,-20, 21, 22, 23,-24,-25,-26
-  { 75,  0,  0,  1,  0,  3,  2,  0,  0,  1,  1,  2,  0,  4,  2,  0,  1,  1,  1,  1,  0,  2,  2,  0,  0,  0,  0},//0
-  { 60, 40,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//1
-  { 67,  0, 33,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//2
-  { 80,  0,  0, 20,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//3
-  { 67,  0,  0,  0, 33,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//4
-  { 82,  0,  0,  0,  0, 16,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//5
-  { 77,  0,  0,  0,  0,  0, 20,  0,  0,  0,  0,  0,  0,  0,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//6
-  {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//7
-  { 67,  0,  0,  0,  0,  0,  0,  0, 33,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//8
-  {100,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//9
-  { 88,  0,  0,  6,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//10
-  { 89,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4,  4,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//11
-  {100,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//12
-  { 85,  0,  0,  0,  0,  2,  0,  0,  0,  2,  0,  0,  2,  8,  0,  0,  0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0},//13
-  { 96,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//14
-  {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//15
-  {100,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//16
-  { 81,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 14,  5,  0,  0,  0,  0,  0,  0,  0,  0},//17
-  { 89,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 11,  0,  0,  0,  0,  0,  0,  0,  0},//18
-  { 76,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 18,  0,  6,  0,  0,  0,  0,  0},//19
-  {100,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//20
-  { 85,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 12,  4,  0,  0,  0,  0},//21
-  { 70,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//22
-  {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//23
-  { 50,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 50,  0,  0,  0},//24
-  {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//25
-  {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},//26
-
- };
-
-const int Speed_prob[27][3] = {
-  //slow, mid ,fast
-  {100,  0,  0},
-  { 60,  0, 40},
-  { 33, 33, 33},
-  { 40, 28, 32},
-  {100,  0,  0},
-  { 64, 25, 11},
-  { 26, 46, 29},
-  {  0,  0,  0},
-  { 33, 50, 17},
-  { 82,  9,  9},
-  { 62, 25, 12},
-  { 85,  7,  7},
-  { 50, 50,  0},
-  { 93,  3,  3},
-  { 81, 19,  0},
-  {  0,  0,  0},
-  { 62, 12, 25},
-  { 43, 24, 33},
-  { 56, 11, 33},
-  { 35, 47, 18},
-  { 33, 33, 33},
-  { 81, 15,  4},
-  {  9, 30, 61},
-  {  0,  0,  0},
-  { 12, 88,  0},
-  {  0,  0,  0},
-  {  0,  0,  0},
- };
-
-/*
-    0 = stop
-    1 = straight up
-    2 = small right up (45 degree)
-    3 = right up (90 degree)
-    4 = Big right up (135 degree)
-    5 = Big big right up(180 degree)
-    6 = Big left up
-    7 = left up
-    8 = small left up 
-    9 = straight
-    10 = small right
-    11 = right
-    12 = big right 
-    13 = big big right
-    14 = big left
-    15 = left
-    16 = small left
-    17 = straight down
-    18 = small right down
-    19 = right down
-    20 = big right down
-    21 = big big right down
-    22 = big left down
-    23 = left down
-    24 = small left down
-    25 = up
-    26 = down
-*/
+  mySerial.listen();
+  if (mySerial.available()) // judge have data or not , if exist!! store into array
+  {
+    for (int iMymessage = 0; 0 < mySerial.available(); ++iMymessage)
+    {
+      char c =  mySerial.read();
+      mymessage[iMymessage] = c;
+      delay(2);
+    }
+    p_buf = mymessage;
     
- for(int next_action=0; next_action<27; next_action++){
-  if(Action_prob[current_action][next_action]>0){
-   Prob=Prob+Action_prob[current_action][next_action];
-   if( Random < Prob ){
-    current_action=next_action;
-    switch(current_action){
-     case 0 :
-      Tail_bool_turn_Left = false;
-      Tail_bool_turn_Right = false;
-      Tail_bool_straight = false;
-      DONE = false;
-      break;
-      
-     case 1:
-      /*Data_RF[1] = 1.6;
-      //UP();
-      STRAIGHT(); 
-      DONE=false;*/
-      break;
+      switch (*p_buf) // [data formula] : H, data 1 , data 2 , data 3 , ...
+      {        
+        case 'L': case 'l': //轉彎動作 turning left action
+        {
+            Tail_bool_turn_Left = true;
+            Tail_bool_turn_Right = false;
+            Tail_bool_straight = false;
+            decode_Data();
+            parameter_determine();
+        }        
+        break;   
+        
+        case 'R': case 'r': //轉彎動作 turning right action
+        {
+            Tail_bool_turn_Right = true;
+            Tail_bool_turn_Left = false;
+            Tail_bool_straight = false;
+            decode_Data();
+            parameter_determine();
+        }        
+        break;
+        
+        case 'O': case 'o': //直線動作 straight action
+        {
+            Tail_bool_straight = true;
+            Tail_bool_turn_Left = false;
+            Tail_bool_turn_Right = false;  
+            decode_Data();
+            parameter_determine();
+        }        
+        break;    
+        
+        case 'S': case 's': //　　　停止 stop action
+        {
+          Tail_bool_turn_Left = false;
+          Tail_bool_turn_Right = false;
+          Tail_bool_straight = false;
+          robot.moveJoint(ID2, 512);
+          robot.moveJoint(ID1, 512);
+        }break;
 
-     case 2:
-      /*Data_RF[1] = 0.5;
-      //UP();
-      RIGHT();
-      DONE=false*/;
-      break;
+        case 'D': case 'd': 
+        {
+            if (G_pos<2){
+              ++G_pos;
+            }
+        } 
+        break;
 
-     case 3:
-      /*Data_RF[1] = 1;
-      //UP();
-      RIGHT();*/
-      DONE=false;
+        case 'U': case 'u': 
+        {
+            if (G_pos>0){
+              --G_pos;
+            }
+        } 
+        break;
 
-     case 4:
-      /*Data_RF[1] = 1.5;
-      //UP();
-      RIGHT();
-      DONE=false;*/
-      break;
-      
-     case 5:
-       /*Data_RF[1] = 2;
-       //UP();
-       RIGHT();
-       DONE=false;*/
-       break;
-      
-     case 6: 
-       /*Data_RF[1] = 1.5;
-       //UP();
-       LEFT();
-       DONE=false;*/
-       break;
-       
-     case 8:
-       /*Data_RF[1] = 0.5;
-       //UP();
-       LEFT();
-       DONE=false;*/
-       break;
+        case 'F': case 'f': 
+        {
+            digitalWrite(led,HIGH);
+            robot.setJointSpeed(ID, 2047);
+            delay(250);
+            robot.setJointSpeed(ID, 1024);
+            delay(100);
+            digitalWrite(led,LOW);
+        } 
+        break;
 
-     case 9:
-       Data_RF[1] = 1.6;
-       STRAIGHT(); 
-       DONE=false;
-       break;
-
-     case 10:
-       Data_RF[1] = 0.5;
-       RIGHT();
-       DONE=false;
-       break;
-
-     case 11:
-       Data_RF[1] = 1;
-       RIGHT();
-       DONE=false;
-       break;
-       
-     case 12:
-       /*Data_RF[1] = 1.5;
-       RIGHT();
-       DONE=false;*/
-       break;
-       
-     case 13:
-       /*Data_RF[1] = 2;
-       RIGHT();
-       DONE=false;*/
-       break;
-       
-     case 14:
-       /*Data_RF[1] = 1.5;
-       LEFT();
-       DONE=false;*/
-       break;
-       
-     case 16:
-       Data_RF[1] = 0.5;
-       LEFT();
-       DONE=false;
-       break;
-       
-     case 17:
-       /*Data_RF[1] = 1.6;
-       //DOWN();
-       STRAIGHT(); 
-       DONE=false;*/
-       break;
-       
-     case 18:
-       /*Data_RF[1] = 0.5;
-       //DOWN();
-       RIGHT();
-       DONE=false;*/
-       break;
-       
-     case 19:
-       /*Data_RF[1] = 1;
-       DOWN();
-       RIGHT();
-       DONE=false;*/
-       break;
-       
-     case 21:
-       /*Data_RF[1] = 2;
-       DOWN();
-       RIGHT();
-       DONE=false;*/
-       break;
-
-     case 22:
-       /*Data_RF[1] = 1.5;
-       DOWN();
-       LEFT();
-       DONE=false;*/
-       break;
-     case 23:
-       /*Data_RF[1] = 1;
-       DOWN();
-       LEFT();
-       DONE=false;*/
-       break;
-    }   
-   Prob=0;
-   parameter_determine();
-   break; 
-   }
+        case 'B': case 'b': 
+        {
+            digitalWrite(led,HIGH);
+            robot.setJointSpeed(ID, 1023);
+            delay(250);
+            robot.setJointSpeed(ID, 0);
+            delay(100);
+            digitalWrite(led,LOW);
+        } 
+        break;
+        
+        case 'K': case 'k': //　追縱深度 depth sensory
+        { 
+          
+        }
+        break;
+      }
  }
 }
- 
- for(int next_speed=0; next_speed<3; next_speed++){
-  if(Speed_prob[current_action][next_speed]>0){
-   Prob=Prob+Speed_prob[current_action][next_speed];
-   if( Random < Prob ){
-    if (next_speed==0){
-        Data_RF[2] = 0.6;
-    }
-    else if (next_speed==1){
-        Data_RF[2] = 0.75;
-    }
-    else if (next_speed==2){
-        Data_RF[2] = 0.9;
-    }
-   parameter_determine(); 
-   break;
-   }
- }
- }     
- 
-}
 
-//-----------------------Data decoding---------------------------              
+//-----------------------Data decoding---------------------------
+void decode_Data(){//store all messages into Data_RF
+  char* p;
+  char buf[0x3F];
+          if (',' == *(++p_buf)) 
+            {
+            for (int m = 0, mm = 4; m < mm; ++m) //NofData=4, run 4 times
+            {
+              for (p = buf, ++p_buf; (',' != *p_buf) && (-1 != *p_buf); ++p, (++p_buf)) //see value after ' ,' and stop when next value is ' ,' and store null for ' ,'
+                  { (*p) = *p_buf;}//store value if not ' ,'
+              (*p) = '\0'; //' ,' will be store as null
+              Data_RF[m] = atof(buf);// convert value and null together into integer value and store into array
+              }}}  
+                 
 void Read_Height(){
   final_V=0;
   for (int i =0 ;i<10;i++)
@@ -531,10 +404,12 @@ else if(Tail_bool_straight == true){
      i =  Data_RF[0] -1;  //the number of movement
      amppt = Data_RF[1];//Amppt determine
      w = Data_RF[2];// W determine
+     delay_t =80;
      shift = Data_RF[3];
      N = Period_S[i]/w*10;
      w_1 =  S_1[i][9]*w;
      w_2 =  S_1[i][19]*w;
+     n=0;
 }}
 
 
@@ -571,8 +446,7 @@ void Tail_control_turn_Right(){//right
             ++n;
             delay(delay_t); // time for motor
             if(n==N+2){ //N+2=12 bcuz turn is only size 12
-              Tail_bool_turn_Right = false; 
-              DONE=true;
+              //Tail_bool_turn_Right = false; 
               theta_last_1=0;
               theta_last_2=0;
               delay(1500);}
@@ -610,16 +484,14 @@ void Tail_control_turn_Left(){//left
             ++n;
             delay(delay_t); // time for motor
             if(n==N+2){ //N+2=12 bcuz turn is only size 12
-              Tail_bool_turn_Left = false;
-              DONE=true;
+              //Tail_bool_turn_Left = false;
               theta_last_1=0;
               theta_last_2=0;
               delay(1500);}
 }
 
 void Tail_control_straight(){
-  
-    n %= (N+1); //n/(N+1)?擗 remaining number
+    n %= (N+1); //n/(N+1)　餘數 remaining number
     t = n*0.1;  //time for fomula
          for (int m = 1, mm = 2; m <= mm; ++m)
             { double theta_now; 
@@ -648,80 +520,21 @@ void Tail_control_straight(){
                               ++n;
              delay(delay_t);
              if(n==N+1){ //stop when n=3
-              Tail_bool_straight = false;
-              DONE=true;
+              //Tail_bool_straight = false;
+              //done=true;
               robot.moveJoint(M_ID_[1], 512);  
-              robot.moveJoint(M_ID_[2], 512);}}
+              robot.moveJoint(M_ID_[2], 512);
+              }
+}
 
-void Do_nothing(){
-  n %= timer;
-  delay(1);
-  ++n;
-  if(n==N+1){
-    DONE=true;
+//-------Clear Array---------------
+void empty(){
+  uint32_t *q = (uint32_t *) &mymessage[0] ;
+  while(q < (uint32_t *)(mymessage+0XFF)) {
+    *q = (uint32_t)0;
+    q++;
   }
 }
-
-//---------BOOL for action-----------------------------------------------
-void STRAIGHT(){
-  Tail_bool_straight = true;
-  Tail_bool_turn_Left = false;
-  Tail_bool_turn_Right = false;
-  robot.LED(1, &rgb[0] );
-}
-void LEFT(){
-  Tail_bool_turn_Left = true;
-  Tail_bool_straight = false;
-  Tail_bool_turn_Right = false;
-  robot.LED(1, &rgb[1] );
-}
-void RIGHT(){
-  Tail_bool_turn_Right = true;
-  Tail_bool_straight = false;
-  Tail_bool_turn_Left = false; 
-  robot.LED(1, &rgb[2] ); 
-}
-//---------IR SENSER------------------------------------------------------
-/*float cm_invert(){
-  float cm=0;
-  if(millis() - previousTimeCminvert > 500){
-  for(short i=0;i<=3;i++){
-  if(IRsensorValue[i] >= 297)
-    {
-      cm = (0.0062*(pow(IRsensorValue,2))) - (4.3167*(pow(IRsensorValue,1))) + (753.96);
-    }
-  }
-  return cm;
-  }
-}*/
-//---------UP DOWN--------------------------------------------------------
-void UP(){
-  if(G_pos>0){
-     --G_pos;
-    }
-}
-
-void DOWN(){
-  if(G_pos<=2){
-     ++G_pos;
-    }
-}
-
-void U_D(){
-  if (OG_pos<G_pos){
-      robot.setJointSpeed(ID, 2047);
-      delay(1000);
-      robot.setJointSpeed(ID, 1024);
-      ++OG_pos;
-    }
-    else if (OG_pos>G_pos){
-      robot.setJointSpeed(ID, 1023);
-      delay(1000);
-      robot.setJointSpeed(ID, 0);
-      --OG_pos;
-    }
-}
-
 //----------OTA Web Updater----------------------------------------------
 void OTA()
 {
@@ -736,8 +549,11 @@ void OTA()
   
   // Wait for connection
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
+    for(int i=0;i<10;i++){
+      delay(500);
+      Serial.print(".");
+    }
+    break;
   }
   Serial.println("");
   Serial.print("Connected to ");

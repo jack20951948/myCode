@@ -3,9 +3,10 @@
 #include <math.h>
 #include <SoftwareSerial.h>
 #define DepthPin 32
+#define led 2
 XL320 robot;
 TaskHandle_t Task1; //Task 2 runs on core 1 which runs by default in Loop()
-char rgb[] = "rgbypcwo";
+
 //--------- OTA Web Updater ----------------------------------------------------------------------------------
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -20,7 +21,7 @@ const char* password = "fishisgood";
 WebServer server(80);
 
 // Set your Static IP address
-IPAddress local_IP(10, 1, 1, 28);
+IPAddress local_IP(10, 1, 1, 41);
 // Set your Gateway IP address
 IPAddress gateway(10, 1, 1, 1);
 IPAddress subnet(255, 255, 0, 0);
@@ -102,6 +103,12 @@ int ID1 = 1;//body
 int ID2 = 2;//tail
 int ID  = 3;//head
 int M_ID_[3]  =  {ID, ID1, ID2}; //HEAD To TAIL
+//------------------IR senser ------------------------------------------------------------------------------------------------------------------
+int analogInPin_1 = 34;  // Analog input pin that the potentiometer is attached to
+int analogInPin_2 = 35;  // Analog input pin that the potentiometer is attached to
+
+int IRsensorValue_1=0;
+int IRsensorValue_2=0;
 
 //------------------ Parameter -----------------------------------------------------------------------------------------------------------------------
 double Data_RF[4] = {1,0.0,0.0,3};// {movement type, amplitude, frequency, shifts} Amplitude 1.5-2, Frequency 0.6-0.9
@@ -117,7 +124,7 @@ int const A = 10; //總數 total
 int i; //index　動作索引 action index
 int n = 0;
 int N;
-int timer=1000;
+int timer=100;
 int OG_pos=0;
 int G_pos=0;
 int Height;
@@ -167,7 +174,10 @@ double Period_S[1] = {1.4};
 
 void setup() {
   Serial.begin(1000000);
+  pinMode(led,  OUTPUT);
+  digitalWrite(led,HIGH);
   OTA();
+  digitalWrite(led,LOW);
   robot.begin(Serial);
   robot.moveJoint(ID2, 512);
   robot.moveJoint(ID1, 512);
@@ -187,13 +197,12 @@ void setup() {
 
 //-------------- Core 1 loop -----------------------------
 void loop() {
-  if (DONE==true){ //用於之後可切換模式開關
+  IRsensorValue_1 = analogRead(analogInPin_1);
+  IRsensorValue_2 = analogRead(analogInPin_2);
+  
+  if (DONE==true){
     MARKOV();
   } 
-  else{
-    
-  }
-  //差IR和深度(感測器)
   delay(10);
   //check if there' s obstacle 
   if(Tail_bool_turn_Left == true)  {Tail_control_turn_Left();}
@@ -311,170 +320,242 @@ void MARKOV(void)
     25 = up
     26 = down
 */
-    
+  
  for(int next_action=0; next_action<27; next_action++){
   if(Action_prob[current_action][next_action]>0){
    Prob=Prob+Action_prob[current_action][next_action];
    if( Random < Prob ){
     current_action=next_action;
-    switch(current_action){
-     case 0 :
-      Tail_bool_turn_Left = false;
-      Tail_bool_turn_Right = false;
-      Tail_bool_straight = false;
-      DONE = false;
-      break;
-      
-     case 1:
-      Data_RF[1] = 1.6;
-      UP();
-      STRAIGHT(); 
-      DONE=false;
-      break;
+      if (current_action == 0 ){ //empty
+        Tail_bool_turn_Left = false;
+        Tail_bool_turn_Right = false;
+        Tail_bool_straight = false;
+        DONE = false;
+      }
+  
+      else if (current_action == 1 ){ //Straight and UP
+        Data_RF[1] = 1.6;
+        UP();
+        STRAIGHT(); 
+        DONE=false;
+      }
+  
+      else if (current_action == 2 ){ // Right 45* and UP
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 1.0;
+        UP();
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 3 ){ // Right 90* and UP
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        UP();
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 4 ){ // Right 135* and UP
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        UP();
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 5 ){ // Right 180* and UP
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        UP();
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 6 ){ // Left 135* and UP
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        UP();
+        LEFT();
+        DONE=false;
+      }
+  
+      else if (current_action == 8 ){ //Left 45* and UP
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 1.0;
+        UP();
+        LEFT();
+        DONE=false;
+      }
+ 
+      else if (current_action == 9 ){ // Straight
+        Data_RF[1] = 1.6;
+        STRAIGHT(); 
+        DONE=false;
+      }
+  
+      else if (current_action == 10){ // Right 45*
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 1.0;
+        RIGHT();
+        DONE=false;
+      }
+ 
+      else if (current_action == 11){ // Right 90*
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 12){ // Right 135*
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 13){ // Right 180*
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 14){ // Left 135*
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        LEFT();
+        DONE=false;
+      }
+  
+      else if (current_action == 16){ // Left 45*
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        LEFT();
+        DONE=false;
+      }
+ 
+      else if (current_action == 17){ // Straight and Down
+        Data_RF[1] = 1.6;
+        DOWN();
+        STRAIGHT(); 
+        DONE=false;
+      }
+  
+      else if (current_action == 18){ // Right 45* and Down
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 1.0;
+        DOWN();
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 19){ // Right 90* and Down
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        DOWN();
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 21){ // Right 180* and Down
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        DOWN();
+        RIGHT();
+        DONE=false;
+      }
+  
+      else if (current_action == 22){ // Left 135* and Down
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        DOWN();
+        LEFT();
+        DONE=false;
+      }
+  
+      else if (current_action == 23){ //Left 90* and Down
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        DOWN();
+        LEFT();
+        DONE=false;
+      }
 
-     case 2:
-      Data_RF[1] = 0.5;
-      UP();
-      RIGHT();
-      DONE=false;
-      break;
-
-     case 3:
-      Data_RF[1] = 1;
-      UP();
-      RIGHT();
-      DONE=false;
-
-     case 4:
-      Data_RF[1] = 1.5;
-      UP();
-      RIGHT();
-      DONE=false;
-      break;
-      
-     case 5:
-       Data_RF[1] = 2;
-       UP();
-       RIGHT();
-       DONE=false;
-       break;
-      
-     case 6: 
-       Data_RF[1] = 1.5;
-       UP();
-       LEFT();
-       DONE=false;
-       break;
-       
-     case 8:
-       Data_RF[1] = 0.5;
-       UP();
-       LEFT();
-       DONE=false;
-       break;
-
-     case 9:
-       Data_RF[1] = 1.6;
-       STRAIGHT(); 
-       DONE=false;
-       break;
-
-     case 10:
-       Data_RF[1] = 0.5;
-       RIGHT();
-       DONE=false;
-       break;
-
-     case 11:
-       Data_RF[1] = 1;
-       RIGHT();
-       DONE=false;
-       break;
-       
-     case 12:
-       Data_RF[1] = 1.5;
-       RIGHT();
-       DONE=false;
-       break;
-       
-     case 13:
-       Data_RF[1] = 2;
-       RIGHT();
-       DONE=false;
-       break;
-       
-     case 14:
-       Data_RF[1] = 1.5;
-       LEFT();
-       DONE=false;
-       break;
-       
-     case 16:
-       Data_RF[1] = 0.5;
-       LEFT();
-       DONE=false;
-       break;
-       
-     case 17:
-       Data_RF[1] = 1.6;
-       DOWN();
-       STRAIGHT(); 
-       DONE=false;
-       break;
-       
-     case 18:
-       Data_RF[1] = 0.5;
-       DOWN();
-       RIGHT();
-       DONE=false;
-       break;
-       
-     case 19:
-       Data_RF[1] = 1;
-       DOWN();
-       RIGHT();
-       DONE=false;
-       break;
-       
-     case 21:
-       Data_RF[1] = 2;
-       DOWN();
-       RIGHT();
-       DONE=false;
-       break;
-
-     case 22:
-       Data_RF[1] = 1.5;
-       DOWN();
-       LEFT();
-       DONE=false;
-       break;
-     case 23:
-       Data_RF[1] = 1;
-       DOWN();
-       LEFT();
-       DONE=false;
-       break;
-    }   
+      else if (current_action == 24){ // Right 90*
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        RIGHT();
+        DONE=false;
+      }
+      else if (current_action == 25){ // Left 135*
+        Data_RF[1] = 1.0;
+        Data_RF[0] = 3.0;
+        LEFT();
+        DONE=false;
+      }
+   
    Prob=0;
    parameter_determine();
    break; 
    }
  }
 }
- 
+
+  if((IRsensorValue_1<4095) && (IRsensorValue_2<4095)){ 
+    current_action = 14;
+    Data_RF[1] = 1.0;
+    Data_RF[0] = 3.0;
+    LEFT();
+    DONE=false;
+    parameter_determine();
+  }
+  else if((IRsensorValue_1<4095) && (IRsensorValue_2>=4095)){
+    current_action = 12;
+    Data_RF[1] = 1.0;
+    Data_RF[0] = 3.0;
+    RIGHT();
+    DONE=false;
+    parameter_determine();
+  }
+
+  
  for(int next_speed=0; next_speed<3; next_speed++){
   if(Speed_prob[current_action][next_speed]>0){
    Prob=Prob+Speed_prob[current_action][next_speed];
    if( Random < Prob ){
     if (next_speed==0){
+      
+      if (Tail_bool_straight == true){
         Data_RF[2] = 0.6;
+      }
+      else if (Tail_bool_straight == false){
+        Data_RF[2] = 0.6;
+      } 
+      
     }
+    
     else if (next_speed==1){
+        
+      if (Tail_bool_straight == true){
         Data_RF[2] = 0.75;
+      }
+      else if (Tail_bool_straight == false){
+        Data_RF[2] = 0.6;
+      } 
+      
     }
+    
     else if (next_speed==2){
+        
+      if (Tail_bool_straight == true){
         Data_RF[2] = 0.9;
+      }
+      else if (Tail_bool_straight == false){
+        Data_RF[2] = 0.6;
+      } 
+      
     }
    parameter_determine(); 
    break;
@@ -640,56 +721,56 @@ void Do_nothing(){
   n %= timer;
   delay(1);
   ++n;
-  if(n==N+1){
+  if(n==timer){
     DONE=true;
   }
 }
 
 //---------BOOL for action-----------------------------------------------
 void STRAIGHT(){
+  Data_RF[0] = 1.0;
   Tail_bool_straight = true;
   Tail_bool_turn_Left = false;
-  Tail_bool_turn_Right = false;
-  robot.LED(1, &rgb[0] );
+  Tail_bool_turn_Right = false; 
 }
 void LEFT(){
   Tail_bool_turn_Left = true;
   Tail_bool_straight = false;
   Tail_bool_turn_Right = false;
-  robot.LED(1, &rgb[1] );
+  
 }
 void RIGHT(){
   Tail_bool_turn_Right = true;
   Tail_bool_straight = false;
-  Tail_bool_turn_Left = false; 
-  robot.LED(1, &rgb[2] ); 
+  Tail_bool_turn_Left = false;  
 }
 
 //---------UP DOWN--------------------------------------------------------
 void UP(){
-  if(G_pos>0){
-     --G_pos;
-    }
+  G_pos=0;
 }
 
 void DOWN(){
-  if(G_pos<=2){
-     ++G_pos;
-    }
+  G_pos=2;
 }
 
-void U_D(){
-  if (OG_pos<G_pos){
+void U_D(){    
+    if (OG_pos<G_pos){ // DOWN
       robot.setJointSpeed(ID, 2047);
-      delay(1000);
+      delay(530);
       robot.setJointSpeed(ID, 1024);
+      delay(100);
       ++OG_pos;
     }
-    else if (OG_pos>G_pos){
+    else if (OG_pos>G_pos){ //UP
       robot.setJointSpeed(ID, 1023);
-      delay(1000);
+      delay(530);
       robot.setJointSpeed(ID, 0);
+      delay(100);
       --OG_pos;
+    }
+    else if (OG_pos==G_pos){
+      robot.setJointSpeed(ID, 0);
     }
 }
 
