@@ -471,7 +471,7 @@ def motionForecast(transitionMatrixM, transitionMatrixS):   ####馬爾可夫鏈�
 
         update_line(hl, (now_pos[0],now_pos[1],now_pos[2]))
         plt.show(block=False)
-        plt.pause(0.0001)
+        plt.pause(0.001)
 
     print("Action is nill")
 
