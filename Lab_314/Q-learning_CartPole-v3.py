@@ -102,25 +102,25 @@ for i in range(0, TRAILS):
     p_before = 0
         
     for j in range(0, MAX_STEPS):
-     x_vec = Box(ob)
-     reward_hat, p_before = ACE(learn=0.5, decay=0.8, reward=0, gamma=0.95, p_before=p_before)
-     action = ASE(learn=1000, decay=0.9, reward=reward_hat)
+        x_vec = Box(ob)
+        reward_hat, p_before = ACE(learn=0.5, decay=0.8, reward=0, gamma=0.95, p_before=p_before)
+        action = ASE(learn=1000, decay=0.9, reward=reward_hat)
      
-     if j > 30000: 
-       env.render()
+        if j > 30000: 
+            env.render()
          
-     ob, _, done, _ = env.step(action)
+        ob, _, done, _ = env.step(action)
 
-     if done:
-         x_vec = Box(ob)
-         reward_hat, p_before = ACE(learn=0.5, decay=0.8, reward=-1, gamma=0.95, p_before=p_before)
-         ASE(learn=1000, decay=0.9, reward=reward_hat)
-         break
+        if done:
+            x_vec = Box(ob)
+            reward_hat, p_before = ACE(learn=0.5, decay=0.8, reward=-1, gamma=0.95, p_before=p_before)
+            ASE(learn=1000, decay=0.9, reward=reward_hat)
+            break
 
     if i % 1 == 0 :
-     print("Trial {0:3} was {1:5} steps".format(i, j))
+        print("Trial {0:3} was {1:5} steps".format(i, j))
     if j == MAX_STEPS-1 :
-     print("Pole balanced successfully for at least {} steps at Trail {}".format(MAX_STEPS, i))
-     break
+        print("Pole balanced successfully for at least {} steps at Trail {}".format(MAX_STEPS, i))
+        break
 
 env.close()

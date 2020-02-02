@@ -13,13 +13,13 @@ def dataConbining():
     u_data = None
     s_data = None
     for i in range(fileTotal):
-        tmpdata = np.loadtxt("Lab_random_motion/head_u_2_{}.txt".format(i+Nowfile), delimiter="\t", dtype=float, skiprows=2)
+        tmpdata = np.loadtxt("Lab_314/Lab_random_motion/head_u_2_{}.txt".format(i+Nowfile), delimiter="\t", dtype=float, skiprows=2)
         if u_data is None:
             u_data = tmpdata
         else:
             u_data = np.vstack((u_data, tmpdata))
     for i in range(fileTotal):
-        tmpdata = np.loadtxt("Lab_random_motion/head_s_2_{}.txt".format(i+Nowfile), delimiter="\t", dtype=float, skiprows=2)
+        tmpdata = np.loadtxt("Lab_314/Lab_random_motion/head_s_2_{}.txt".format(i+Nowfile), delimiter="\t", dtype=float, skiprows=2)
         if s_data is None:
             s_data = tmpdata
         else:

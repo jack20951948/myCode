@@ -16,6 +16,8 @@ def testUrl(url):
         print(e)
     except UnicodeEncodeError as ue:
         print(ue)
+    except:
+        print("something error!")
     else:
         return html
 
@@ -27,20 +29,34 @@ def testEncode(html):
     else:
         return bs
 
+# class CB_Dictionarys:
+#     def __init__(self, definitions):
+#         self.defnitions = self.CB_Definitions()
+
+#     class CB_Definitions:
+#     def __init__(self, examples):
+#         self.examples = examples
 
 if __name__ == "__main__":
     print("Welcome to AutoCambridge_Lee_High!\nReady to translate.....................\n")
     print("Press 'Ctrl + q' to activate the translater. DO NOT CLOSE THE WINDOW!!!")
     context = str()
+    windowindex = 0
     Word = ""
     lang = {'E': '%E8%8B%B1%E8%AA%9E', 'e': '%E8%8B%B1%E8%AA%9E', 'C': '%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94', 'c': '%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94'}
-    # language = input('Enter "E"->English / "C"->Chinese :') # EN/CN
-    language = 'c'
+    language = input('Enter "E"->English / "C"->Chinese :') # EN/CN
+    # language = 'c'
+
+    print(".\n.\n.\n.\nAuto-Cambridge is activated! Please press 'Ctrl + q' to start translate............")
 
     while True:
-        keyboard.wait(hotkey='ctrl+q')
-        pyautogui.hotkey('ctrlleft', 'c')
-        Word = pyperclip.paste()
+        if windowindex == 1:
+            pass
+        else:
+            keyboard.wait(hotkey='ctrl+q', suppress=True)
+            pyautogui.hotkey('ctrlleft', 'c')
+            Word = pyperclip.paste()
+        
 
         context = "Search \"" + str(Word) + "\" definition from {} dictionary..........\n".format(language)
         print("\nSearch \"", Word, "\" definition from {} dictionary..........\n".format(language))
@@ -129,11 +145,14 @@ if __name__ == "__main__":
         scrollbar.config(command=listbox.yview)
 
         keyboard.add_hotkey('alt+q', lambda: window.quit())
+
         # window.bind('<Button-3>',hello())
         window.mainloop()
         try:
-            window.destroy()
+            window.destroy()   
         except:
             pass
+            
+            
         
         ### GUI
