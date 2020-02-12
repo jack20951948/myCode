@@ -1,6 +1,12 @@
 #include <SPI.h>
 #include <MFRC522.h>     // 引用程式庫
 
+#define LED1  3
+#define LED2  4
+#define LED3  8
+#define LED4  9
+#define LED5  A1
+
 #define RST_PIN      A0        // 讀卡機的重置腳位
 #define SS_PIN       10        // 晶片選擇腳位
 
@@ -68,7 +74,11 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);  // 建立MFRC522物件
 
 void setup() {
   randomSeed(analogRead(1));
-  pinMode(7, OUTPUT); digitalWrite(7, LOW);
+  pinMode(LED1, OUTPUT); digitalWrite(LED1, HIGH);
+  pinMode(LED2, OUTPUT); digitalWrite(LED2, LOW);
+  pinMode(LED3, OUTPUT); digitalWrite(LED3, LOW);
+  pinMode(LED4, OUTPUT); digitalWrite(LED4, LOW);
+  pinMode(LED5, OUTPUT); digitalWrite(LED5, LOW);
 
   pinMode(Enter, INPUT_PULLUP);
   pinMode(Return, INPUT_PULLUP);
@@ -93,15 +103,12 @@ void setup() {
 
 void loop() {
   if (home_flag == 0){
+    status_sign('a');
     lcd.clear();
-    lcd.setCursor ( 0, 0 );            // go to the top left corner
-    lcd.print("    Mei's project   "); // write this string on the top row
     lcd.setCursor ( 0, 1 );            // go to the 2nd row
-    lcd.print("RFID reader's ready!"); // pad string with spaces for centering
+    lcd.print("Welcome! Please scan"); // pad string with spaces for centering
     lcd.setCursor ( 0, 2 );            // go to the third row
-    lcd.print("Please swipe the    "); // pad with spaces for centering
-    lcd.setCursor ( 0, 3 );            // go to the fourth row
-    lcd.print("card to activate!...");
+    lcd.print("   your passport!"); // pad with spaces for centering
     home_flag = 1;
   }
   readRFID();
@@ -116,14 +123,15 @@ void readRFID(){
       print_list = "";
       print_list_checkID = "";
       lcd.clear();
-      lcd.setCursor ( 0, 0 );
-      lcd.print("Loading");
+      lcd.setCursor ( 0, 1 );
+      lcd.print("    Loading");
       delay(500);
-      for( int i = 7; i < 13 ; i++ ){
-        lcd.setCursor ( i, 0 );
+      for( int i = 11; i < 16 ; i++ ){
+        lcd.setCursor ( i, 1 );
         lcd.print(".");
         delay(500);
       }
+      delay(2000);
 
       byte *id = mfrc522.uid.uidByte;   // 取得卡片的UID
       byte idSize = mfrc522.uid.size;   // 取得UID的長度
@@ -143,17 +151,19 @@ void readRFID(){
         Serial.println(id[i], HEX);       // 以16進位顯示UID值
         currentID += id[i];
       }
+      currentID = "#A" + currentID;
       Serial.println();
       Serial.print("currentID: ");
       Serial.println(currentID);
 
+      status_sign('b');
       lcd.clear();
       lcd.setCursor ( 0, 0 );
-      lcd.print("currentID: ");
-      lcd.setCursor ( 11, 0 );
+      lcd.print("  ID: ");
+      lcd.setCursor ( 6, 0 );
       lcd.print(currentID);
       lcd.setCursor ( 0, 3 );
-      lcd.print("Comfirm       Return");
+      lcd.print("   Return/Comfirm");
 
       print_list += "currentID: " + String(currentID) + "\n";
 
@@ -167,35 +177,57 @@ void readRFID(){
         }
       }
       while (digitalRead(Enter) == LOW){}
+
+      lcd.clear();
+      lcd.setCursor ( 0, 1 );
+      lcd.print("Please look at the");
+      lcd.setCursor ( 0, 2 );
+      lcd.print("camera!");
+      delay(2000);
+
+      
+      for( int j = 0; j < 3; j++ ){
+        lcd.clear();
+        lcd.setCursor ( 0, 1 );
+        lcd.print("   Verifying");
+        delay(500);
+        for( int i = 12; i < 17 ; i++ ){
+          lcd.setCursor ( i, 1 );
+          lcd.print(".");
+          delay(500);
+        }
+      }
+      delay(500);
+
       changeRole(); 
       printOut(print_list + print_list_checkID + print_list_change);
     } 
 }
 
 void checkIdentity(String currentID){
-  if (currentID == "912112428"){
+  if (currentID == "#A912112428"){
       role = roleA;
       Serial.print("Last role: ");
       Serial.println(role);
 
-      lcd.setCursor ( 0, 1 );
-      lcd.print("Now role: ");
-      lcd.setCursor ( 10, 1 );
-      lcd.print(role);
+      //lcd.setCursor ( 0, 1 );
+      //lcd.print("Now role: ");
+      //lcd.setCursor ( 10, 1 );
+      //lcd.print(role);
 
       print_list_checkID += "Last role: " + String(role) + "\n";
   }
-  else if (currentID == "9015113522"){
+  else if (currentID == "#A9015113522"){
       role = roleB;
       Serial.print("Last role: ");
       Serial.println(role);
 
-      lcd.setCursor ( 0, 1 );
-      lcd.print("Now role: ");
-      lcd.setCursor ( 10, 1 );
-      lcd.print(role);
-      lcd.setCursor ( 0, 2 );
-      lcd.print(" ");
+      //lcd.setCursor ( 0, 1 );
+      //lcd.print("Now role: ");
+      //lcd.setCursor ( 10, 1 );
+      //lcd.print(role);
+      //lcd.setCursor ( 0, 2 );
+      //lcd.print(" ");
 
       print_list_checkID += "Last role: " + String(role) + "\n";
   }
@@ -216,35 +248,40 @@ void checkIdentity(String currentID){
 }
 
 void changeRole(){
+     status_sign('c');
      Serial.print("Change from role ");
-     lcd.setCursor ( 0, 2 );
-     lcd.print("Change to role ");
+
+     lcd.clear();
+     lcd.setCursor ( 0, 0 );
+     lcd.print(" Verification pass!");
+     lcd.setCursor ( 0, 1 );
+     lcd.print("Switch to zone #");
 
      print_list_change += "Change from role ";
-
+     
      getRandomRole();
-     lcd.setCursor ( 15, 2 );
+     lcd.setCursor ( 16, 1 );
      lcd.print(randomRole);
-     lcd.setCursor ( 0, 3 );
-     lcd.print("Comfirm the change? ");
+     lcd.setCursor ( 0, 2 );
+     lcd.print("   Return/Comfirm");
 
      while (digitalRead(Enter) == HIGH){
        if (digitalRead(Return) == LOW){
           getRandomRole();
-          lcd.setCursor ( 15, 2 );
+          lcd.setCursor ( 16, 1 );
           lcd.print(randomRole);
-          lcd.setCursor ( 0, 3 );
-          lcd.print("Comfirm the change?");
+          lcd.setCursor ( 0, 2 );
+          lcd.print("   Return/Comfirm");
           delay(500);
        }
      }
 
-     if (currentID == "912112428"){
+     if (currentID == "#A912112428"){
       Serial.print(roleA);
       print_list_change += String(roleA);
       roleA = randomRole;
     }
-     else if (currentID == "9015113522"){
+     else if (currentID == "#A9015113522"){
       Serial.print(roleB);
       print_list_change += String(roleB);
       roleB = randomRole;
@@ -261,36 +298,38 @@ void changeRole(){
     currentID = "";
     mfrc522.PICC_HaltA();  // 讓卡片進入停止模式
     delay(100);
+
+    for( int j = 0; j < 3; j++ ){
+      lcd.clear();
+      lcd.setCursor ( 0, 1 );
+      lcd.print("Switching to zone #"); 
+      lcd.setCursor ( 19, 1 );
+      lcd.print(randomRole); 
+      lcd.setCursor ( 0, 2 );
+      lcd.print("  please wait"); 
+      delay(500);
+      for( int i = 13; i < 18 ; i++ ){
+        lcd.setCursor ( i, 2 );
+        lcd.print(".");
+        delay(500);
+      }
+    }
     Serial.println("### changeRole Out ###");
+    delay(1000);
 }
 
 void printOut(String print_data){
   lcd.clear();
-  lcd.setCursor ( 0, 0 );
-  lcd.print("Processing"); 
-  delay(500);
-  for( int i = 10; i < 20 ; i++ ){
-    lcd.setCursor ( i, 0 );
-    lcd.print(".");
-    delay(500);
-  }
-  delay(2000);
   lcd.setCursor ( 0, 1 );
-  lcd.print("updating your data");
-  delay(500);
-  for( int i = 18; i < 20 ; i++ ){
-    lcd.setCursor ( i, 1 );
-    lcd.print(".");
-    delay(500);
-  }
+  lcd.print("  Switch complete!"); 
   delay(2000);
-  lcd.setCursor ( 0, 2 ); 
-  lcd.print("Connecting to your");
-  lcd.setCursor ( 0, 3 );
-  lcd.print("printer"); 
+  lcd.setCursor ( 0, 2 );
   delay(500);
-  for( int i = 7; i < 16 ; i++ ){
-    lcd.setCursor ( i, 3 );
+  status_sign('d');
+  lcd.print("  List printing"); 
+  delay(500);
+  for( int i = 15; i < 18 ; i++ ){
+    lcd.setCursor ( i, 2 );
     lcd.print(".");
     delay(500);
   }
@@ -314,22 +353,63 @@ void printOut(String print_data){
   print_list_checkID = "";
   print_list_change = "";
 
+  status_sign('e');
   lcd.clear();
-  lcd.setCursor ( 0, 0 );
+  lcd.setCursor ( 0, 1 );
   lcd.print("Print out complete!");
   delay(3000);
 }
 
 void getRandomRole(){
   randomRole = random(0,4);
-  if (currentID == "912112428"){
+  if (currentID == "#A912112428"){
     while (randomRole == roleA){
       randomRole = random(0,4);
     }
   }
-  else if (currentID == "9015113522"){
+  else if (currentID == "#A9015113522"){
     while (randomRole == roleB){
       randomRole = random(0,4);
     }
+  }
+}
+
+void status_sign(char sign){
+  switch(sign){
+    case 'a':
+      digitalWrite(LED1, HIGH);
+      digitalWrite(LED2, LOW);
+      digitalWrite(LED3, LOW);
+      digitalWrite(LED4, LOW);
+      digitalWrite(LED5, LOW);
+      break;
+    case 'b':
+      digitalWrite(LED1, LOW);
+      digitalWrite(LED2, HIGH);
+      digitalWrite(LED3, LOW);
+      digitalWrite(LED4, LOW);
+      digitalWrite(LED5, LOW);
+      break;
+    case 'c':
+      digitalWrite(LED1, LOW);
+      digitalWrite(LED2, LOW);
+      digitalWrite(LED3, HIGH);
+      digitalWrite(LED4, LOW);
+      digitalWrite(LED5, LOW);
+      break;
+    case 'd':
+      digitalWrite(LED1, LOW);
+      digitalWrite(LED2, LOW);
+      digitalWrite(LED3, LOW);
+      digitalWrite(LED4, HIGH);
+      digitalWrite(LED5, LOW);
+      break;
+    case 'e':
+      digitalWrite(LED1, LOW);
+      digitalWrite(LED2, LOW);
+      digitalWrite(LED3, LOW);
+      digitalWrite(LED4, LOW);
+      digitalWrite(LED5, HIGH);
+      break;
   }
 }
