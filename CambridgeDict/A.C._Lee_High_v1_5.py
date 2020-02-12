@@ -61,7 +61,7 @@ def func_quit():
         pass
     else:
         windowindex = 1
-        keyboard.remove_hotkey('ctrl+q')
+    pyautogui.hotkey('ctrlleft', 'q')  # to awake the tkinter befor quit
     window.quit()
 
 if __name__ == "__main__":
@@ -250,8 +250,7 @@ if __name__ == "__main__":
 
         keyboard.add_hotkey('ctrl+q', lambda: func_quit(), suppress=True)
         window.mainloop()
-        if windowindex == 0:
-            keyboard.remove_hotkey('ctrl+q')
+        keyboard.remove_hotkey('ctrl+q')
         try:
             window.destroy()   
         except:
@@ -264,4 +263,5 @@ if __name__ == "__main__":
 # v1_5 Update: 
 # enable the A.C. to search the word in tkinter
 # changed the "close" command from double-click to right-click
+# solve the tkinter quit problem
 # modified print out text
