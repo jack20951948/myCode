@@ -11,6 +11,7 @@ import tkinter as tk
 from tkinter.font import Font
 from googletrans import Translator
 from functools import partial
+from GoogleTranslator import GoogleTranslator
 
 def testUrl(url):
     try:
@@ -38,9 +39,8 @@ def press(event):
     window.quit()
     
 def googleTranslate(content):
-    translator = Translator()
-    translations = translator.translate(content, dest='zh-tw')    
-    return str(translations.text)
+    translator = GoogleTranslator()
+    return translator.translate(content)
 
 def play(url):
     try:
@@ -258,12 +258,7 @@ if __name__ == "__main__":
 
         ####################################       GUI       ####################################
 
-# Export to exe: pyinstaller -F ./CambridgeDict/A.C._Lee_High_v1_5.py
+# Export to exe: pyinstaller -F ./CambridgeDict/A.C._Lee_High_v1_6.py
 
-# v1_5 Update: 
-# enable the program to search the word in tkinter
-# changed the "close" command from double-click to right-click
-# avoid popup menus while right-clicking
-# solve the tkinter quit problem
-# solve the clipboard overwrite problem
-# modified print out text
+# v1_6 Update: 
+# scrap the google translate website instead of using library
