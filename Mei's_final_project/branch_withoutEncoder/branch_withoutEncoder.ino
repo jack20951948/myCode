@@ -18,7 +18,7 @@
 #define interruptA 0 // UNO腳位2是interrupt 0，其他板子請見官方網頁
 
 #include "Adafruit_Thermal.h"
-#include "adalogo.h"
+#include "logo.h"
 #include "adaqrcode.h"
 
 // Here's the new syntax when using SoftwareSerial (e.g. Arduino Uno) ----
@@ -55,6 +55,9 @@ LiquidCrystal_I2C lcd(I2C_ADDR,
                       En_pin,Rw_pin,Rs_pin,D4_pin,D5_pin,D6_pin,D7_pin,
                       BACKLIGHT_PIN, POSITIVE);
 
+String todays_date = "22 MAY 2020";
+String exchange_rate = "1 : 0.00128";
+
 int randomRole = 0;
 unsigned long t = 0;
 
@@ -65,10 +68,6 @@ int roleB = 1;
 
 int home_flag = 0;
 int stranger_flag = 0;
-
-String print_list = "";
-String print_list_checkID = "";
-String print_list_change = "";
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);  // 建立MFRC522物件
 
@@ -120,8 +119,6 @@ void readRFID(){
       home_flag = 0;
       stranger_flag = 0;
       currentID = "";
-      print_list = "";
-      print_list_checkID = "";
       lcd.clear();
       lcd.setCursor ( 0, 1 );
       lcd.print("    Loading");
@@ -151,21 +148,18 @@ void readRFID(){
         Serial.println(id[i], HEX);       // 以16進位顯示UID值
         currentID += id[i];
       }
-      currentID = "#A" + currentID;
       Serial.println();
-      Serial.print("currentID: ");
+      Serial.print("currentID: #A");
       Serial.println(currentID);
 
       status_sign('b');
       lcd.clear();
       lcd.setCursor ( 0, 0 );
-      lcd.print("  ID: ");
-      lcd.setCursor ( 6, 0 );
+      lcd.print("  ID: #A");
+      lcd.setCursor ( 8, 0 );
       lcd.print(currentID);
       lcd.setCursor ( 0, 3 );
       lcd.print("   Return/Comfirm");
-
-      print_list += "currentID: " + String(currentID) + "\n";
 
       checkIdentity(currentID);
       
@@ -200,12 +194,12 @@ void readRFID(){
       delay(500);
 
       changeRole(); 
-      printOut(print_list + print_list_checkID + print_list_change);
+      printOut(todays_date, exchange_rate, currentID, role, randomRole);
     } 
 }
 
 void checkIdentity(String currentID){
-  if (currentID == "#A912112428"){
+  if (currentID == "912112428"){
       role = roleA;
       Serial.print("Last role: ");
       Serial.println(role);
@@ -214,10 +208,8 @@ void checkIdentity(String currentID){
       //lcd.print("Now role: ");
       //lcd.setCursor ( 10, 1 );
       //lcd.print(role);
-
-      print_list_checkID += "Last role: " + String(role) + "\n";
   }
-  else if (currentID == "#A9015113522"){
+  else if (currentID == "9015113522"){
       role = roleB;
       Serial.print("Last role: ");
       Serial.println(role);
@@ -228,8 +220,6 @@ void checkIdentity(String currentID){
       //lcd.print(role);
       //lcd.setCursor ( 0, 2 );
       //lcd.print(" ");
-
-      print_list_checkID += "Last role: " + String(role) + "\n";
   }
   else{
     stranger_flag = 1;
@@ -256,8 +246,6 @@ void changeRole(){
      lcd.print(" Verification pass!");
      lcd.setCursor ( 0, 1 );
      lcd.print("Switch to zone #");
-
-     print_list_change += "Change from role ";
      
      getRandomRole();
      lcd.setCursor ( 16, 1 );
@@ -276,14 +264,12 @@ void changeRole(){
        }
      }
 
-     if (currentID == "#A912112428"){
+     if (currentID == "912112428"){
       Serial.print(roleA);
-      print_list_change += String(roleA);
       roleA = randomRole;
     }
-     else if (currentID == "#A9015113522"){
+     else if (currentID == "9015113522"){
       Serial.print(roleB);
-      print_list_change += String(roleB);
       roleB = randomRole;
     }
 
@@ -292,10 +278,6 @@ void changeRole(){
     Serial.print("\nNow role: ");
     Serial.println(randomRole);
 
-    print_list_change += " to " + String(randomRole) + "\nNow role: " + String(randomRole);
-
-    role = 999;
-    currentID = "";
     mfrc522.PICC_HaltA();  // 讓卡片進入停止模式
     delay(100);
 
@@ -318,7 +300,7 @@ void changeRole(){
     delay(1000);
 }
 
-void printOut(String print_data){
+void printOut(String todays_date, String exchange_rate, String currentID, int role, int randomRole){
   lcd.clear();
   lcd.setCursor ( 0, 1 );
   lcd.print("  Switch complete!"); 
@@ -335,12 +317,69 @@ void printOut(String print_data){
   }
   delay(2000);
 
-  printer.println(F("Print It!"));
-
-  printer.println(print_data);
-
+  ///////////////////////////////////////////////////////////////////////
   printer.justify('C');
-  printer.println(F("##### End #####"));
+
+  printer.doubleHeightOn();
+  printer.println(F("TIME UNIT EXCHANGER"));
+  printer.doubleHeightOff();
+
+  printer.feed(1);
+
+  printer.boldOn();
+  printer.print(F("Date: "));
+  printer.println(todays_date);
+  printer.boldOff();
+
+  printer.feed(1);
+
+  printer.underlineOn();
+  printer.println(F("INFORMATION"));
+  printer.underlineOff();
+
+  printer.feed(1);
+
+  printer.print(F("Personal ID Number: #A"));
+  printer.println(currentID);
+  printer.print(F("Passport Number: "));
+  printer.println(currentID.toInt() - 100542577);
+  printer.print(F("Zone: "));
+  printer.println(role);
+
+  printer.feed(1);
+
+  printer.setSize('L');
+  printer.print(F("SWITCH TO ZONE "));
+  printer.println(randomRole);
+  printer.setSize('S');
+  printer.inverseOn();
+  printer.print(F("exchange rate"));
+  printer.inverseOff();
+  printer.print(F(" "));
+  printer.println(exchange_rate);
+  printer.print(F("Current zone "));
+  printer.println(randomRole);
+
+  printer.feed(1);
+
+  printer.underlineOn();
+  printer.println(F("MORE DETAILS"));
+  printer.underlineOff();
+  printer.setBarcodeHeight(100);
+  // Print UPC line on product barcodes:
+  printer.printBarcode("123456789123", UPC_A);
+
+  printer.feed(1);
+
+  printer.printBitmap(adalogo_width, adalogo_height, adalogo_data);
+
+  printer.feed(1);
+
+  printer.printBitmap(adaqrcode_width, adaqrcode_height, adaqrcode_data);
+  printer.feed(1);
+  printer.println(F("www.itueo.com"));
+
+  // printer.println(print_data);
   
   printer.feed(2);
 
@@ -349,9 +388,8 @@ void printOut(String print_data){
   printer.wake();       // MUST wake() before printing again, even if reset
   printer.setDefault(); // Restore printer to defaults
 
-  print_list = "";
-  print_list_checkID = "";
-  print_list_change = "";
+  role = 999;
+  currentID = "";
 
   status_sign('e');
   lcd.clear();
@@ -362,12 +400,12 @@ void printOut(String print_data){
 
 void getRandomRole(){
   randomRole = random(0,4);
-  if (currentID == "#A912112428"){
+  if (currentID == "912112428"){
     while (randomRole == roleA){
       randomRole = random(0,4);
     }
   }
-  else if (currentID == "#A9015113522"){
+  else if (currentID == "9015113522"){
     while (randomRole == roleB){
       randomRole = random(0,4);
     }

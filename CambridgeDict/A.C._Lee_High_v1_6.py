@@ -12,6 +12,7 @@ from tkinter.font import Font
 from googletrans import Translator
 from functools import partial
 from GoogleTranslator import GoogleTranslator
+# import time
 
 def testUrl(url):
     try:
@@ -79,6 +80,8 @@ if __name__ == "__main__":
     print(".\n.\n.\n.\nAuto-Cambridge is activated! Please press 'Ctrl + q' to start translate............\nDO NOT CLOSE THE WINDOW!!!")
 
     while True:
+        # startTime = time.time()
+
         if windowindex == 1:
             pass 
         else:
@@ -168,6 +171,8 @@ if __name__ == "__main__":
                 context += '\n' + googleTranslate(Word)
         else:
             context += '\n' + googleTranslate(Word)
+
+        # print('\n###### Programe End / Process time: %.2f seconds ######' % (time.time() - startTime))
  
         ####################################       GUI       ####################################
 

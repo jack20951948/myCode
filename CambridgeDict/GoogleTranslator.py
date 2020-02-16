@@ -103,7 +103,7 @@ class GoogleTranslator ():
     __googleTokenKeyUpdataTime = 600.0
     __googleTokenKeyRetireTime = time.time() + 600.0
 
-    def __init__(self, src = 'en', dest = 'zh-TW', tkkUpdataTime = 600.0):
+    def __init__(self, src = 'auto', dest = 'zh-TW', tkkUpdataTime = 600.0):
         if src not in self._language and src not in self._language.values():
             src = 'auto'
         if dest not in self._language and dest not in self._language.values():
