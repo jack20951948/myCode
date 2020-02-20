@@ -65,6 +65,7 @@ String currentID;
 int role = 999;
 int roleA = 0;
 int roleB = 1;
+int roleC = 2;
 
 int home_flag = 0;
 int stranger_flag = 0;
@@ -221,6 +222,11 @@ void checkIdentity(String currentID){
       //lcd.setCursor ( 0, 2 );
       //lcd.print(" ");
   }
+  else if (currentID == "24512017399"){
+      role = roleC;
+      Serial.print("Last role: ");
+      Serial.println(role);
+  }
   else{
     stranger_flag = 1;
     Serial.println("Loggin deny!");
@@ -272,6 +278,10 @@ void changeRole(){
       Serial.print(roleB);
       roleB = randomRole;
     }
+     else if (currentID == "24512017399"){
+      Serial.print(roleC);
+      roleC = randomRole;
+     }
 
     Serial.print(" to ");
     Serial.println(randomRole);
@@ -339,11 +349,11 @@ void printOut(String todays_date, String exchange_rate, String currentID, int ro
 
   printer.feed(1);
 
-  printer.print(F("Personal ID Number: #A"));
+  printer.print(F("Personal ID Number:#A"));
   printer.println(currentID);
-  printer.print(F("Passport Number: "));
-  printer.println(currentID.toInt() - 100542577);
-  printer.print(F("Zone: "));
+  printer.print(F("Passport Number:"));
+  printer.println(currentID.toInt() + 1144);
+  printer.print(F("Zone:"));
   printer.println(role);
 
   printer.feed(1);
@@ -407,6 +417,11 @@ void getRandomRole(){
   }
   else if (currentID == "9015113522"){
     while (randomRole == roleB){
+      randomRole = random(0,4);
+    }
+  }
+  else if (currentID == "24512017399"){
+    while (randomRole == roleC){
       randomRole = random(0,4);
     }
   }
