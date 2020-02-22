@@ -94,11 +94,8 @@ def optimal_split(ds):
     opt_qr = None
     g = gini(ds)
 
-    _print_feature, _print_attribute = 0, 0
-
     # 算每一feature的gain
     for ft in range(len(ds[0])-1):
-        _print_feature += 1
         # id不跑
         if ft == 0:
             continue
@@ -107,9 +104,6 @@ def optimal_split(ds):
 
         # 算該feature各特徵的gain
         for val in values: 
-            _print_attribute += 1
-            print("\rCalculate gain :", _print_attribute, "/", _print_feature, end='    ')
-
             qr = query(ft, val)
             l, r = partition(ds, qr)
 
@@ -125,7 +119,7 @@ def optimal_split(ds):
 
 def CART(ds):
     opt_gain, opt_qr = optimal_split(ds)
-
+    
     if opt_gain == 0 or len(ds) <= 30:
         return leaf(ds)
 
@@ -172,8 +166,9 @@ def resultD(tds, tree, CM):
     
     return float(cnt / len(tds) * 100)
 
-def DecisionTree(df, td, mode=0):
-    print("Plant a tree...")
+# DecisionTree(trainset, testset, mode=0, k:k-folds(in mode 2 only)):
+def DecisionTree(df, td, mode=0, k=None):
+    print("Planting a dicision tree...")
     ds = df.values.tolist()
     tds = td.values.tolist()
 
@@ -182,17 +177,16 @@ def DecisionTree(df, td, mode=0):
     if mode == 0:
         tree = CART(ds)
         submitD(tds, tree)  
-        print("\nTree is generated!\n")
-        print("Predict test set...\n")
+        print("A tree is planted!")
+        print("Predicting test set...\n")
     elif mode == 1:
         tree = CART(ds)
-        print("\nTree is generated!\n")
-        print("Predict test set...\n")
+        print("A tree is planted!")
+        print("Predicting test set...\n")
         ans = resultD(tds, tree, CM)
         visual_matrix(CM)
         return ans
     elif mode == 2:
-        k = 10
         folds = k_fold(ds, k)
         tree = []
         for j in range(k):
@@ -201,9 +195,9 @@ def DecisionTree(df, td, mode=0):
                 if _j == j:
                     continue
                 tmp_folds += folds[_j]
+            print("\rPlanting a tree in the {} / {} fold...".format(j + 1, k), end='    ')
             tree.append(CART(tmp_folds))
-            print("\nTree {} is generated!\n".format(j + 1))
-        print("Predict test set...\n")
+        print("\nPredicting test set...\n")
 
         avg = 0.0
         for fold in range(k): 
@@ -242,8 +236,8 @@ def resultR(tds, trees, CM):
 
     return float(_cnt / len(tds) * 100)
     
-# RandomForest(trainset, testset, n_sam:sample, m:tree, mode=0):
-def RandomForest(df, td, n_sam, m, mode=0):
+# RandomForest(trainset, testset, n_sam:sample, m:tree, mode=0, k:k-folds(in mode 2 only)):
+def RandomForest(df, td, n_sam, m, mode=0, k=None):
     print("Create forest...")
     trees = []
     tds = td.values.tolist()
@@ -252,7 +246,7 @@ def RandomForest(df, td, n_sam, m, mode=0):
 
     if mode == 0:
         for _i in range(m):
-            print("\nBuilding the {} tree...".format(_i + 1))
+            print("\rPlanting the {} / {} tree...".format(_i + 1, m), end='     ')
             ds = df.sample(n=n_sam).values.tolist()
             trees.append(CART(ds))
         print("\nPredict test set...\n")
@@ -261,17 +255,16 @@ def RandomForest(df, td, n_sam, m, mode=0):
     
     elif mode == 1:
         for _i in range(m):
-            print("\nBuilding the {} tree...".format(_i + 1))
+            print("\rPlanting the {} / {} tree...".format(_i + 1, m), end='     ')
             ds = df.sample(n=n_sam).values.tolist()
             trees.append(CART(ds))   
-        print("\nPredict test set...\n")
+        print("\nPredicting test set...\n")
 
         ans = resultR(tds, trees, CM)
         visual_matrix(CM)
         return ans
     
     elif mode == 2:
-        k = 10
         ds = df.values.tolist()
         folds = k_fold(ds, k)
         samples = []
@@ -286,7 +279,7 @@ def RandomForest(df, td, n_sam, m, mode=0):
         avg = 0.0
         for i in range(len(folds)):
             for _i in range(m):
-                print("\nBuilding the {} tree in the {} fold : ".format(_i + 1, i + 1))
+                print("\rPlanting the {} / {} tree in the {} / {} fold...".format(_i + 1, m, i + 1, k), end='           ')
                 ds_t = random.sample(samples[i], n_sam)
                 trees.append(CART(ds_t))
             
@@ -296,8 +289,8 @@ def RandomForest(df, td, n_sam, m, mode=0):
         return avg / float(k)
 
 def main():
-    # 并行
-    df = pd.concat([pd.read_csv('Random_Forest_handmake\X_train.csv'), pd.read_csv('Random_Forest_handmake\y_train.csv')['Category']], axis = 1)
+    # 併行
+    df = pd.concat([pd.read_csv(r'Random_Forest_handmake\X_train.csv'), pd.read_csv(r'Random_Forest_handmake\y_train.csv')['Category']], axis = 1)
 
     # df.sample取樣(frac=比例1=100%), 重設index, 此舉為了重新排列
     df = df.sample(frac=1).reset_index(drop=True) 
@@ -315,7 +308,7 @@ def main():
     # //相除取整數商
     # df['fnlwgt'] = df['fnlwgt']//50000
 
-    td = pd.read_csv('Random_Forest_handmake\X_test.csv')
+    td = pd.read_csv(r'Random_Forest_handmake\X_test.csv')
     td = td.applymap(lambda x: x.strip() if isinstance(x, str) else x)
 
     for col in td.columns:
@@ -328,23 +321,23 @@ def main():
     #################################################################################################
     train, test = df[0:int((len(df.index)+1)*.70)], df[int((len(df.index)+1)*.70):]
 
-    # # decision tree method 
-    # # holdout validation 
-    # print("\nHoldout validation with DecisionTree :")
-    # print("Accuracy", DecisionTree(train, test, 1))
+    # decision tree method 
+    # holdout validation 
+    print("\nHoldout validation with DecisionTree :")
+    print("Accuracy", DecisionTree(train, test, 1))
 
-    # # k-fold validation
-    # print("\nk-fold validation with DecisionTree :")
-    # print("Accuracy :",DecisionTree(train, test, 2))
+    # k-fold validation
+    print("\nk-fold validation with DecisionTree :")
+    print("Accuracy :", DecisionTree(train, test, 2, 10))
 
-    # # random forest method 
-    # # holdout validation 
-    # print("\nHoldout validation with RandomForest :")
-    # print("Accuracy",RandomForest(train, test, len(train)//4, 200, 1))
+    # random forest method 
+    # holdout validation 
+    print("\nHoldout validation with RandomForest :")
+    print("Accuracy", RandomForest(train, test, len(train)//4, 200, 1))
 
     # k-fold validation
     print("\nk-fold validation with RandomForest :")
-    print("Accuracy",RandomForest(train, test, len(train)//4, 200, 2))
+    print("Accuracy", RandomForest(train, test, len(train)//4, 200, 2, 10))
 
 if __name__ == "__main__":
     startTime = time.time()
