@@ -1,3 +1,75 @@
+class node:
+    def __init__(self, val=7):
+        self.action = None
+        self.val = val
+        self.zero = 1
+        self.two = 1
+        self.three = 1
+        self.four = 1
+        self.five = 1
+        self.six = 1
+
+    def insert_Zero(self):
+        if self.zero == 1:
+            self.zero = node()
+            self.val += self.zero.val - 1
+        
+    def insert_One(self, action):
+        if self.one == 1:
+            self.one = node()
+            self.val += self.one.val
+
+
+
+def compress(message):
+    tree_dict, m_len, i = {}, len(message), 0
+    while i < m_len:
+        # case I
+        if message[i] not in tree_dict.keys():
+            yield (0, message[i])
+            tree_dict[message[i]] = len(tree_dict) + 1
+            i += 1
+        # case III
+        elif i == m_len - 1:
+            yield (tree_dict.get(message[i]), '')
+            i += 1
+        else:
+            for j in range(i + 1, m_len):
+                # case II
+                if message[i:j + 1] not in tree_dict.keys():
+                    yield (tree_dict.get(message[i:j]), message[j])
+                    tree_dict[message[i:j + 1]] = len(tree_dict) + 1
+                    i = j + 1
+                    break
+                # case III
+                elif j == m_len - 1:
+                    yield (tree_dict.get(message[i:j + 1]), '')
+                    i = j + 1
+
+    print("message:", message, "\ntree dict:", tree_dict)
+
+def uncompress(packed):
+    unpacked, tree_dict = '', {}
+    for index, ch in packed:
+        if index == 0:
+            unpacked += ch
+            tree_dict[len(tree_dict) + 1] = ch
+        else:
+            term = tree_dict.get(index) + ch
+            unpacked += term
+            tree_dict[len(tree_dict) + 1] = term
+    return unpacked
+
+def main():
+    messages = ['ABBCBCABABCAABCAAB', 'BABAABRRRA', 'AAAAAAAAA']
+    for m in messages:
+        pack = compress(m)
+        unpack = uncompress(pack)
+
+if __name__ == '__main__':
+    main()
+
+
 # def compress(uncompressed):
 #     """Compress a string to a list of output symbols."""
 
@@ -65,52 +137,3 @@
 
 # if __name__ == "__main__":
 #     main()
-
-
-def compress(message):
-    tree_dict, m_len, i = {}, len(message), 0
-    while i < m_len:
-        # case I
-        if message[i] not in tree_dict.keys():
-            yield (0, message[i])
-            tree_dict[message[i]] = len(tree_dict) + 1
-            i += 1
-        # case III
-        elif i == m_len - 1:
-            yield (tree_dict.get(message[i]), '')
-            i += 1
-        else:
-            for j in range(i + 1, m_len):
-                # case II
-                if message[i:j + 1] not in tree_dict.keys():
-                    yield (tree_dict.get(message[i:j]), message[j])
-                    tree_dict[message[i:j + 1]] = len(tree_dict) + 1
-                    i = j + 1
-                    break
-                # case III
-                elif j == m_len - 1:
-                    yield (tree_dict.get(message[i:j + 1]), '')
-                    i = j + 1
-
-def uncompress(packed):
-    unpacked, tree_dict = '', {}
-    for index, ch in packed:
-        if index == 0:
-            unpacked += ch
-            tree_dict[len(tree_dict) + 1] = ch
-        else:
-            term = tree_dict.get(index) + ch
-            unpacked += term
-            tree_dict[len(tree_dict) + 1] = term
-    return unpacked
-
-def main():
-    messages = ['ABBCBCABABCAABCAAB', 'BABAABRRRA', 'AAAAAAAAA']
-    for m in messages:
-        pack = compress(m)
-        unpack = uncompress(pack)
-        print(pack)
-        print(unpack)
-
-if __name__ == '__main__':
-    main()
