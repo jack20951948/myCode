@@ -9,19 +9,22 @@ import time
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import KFold
-from sklearn.model_selection import train_test_split
 from keras.regularizers import l2
 from keras.callbacks import EarlyStopping
 from keras import optimizers
 
 raw_data = pd.read_csv("Datathon2019/Datathon_dataset/mean_train_final.csv")
 
+
+
 X = raw_data[['nlr', 'lactate', 'bcd', 'GENDER', 'age', 'DISCHARGE_LOCATION', 'Neoplastic_disease', 'LIVER_DISEASE', 'CONGESTIVE_HEART_FAILURE', 'OTHER_NEUROLOGICAL', 'RENAL_FAILURE', 'total', 'resp_rate', 'sys_bp', 'temp', 'hr', 'bun', 'sodium', 'glucose_blood', 'hematocrit', 'o2', 'glucose_pleural', 'pH', 'potassium', 'cre', 'wbc', 'platelets', 'alb', 'row_num']]
 y = np.ravel(raw_data[['die_in_h']])
+print(X)
 
 # normalize the data
 from sklearn import preprocessing
 X = preprocessing.StandardScaler().fit(X).transform(X)
+
 
 #DNN
 batch_size = 10
