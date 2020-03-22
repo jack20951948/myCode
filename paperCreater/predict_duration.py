@@ -1,4 +1,4 @@
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Flatten
 from keras import regularizers
@@ -84,12 +84,16 @@ def neural_network(train, target):
     NN_model = Sequential()
 
     # The Input Layer :
-    NN_model.add(Dense(30, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.01),input_dim = x_train.shape[1], activation='relu'))
+    NN_model.add(Dense(29, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),input_dim = x_train.shape[1], activation='relu'))
 
     # The Hidden Layers :
-    NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.01),activation='relu'))
-    NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.01),activation='relu'))
-    NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.01),activation='relu'))
+    NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
+    NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
+    NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
+    NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
+    NN_model.add(Dense(29, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
+
+
 
     # The Output Layer :
     NN_model.add(Dense(1, kernel_initializer='normal',activation='linear'))
@@ -100,10 +104,11 @@ def neural_network(train, target):
     NN_model.summary()
 
     checkpoint_name = "paperCreater/model/Weights-{epoch:03d}--{val_loss:.5f}.hdf5"
+    earlystop = EarlyStopping(monitor="val_loss", patience=10)
     checkpoint = ModelCheckpoint(checkpoint_name, monitor='val_loss', verbose = 1, save_best_only = True, mode ='auto')
-    callbacks_list = [checkpoint]
+    callbacks_list = [earlystop, checkpoint]
 
-    history = NN_model.fit(x_train, y_train, epochs=500, batch_size=20, validation_split = 0.2, callbacks=callbacks_list)
+    history = NN_model.fit(x_train, y_train, epochs=5000, batch_size=5, validation_split = 0.25, callbacks=callbacks_list)
 
     return history
 
