@@ -1,25 +1,82 @@
+class leaf:
+    def __init__(self, val=1):
+        self.val = val
+
 class node:
     def __init__(self, val=7):
-        self.action = None
         self.val = val
-        self.zero = 1
-        self.two = 1
-        self.three = 1
-        self.four = 1
-        self.five = 1
-        self.six = 1
+        self.Zero = leaf()
+        self.One = leaf()
+        self.Two = leaf()
+        self.Three = leaf()
+        self.Four = leaf()
+        self.Five = leaf()
+        self.Six = leaf()
+
+    def __str__(self):
+        return str(self.val)
+
+    def _update_val(self):
+        self.val = self.Zero.val + self.One.val + self.Two.val + self.Three.val + self.Four.val + self.Five.val + self.Six.val
+        if isinstance(self.Zero, node): self.Zero._update_val()
+        if isinstance(self.One, node): self.One._update_val()
+        if isinstance(self.Two, node): self.Two._update_val()
+        if isinstance(self.Three, node): self.Three._update_val()
+        if isinstance(self.Four, node): self.Four._update_val()
+        if isinstance(self.Five, node): self.Five._update_val()
+        if isinstance(self.Six, node): self.Six._update_val()
+
+    def treeDepth(self,pRoot):
+        if(not isinstance(pRoot, node)):
+            return 0
+        else:
+            nZero = self.treeDepth(pRoot.Zero)
+            nOne = self.treeDepth(pRoot.One)
+            nTwo = self.treeDepth(pRoot.Two)
+            nThree = self.treeDepth(pRoot.Three)
+            nFour = self.treeDepth(pRoot.Four)
+            nFive = self.treeDepth(pRoot.Five)
+            nSix = self.treeDepth(pRoot.Six)
+            return max(nZero + 1, nOne + 1, nTwo + 1, nThree + 1, nFour + 1, nFive + 1, nSix + 1)
+
+    def update_root(self, _root):
+        for i in range(_root.treeDepth(_root)-1):
+            _root._update_val()
 
     def insert_Zero(self):
-        if self.zero == 1:
-            self.zero = node()
-            self.val += self.zero.val - 1
+        assert isinstance(self.Zero, leaf) # assert：斷言，true->continue，false->exception
+        self.Zero = node()
+        self.val += self.Zero.val - 1
         
-    def insert_One(self, action):
-        if self.one == 1:
-            self.one = node()
-            self.val += self.one.val
+    def insert_One(self):
+        assert isinstance(self.One, leaf)
+        self.One = node()
+        self.val += self.One.val - 1
 
+    def insert_Two(self):
+        assert isinstance(self.Two, leaf)
+        self.Two = node()
+        self.val += self.Two.val - 1
 
+    def insert_Three(self):
+        assert isinstance(self.Three, leaf)
+        self.Three = node()
+        self.val += self.Three.val - 1
+
+    def insert_Four(self):
+        assert isinstance(self.Four, leaf)
+        self.Four = node()
+        self.val += self.Four.val - 1
+
+    def insert_Five(self):
+        assert isinstance(self.Five, leaf)
+        self.Five = node()
+        self.val += self.Five.val - 1
+
+    def insert_Six(self):
+        assert isinstance(self.Six, leaf)
+        self.Six = node()
+        self.val += self.Six.val - 1
 
 def compress(message):
     tree_dict, m_len, i = {}, len(message), 0
@@ -46,7 +103,7 @@ def compress(message):
                     yield (tree_dict.get(message[i:j + 1]), '')
                     i = j + 1
 
-    print("message:", message, "\ntree dict:", tree_dict)
+    print("message:", message, "\ntree dict keys:", tree_dict.keys())
 
 def uncompress(packed):
     unpacked, tree_dict = '', {}
@@ -61,10 +118,26 @@ def uncompress(packed):
     return unpacked
 
 def main():
-    messages = ['ABBCBCABABCAABCAAB', 'BABAABRRRA', 'AAAAAAAAA']
+    messages = ['ABBCBCABABCAABCAAB', 'AAHHHAAAKAAAGGGFFKIIIHHHAFFFEEEAHIIKKKAGGGFFEEEAAAKAAKKKIIHHHAAAFAAKKKAAKKKAFFFCCCDDKKKIAAAKAAAEFFGGGAAAHIKKKAAAEEEAAAKKKAAIIFFFGADDCCCFFFIIIDDDGFFFEAKAIIIFFFAKKAACCDDCCCAAAFFFAAAIAAAFFGGAAAKKIIHAAAEEEAKKKKGGGFFEEEHAFFFGDCIIIAKKAFFFAKKAIIIKKIIIAKKAADDDCCCAAKAAIIFFFAAAKKKACCCAAAIIKKKAKAAAKACCDDDKAGGGAAKKACDDDKIIHFFFEEFAKAAGGGHHHCFFFKIIIHHIIIAAAGGAAAKKKAAAKAIKKKCCCFFFEEAAAGGGFFAHHAAAFFGFFFBBAAAKIIHHHAAAKKKAAAFFFGGGFFAAKKKAACCCIIIAAKAAAKAAAKIIIAAACDDDGGGFEAAABEFFFGGAAAKKKAAKKAAFFFAKAKKKIIIAAAKAAAKKAAAKKAAHHHIIIKAAAEEEFCCCIIIHHHIKKKDDDAFEEEFFAAAHABBBCDGGDDAAHHHIIKKKAFFEEEFAKKKIHHHAAAFGGGAAAKAAAEEEFFFEEEAAHIIKKKKFFEEEKKKIHHHAAGGGFEAAAEEFFGGGDDKKKAAAEEEFAAAKKKAAAEEEAAAKKAAAKAAAKAAACCAAKAIIIAAABBBAAKAAAKKKIIHHHAAEEFIIHHBBBEFFFAAAIIIAAAGGFFAAAHHHFFFAKKACHHHIAAAIAAAEFFFCAAIFFFCCAAAGGGFFFAAAHHIIIKKKAAAKKAAADDDKIIHHHAABBFFFKCCCIIIKKIIIAAAEEEAEFFFGGGDAAAEEEAAAIAKKAAAKKAIIIAKAFFFEEBBCCAAAIIIACCCAAAFFFAAAKKAKAAAHHHBCCCDAAAEEAAAKAAAFFFAAAHHHIIIAKAAAFFFAAKKKAAAKKKAAACCCAAAKAAAIIAAAEFFFAAAKKKAAAKKKAAAKAAAKKAAAKK', 'AAAAAAAAA']
+    
     for m in messages:
         pack = compress(m)
         unpack = uncompress(pack)
+
+    root = node()
+    root.insert_Zero()
+    root.Zero.insert_Zero()
+    root.Zero.insert_One()
+    root.Zero.Zero.insert_Zero()
+    root.Zero.Zero.Zero.insert_Zero()
+    root.Zero.Zero.Zero.insert_Six()
+    root.Zero.Zero.Zero.Six.insert_Four()
+    root.insert_One()
+    root.insert_Five()
+    print("Tree depth:", root.treeDepth(root))
+    root.update_root(root)
+    print("root value:", root.val)
+
 
 if __name__ == '__main__':
     main()
