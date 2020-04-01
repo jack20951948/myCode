@@ -125,8 +125,8 @@ def train_result(history):
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
 
-    training_accuracy = history.history["acc"]
-    test_accuracy = history.history["val_acc"]
+    training_accuracy = history.history["accuracy"]
+    test_accuracy = history.history["val_accuracy"]
 
     plt.figure()
     plt.plot(epoch_count, training_accuracy, "r--")
