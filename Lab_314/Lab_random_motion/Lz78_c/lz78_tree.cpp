@@ -1,19 +1,17 @@
+#include<iostream> 
+#include<stdlib.h>
 bool debug = false;
 
 struct binary_search_tree_node
 {
 	int data;
-	struct binary_search_tree_node* A;
-	struct binary_search_tree_node* B;
-	struct binary_search_tree_node* C;
-	struct binary_search_tree_node* D;
-	struct binary_search_tree_node* E;
-	struct binary_search_tree_node* F;
-	struct binary_search_tree_node* G;
+	struct binary_search_tree_node* father;
+	struct binary_search_tree_node* children[7];
 };
 typedef struct binary_search_tree_node BSTNode;
 
 void print_inorder(BSTNode *ptr);
+BSTNode *init_root(BSTNode *root);
 BSTNode *insert_node(BSTNode *root, int value);
 BSTNode *find_node(BSTNode *ptr, int value);
 
@@ -41,18 +39,18 @@ BSTNode *init_root(BSTNode *root)
     {
         root_node = (BSTNode *) malloc(sizeof(BSTNode));
         root_node->data = 7;
-        root_node->A = 0;
-        root_node->B = 0;
-        root_node->C = 0;
-        root_node->D = 0;
-        root_node->E = 0;
-        root_node->F = 0;
-        root_node->G = 0;
+        root_node->father = 0;
+        for(int i=0 ; i<7 ; i++)
+        {
+            BSTNode* newNode = (BSTNode *) malloc(sizeof(BSTNode));
+            root_node->children[i] = newNode;
+        }
+
         return root_node;
     }
     else
     {
-        return root
+        return root;
     }
 }
 
