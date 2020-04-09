@@ -65,20 +65,6 @@ class audio_extraction():
         else:
             return Zxx
 
-    def get_istft(self, data, fs, WindowLength, FFTLength, OverlapLength, return_f=False):
-        plt.figure()
-        f, t, Zxx = signal.stft(data, fs, nperseg=WindowLength, nfft=FFTLength, noverlap=OverlapLength)
-        plt.pcolormesh(t, f, 20 * np.log10(np.abs(Zxx) + math.exp(1)))
-        plt.colorbar()
-        plt.title('STFT Magnitude')
-        plt.ylabel('Frequency [Hz]')
-        plt.xlabel('Time [sec]')
-
-        if return_f:
-            return f, Zxx
-        else:
-            return Zxx
-
     def plot_extract_compare(self, wave_data1, wave_data2, wave_data3, wave_data4, time):
         plt.figure()
         plt.subplot(221) 
