@@ -6,16 +6,18 @@ from matplotlib import pyplot as plt
 from scipy import signal
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Flatten
+from keras.layers import Dense, Activation, BatchNormalization, Dropout
 from keras import regularizers
 from keras import optimizers
 
 class cocktail_party_DNN():
-    def __init__(self, maleSpeechTrain, femaleSpeechTrain, maleValidateAudioFile, femaleValidateAudioFile):
+    def __init__(self, start_path, maleSpeechTrain, femaleSpeechTrain, maleValidateAudioFile, femaleValidateAudioFile, _plot_image):
+        self.start_path = start_path
         self.maleSpeechTrain = maleSpeechTrain
         self.femaleSpeechTrain = femaleSpeechTrain
         self.maleValidateAudioFile = maleValidateAudioFile
         self.femaleValidateAudioFile = femaleValidateAudioFile
+        self._plot_image = _plot_image
         self.main()
 
     def read_wave(self, file_path):
@@ -88,37 +90,60 @@ class cocktail_party_DNN():
             loc                      = loc + seqOverlap
         return mixSequences, maskSequences
 
-    def neural_network(self, x_train, y_train):
+    def neural_network(self, x_train, y_train, x_test, y_test):
         NN_model = Sequential()
 
         # The Input Layer :
-        NN_model.add(Dense(29, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),input_dim = x_train.shape[1], activation='relu'))
+        NN_model.add(Dense(1300, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),input_dim = x_train.shape[1], activation='sigmoid'))
 
         # The Hidden Layers :
-        NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
-        NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
-        NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
-        NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
-        NN_model.add(Dense(29, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
-
-
+        NN_model.add(Dense(1300, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='sigmoid'))
+        NN_model.add(BatchNormalization())
+        NN_model.add(Dropout(0.1))
+        NN_model.add(Dense(1300, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='sigmoid'))
+        NN_model.add(BatchNormalization())
+        NN_model.add(Dropout(0.1))
 
         # The Output Layer :
-        NN_model.add(Dense(1, kernel_initializer='normal',activation='linear'))
+        NN_model.add(Dense(1300, kernel_initializer='normal',activation='sigmoid'))
+        # NN_model.add(Dense(1300, kernel_initializer='normal',activation='linear'))
+        NN_model.add(Dense(1300))
 
         # Compile the network :
-        sgd = optimizers.Adadelta(lr=0.33, decay=1e-6)
-        NN_model.compile(loss='mean_absolute_error', optimizer=sgd, metrics=['accuracy'])
+        NN_model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
         NN_model.summary()
 
-        checkpoint_name = "paperCreater/model/Weights-{epoch:03d}--{val_loss:.5f}.hdf5"
-        earlystop = EarlyStopping(monitor="val_loss", patience=10)
-        checkpoint = ModelCheckpoint(checkpoint_name, monitor='val_loss', verbose = 1, save_best_only = True, mode ='auto')
+        checkpoint_name = self.start_path + "model/Weights-{epoch:03d}--{val_loss:.5f}.hdf5"
+        earlystop = EarlyStopping(monitor="val_loss", patience=2)
+        checkpoint = ModelCheckpoint(checkpoint_name, monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
         callbacks_list = [earlystop, checkpoint]
 
-        history = NN_model.fit(x_train, y_train, epochs=5000, batch_size=5, validation_split = 0.25, callbacks=callbacks_list)
+        history = NN_model.fit(x_train, y_train, epochs=3, batch_size=64, validation_data=(x_test, y_test), shuffle=True, callbacks=callbacks_list)
 
-        return history
+        return NN_model, history
+
+    def train_result(self, history):
+        training_loss = history.history["loss"]
+        test_loss = history.history["val_loss"]
+
+        epoch_count = range(1, len(training_loss) + 1)
+
+        plt.figure()
+        plt.plot(epoch_count, training_loss, "r--")
+        plt.plot(epoch_count, test_loss, "b-")
+        plt.legend(["Training Loss", "Test Loss"])
+        plt.xlabel("Epoch")
+        plt.ylabel("Loss")
+
+        training_accuracy = history.history["accuracy"]
+        test_accuracy = history.history["val_accuracy"]
+
+        plt.figure()
+        plt.plot(epoch_count, training_accuracy, "r--")
+        plt.plot(epoch_count, test_accuracy, "b-")
+        plt.legend(["Training Accuracy", "Test Accuracy"])
+        plt.xlabel("Epoch")
+        plt.ylabel("Accuracy Score")
 
     def main(self):
         ## STFT Targets and Predictors ##
@@ -133,28 +158,29 @@ class cocktail_party_DNN():
         maleSpeechValidate, femaleSpeechValidate, mixValidate = self.combine_audio(maleSpeechValidate, femaleSpeechValidate)
 
         ## Visualize the original and mix signals ##
-        self.plot_audio_wave(maleSpeechTrain, femaleSpeechTrain, mixTrain, male_time_Train)
-        self.plot_audio_wave(maleSpeechValidate, femaleSpeechValidate, mixValidate, male_time_Validate)
+        if self._plot_image:
+            self.plot_audio_wave(maleSpeechTrain, femaleSpeechTrain, mixTrain, male_time_Train)
+            self.plot_audio_wave(maleSpeechValidate, femaleSpeechValidate, mixValidate, male_time_Validate)
 
         ## Source Separation Using Ideal Time-Frequency Masks ##
-        P_M_Train = abs(self.get_stft(maleSpeechTrain, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Male", plot_image=True))
-        P_F_Train = abs(self.get_stft(femaleSpeechTrain, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Female", plot_image=True))
-        f_Train, P_mix_Train = self.get_stft(mixTrain, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Mix", plot_image=True, return_f=True)
+        P_M_Train = abs(self.get_stft(maleSpeechTrain, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Male", plot_image=self._plot_image))
+        P_F_Train = abs(self.get_stft(femaleSpeechTrain, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Female", plot_image=self._plot_image))
+        f_Train, P_mix_Train0 = self.get_stft(mixTrain, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Mix", plot_image=self._plot_image, return_f=True)
 
         ## Take the log of the mix STFT. 
         ## Normalize the values by their mean and standard deviation.
-        P_mix_Train = self.norm_data(P_mix_Train)
+        P_mix_Train = self.norm_data(P_mix_Train0)
         print("Mean Train mix:", np.mean(P_mix_Train))
         print("STD Train mix:", np.std(P_mix_Train))
 
         ## validation Separation Using Ideal Time-Frequency Masks ##
-        P_M_Validate = abs(self.get_stft(maleSpeechValidate, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Male", plot_image=True))
-        P_F_Validate = abs(self.get_stft(femaleSpeechValidate, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Female", plot_image=True))
-        f_Validate, P_mix_Validate = self.get_stft(mixValidate, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Mix", plot_image=True, return_f=True)
+        P_M_Validate = abs(self.get_stft(maleSpeechValidate, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Male", plot_image=self._plot_image))
+        P_F_Validate = abs(self.get_stft(femaleSpeechValidate, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Female", plot_image=self._plot_image))
+        f_Validate, P_mix_Validate0 = self.get_stft(mixValidate, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Mix", plot_image=self._plot_image, return_f=True)
 
         ## Take the log of the validation mix STFT. 
         ## Normalize the values by their mean and standard deviation.
-        P_mix_Validate = self.norm_data(P_mix_Validate)
+        P_mix_Validate = self.norm_data(P_mix_Validate0)
         print("Mean Train mix:", np.mean(P_mix_Validate))
         print("STD Train mix:", np.std(P_mix_Validate))
 
@@ -171,29 +197,29 @@ class cocktail_party_DNN():
         val_mixSequences, val_maskSequences = self.create_trainnig_frame(P_mix_Validate, maskValidate, seqLen=20, seqOverlap=20)
 
         ## Reshape the training and validation signals. ##
-        train_mixSequences = np.reshape(train_mixSequences, (len(train_mixSequences), 20*P_mix_Train.shape[0]))
-        train_maskSequences = np.reshape(train_maskSequences, (len(train_maskSequences), 20*P_mix_Train.shape[0]))
-        val_mixSequences = np.reshape(val_mixSequences, (len(val_mixSequences), 20*P_mix_Train.shape[0]))
-        val_maskSequences = np.reshape(val_maskSequences, (len(val_maskSequences), 20*P_mix_Validate.shape[0]))
+        train_mixSequences = np.reshape(train_mixSequences, (len(train_mixSequences), 20*P_mix_Train.shape[0]))    # (81036, 1300)
+        train_maskSequences = np.reshape(train_maskSequences, (len(train_maskSequences), 20*P_mix_Train.shape[0])) # (81036, 1300)
+        val_mixSequences = np.reshape(val_mixSequences, (len(val_mixSequences), 20*P_mix_Train.shape[0]))          # (4000, 1300)
+        val_maskSequences = np.reshape(val_maskSequences, (len(val_maskSequences), 20*P_mix_Validate.shape[0]))    # (4000, 1300)
         
-        print(train_mixSequences.shape)
-        print(train_mixSequences[1, :])
-        print(train_maskSequences.shape)
-        print(val_mixSequences.shape)
-        print(val_maskSequences.shape)
+        ## Deep Learning Network ##
+        predict_model, train_history = self.neural_network(train_mixSequences, train_maskSequences, val_mixSequences, val_maskSequences)
+        self.train_result(train_history)
 
+        ## Pass the validation predictors to the network. The output is the estimated mask. Reshape the estimated mask. ##
+        SoftMaleMask = predict_model.predict(val_mixSequences)
+        SoftMaleMask = np.reshape(SoftMaleMask,(len(SoftMaleMask)*20,int(SoftMaleMask.shape[1]/20))).T
+        FemaleMask = 1 - SoftMaleMask
 
-# mixSequences  = np.zeros((2, 3, 4))
-# maskSequences = np.ones((3, 4))
-# maskSequences2 = maskSequences + maskSequences
-# print(mixSequences)
-# # print(mixSequences.shape[0])
+        ## Shorten the mix STFT to match the size of the estimated mask. ##
+        P_mix_Validate = P_mix_Validate0[:, 0:SoftMaleMask.shape[1]]
 
-# mixSequences[0, :, :]=maskSequences
-# mixSequences[1, :, :]=maskSequences2
-# print(maskSequences)
-# print(maskSequences2)
-# loc = 1
-# # mixSequences  = np.append(maskSequences, maskSequences2, axis=0)
-# print(mixSequences)
+        ## Multiply the mix STFT by the male soft mask to get the estimated male speech STFT. ##
+        P_Male = P_mix_Validate * SoftMaleMask
 
+        ## Use the ISTFT to get the estimated male audio signal. ##
+        maleSpeech_est_soft = signal.istft(P_Male, male_Fs, nperseg=128, nfft=128, noverlap=128-1)
+        maleSpeech_est_soft = maleSpeech_est_soft / max(abs(maleSpeech_est_soft))
+
+        sd.play(maleSpeech_est_soft, male_Fs)
+        sd.wait()
