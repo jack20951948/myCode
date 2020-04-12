@@ -218,8 +218,6 @@ class cocktail_party_DNN():
         else:
             predict_model = self.load_model_weight(model_architecture, self.trained_weight_file)
 
-        
-
         ## Pass the validation predictors to the network. The output is the estimated mask. Reshape the estimated mask. ##
         SoftMaleMask = predict_model.predict(val_mixSequences)
         SoftMaleMask = np.reshape(SoftMaleMask,(len(SoftMaleMask)*self.trainset_batch,int(SoftMaleMask.shape[1]/self.trainset_batch))).T
