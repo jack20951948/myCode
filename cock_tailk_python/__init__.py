@@ -4,7 +4,7 @@ from audio_extraction import audio_extraction
 from cocktail_party_DNN import cocktail_party_DNN
 
 start_path = r"cock_tailk_python/"
-_plot_image = False
+plot_image = False
 trainModel = False
 
 trainset_batch = 10
@@ -19,7 +19,7 @@ trained_weight_file = start_path + r"model/Weights-003--0.05213.hdf5"
 
 def main():
     # audio_extraction(maleValidatingAudioFile, femaleValidatingAudioFile)
-    cocktail_party_DNN(start_path, maleTrainingAudioFile, femaleTrainingAudioFile, maleValidatingAudioFile, femaleValidatingAudioFile, trainset_batch, trainModel, _plot_image, trained_weight_file)
+    cocktail_party_DNN(start_path, maleTrainingAudioFile, femaleTrainingAudioFile, maleValidatingAudioFile, femaleValidatingAudioFile, trainset_batch, trainModel, plot_image, trained_weight_file)
 
 if __name__ == "__main__":
     startTime = time.time()
