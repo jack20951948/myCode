@@ -1,31 +1,25 @@
 import math
-import wave
 import sounddevice as sd
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy import signal
+from scipy.io.wavfile import write, read
 
 class audio_extraction():
-    def __init__(self, male_audio_file=None, female_audio_file=None):
+    def __init__(self, male_audio_file=None, female_audio_file=None, plot_image=True):
         self.male_audio_file = male_audio_file
         self.female_audio_file = female_audio_file
+        self.plot_image = plot_image
         self.main()
 
     def read_wave(self, file_path):
-        f = wave.open(file_path, "rb")
-        params = f.getparams()
-        nchannels, sampwidth, framerate, nframes = params[:4] # nchannels: 聲道, sampwidth: 量化位數, framerate: fs, nframes: data num
-        print("nchannels:", nchannels)
-        print("sampwidth:", sampwidth)
-        print("framerate:", framerate)
-        print("nframes:", nframes)
-
-        str_data = f.readframes(nframes)
-        wave_data = np.fromstring(str_data, dtype=np.short)
+        fs, wave_data = read(file_path, mmap=False)
         wave_data = wave_data.T
-        time = np.arange(0, nframes) * (1.0 / framerate)
+        if wave_data.ndim > 1:
+            wave_data = wave_data[0,:]
+        time = np.arange(0, len(wave_data)) * (1.0 / fs)
 
-        return wave_data, time, framerate
+        return wave_data, time, fs
 
     def combine_audio(self, mSpeech, fSpeech):
         mSpeech = mSpeech/np.linalg.norm(mSpeech)
@@ -52,13 +46,14 @@ class audio_extraction():
         plt.xlabel("time (seconds)")
 
     def get_stft(self, data, fs, WindowLength, FFTLength, OverlapLength, image_name, return_f=False):
-        plt.figure()
         f, t, Zxx = signal.stft(data, fs, nperseg=WindowLength, nfft=FFTLength, noverlap=OverlapLength)
-        plt.pcolormesh(t, f, np.abs(Zxx))
-        plt.colorbar()
-        plt.title('{} STFT Magnitude'.format(image_name))
-        plt.ylabel('Frequency [Hz]')
-        plt.xlabel('Time [sec]')
+        if self.plot_image:
+            plt.figure()
+            plt.pcolormesh(t, f, np.abs(Zxx))
+            plt.colorbar()
+            plt.title('{} STFT Magnitude'.format(image_name))
+            plt.ylabel('Frequency [Hz]')
+            plt.xlabel('Time [sec]')
 
         if return_f:
             return f, Zxx
@@ -90,10 +85,11 @@ class audio_extraction():
         male_speech, female_speech,  mix = self.combine_audio(male_speech, female_speech)
 
         ## Visualize the original and mix signals ##
-        self.plot_audio_wave(male_speech, female_speech, mix, male_time)
+        if self.plot_image:
+            self.plot_audio_wave(male_speech, female_speech, mix, male_time)
 
-        # sd.play(mix, male_Fs)
-        # sd.wait()
+        sd.play(mix, male_Fs)
+        sd.wait()
 
         ## Source Separation Using Ideal Time-Frequency Masks ##
         P_M = self.get_stft(male_speech, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=96, image_name="Male")
@@ -110,7 +106,8 @@ class audio_extraction():
         mSpeech_Hard = signal.istft(P_M_Hard, f, nperseg=128, nfft=128, noverlap=96)
         fSpeech_Hard = signal.istft(P_F_Hard, f, nperseg=128, nfft=128, noverlap=96)
 
-        self.plot_extract_compare(male_speech, female_speech, mSpeech_Hard, fSpeech_Hard, male_time)
+        if self.plot_image:
+            self.plot_extract_compare(male_speech, female_speech, mSpeech_Hard, fSpeech_Hard, male_time)
 
         # sd.play(mSpeech_Hard, male_Fs)
         # sd.wait()
@@ -126,7 +123,8 @@ class audio_extraction():
         mSpeech_Soft = signal.istft(P_M_Soft, f, nperseg=128, nfft=128, noverlap=96)
         fSpeech_Soft = signal.istft(P_F_Soft, f, nperseg=128, nfft=128, noverlap=96)
 
-        self.plot_extract_compare(male_speech, female_speech, mSpeech_Soft, fSpeech_Soft, male_time)
+        if self.plot_image:
+            self.plot_extract_compare(male_speech, female_speech, mSpeech_Soft, fSpeech_Soft, male_time)
 
         # sd.play(mSpeech_Soft, male_Fs)
         # sd.wait()

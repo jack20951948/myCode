@@ -3,27 +3,35 @@ from matplotlib import pyplot as plt
 from audio_extraction import audio_extraction
 from cocktail_party_DNN import cocktail_party_DNN
 
-start_path = r"cock_tailk_python/"
+process_audio_extraction = False
+process_DNN = True
+
+start_path = ""
+# start_path = r"cock_tailk_python/"
 plot_image = False
-trainModel = False
+trainModel = True
+plot_train_result = True
 
-trainset_batch = 10
+trainset_batch = 20
 
-maleValidatingAudioFile = start_path + r"MaleSpeech-16-4-mono-20secs.wav"
-femaleValidatingAudioFile = start_path + r"FemaleSpeech-16-4-mono-20secs.wav"
+maleValidatingAudioFile = start_path + r"Ted\man1_test.wav"
+femaleValidatingAudioFile = start_path + r"Ted\woman1_test.wav"
 
-maleTrainingAudioFile = start_path + r"MaleSpeech-16-4-mono-405secs.wav"
-femaleTrainingAudioFile = start_path + r"FemaleSpeech-16-4-mono-405secs.wav"
+maleTrainingAudioFile = start_path + r"Ted\man1_train.wav"
+femaleTrainingAudioFile = start_path + r"Ted\woman1_train.wav"
 
 trained_weight_file = start_path + r"model/Weights-003--0.05213.hdf5"
 
 def main():
-    # audio_extraction(maleValidatingAudioFile, femaleValidatingAudioFile)
-    cocktail_party_DNN(start_path, maleTrainingAudioFile, femaleTrainingAudioFile, maleValidatingAudioFile, femaleValidatingAudioFile, trainset_batch, trainModel, plot_image, trained_weight_file)
+    if process_audio_extraction:
+        audio_extraction(maleValidatingAudioFile, femaleValidatingAudioFile)
+    if process_DNN:
+        cocktail_party_DNN(start_path, maleTrainingAudioFile, femaleTrainingAudioFile, maleValidatingAudioFile, femaleValidatingAudioFile, trainset_batch, trainModel, plot_image, plot_train_result, trained_weight_file)
 
 if __name__ == "__main__":
     startTime = time.time()
     main()
     print('\n###### Programe End / Process time: %.2f seconds ######' % (time.time() - startTime))
 
-    plt.show()
+    if plot_image or (plot_train_result and process_DNN):
+        plt.show()
