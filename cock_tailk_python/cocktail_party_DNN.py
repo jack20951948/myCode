@@ -6,7 +6,7 @@ from scipy import signal
 import librosa
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.models import Sequential
-from keras.layers import Dense, Activation, BatchNormalization, Dropout
+from keras.layers import Dense, Activation, BatchNormalization, Dropout, LSTM, TimeDistributed
 from keras import regularizers
 from keras import optimizers
 
@@ -91,23 +91,35 @@ class cocktail_party_DNN():
         NN_model = Sequential()
 
         # The Input Layer :
-        NN_model.add(Dense(65*self.trainset_batch, input_dim = x_train.shape[1], activation='sigmoid'))
+        NN_model.add(Dense(65*self.trainset_batch, input_dim = x_train.shape[1], activation='relu'))
 
         # The Hidden Layers :
-        NN_model.add(Dense(65*self.trainset_batch, activation='sigmoid'))
+        NN_model.add(Dense(65*self.trainset_batch, activation='relu'))
         NN_model.add(BatchNormalization())
         NN_model.add(Dropout(0.1))
-        NN_model.add(Dense(65*self.trainset_batch, activation='sigmoid'))
+        NN_model.add(Dense(65*self.trainset_batch, activation='relu'))
         NN_model.add(BatchNormalization())
         NN_model.add(Dropout(0.1))
-        NN_model.add(Dense(65*self.trainset_batch, activation='sigmoid'))
+        NN_model.add(Dense(65*self.trainset_batch, activation='relu'))
         NN_model.add(BatchNormalization())
         NN_model.add(Dropout(0.1))
 
         # The Output Layer :
         NN_model.add(Dense(65*self.trainset_batch, activation='sigmoid'))
         # NN_model.add(Dense(1300, kernel_initializer='normal',activation='linear'))
-        NN_model.add(Dense(1300))
+        # NN_model.add(Dense(65*self.trainset_batch))
+
+        return NN_model
+
+    def LSTM_network(self, x_train):
+        NN_model = Sequential()
+        # The Input Layer :
+        NN_model.add(LSTM(x_train.shape[1], input_shape=(x_train.shape[1], 1), return_sequences=True))
+
+        # The Hidden Layers :
+        
+        # The Output Layer :
+        NN_model.add(TimeDistributed(Dense(1)))
 
         return NN_model
 
@@ -121,7 +133,8 @@ class cocktail_party_DNN():
         checkpoint = ModelCheckpoint(checkpoint_name, monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
         callbacks_list = [earlystop, checkpoint]
 
-        history = NN_model.fit(x_train, y_train, epochs=10, batch_size=64, validation_data=(x_test, y_test), shuffle=True, callbacks=callbacks_list)
+        # history = NN_model.fit(x_train, y_train, epochs=3, batch_size=64, validation_data=(x_test, y_test), shuffle=True, callbacks=callbacks_list)
+        history = NN_model.fit(x_train, y_train, epochs=5, batch_size=64, validation_data=(x_test, y_test), callbacks=callbacks_list)
 
         return NN_model, history
 
@@ -217,9 +230,16 @@ class cocktail_party_DNN():
         train_maskSequences = np.reshape(train_maskSequences, (len(train_maskSequences), self.trainset_batch*P_mix_Train.shape[0])) # (81036, 1300)
         val_mixSequences = np.reshape(val_mixSequences, (len(val_mixSequences), self.trainset_batch*P_mix_Train.shape[0]))          # (4000, 1300)
         val_maskSequences = np.reshape(val_maskSequences, (len(val_maskSequences), self.trainset_batch*P_mix_Validate.shape[0]))    # (4000, 1300)
+
+        ## LSTM reshape ##
+        train_mixSequences = np.reshape(train_mixSequences, (len(train_mixSequences), train_mixSequences.shape[1], 1))    # (81036, 1300, 1)
+        train_maskSequences = np.reshape(train_maskSequences, (len(train_maskSequences), train_maskSequences.shape[1], 1)) # (81036, 1300, 1)
+        val_mixSequences = np.reshape(val_mixSequences, (len(val_mixSequences), val_mixSequences.shape[1], 1))          # (4000, 1300, 1)
+        val_maskSequences = np.reshape(val_maskSequences, (len(val_maskSequences), val_maskSequences.shape[1], 1))    # (4000, 1300, 1)       
         
         ## Deep Learning Network ##
-        model_architecture = self.neural_network(train_mixSequences)
+        # model_architecture = self.neural_network(train_mixSequences)
+        model_architecture = self.LSTM_network(train_mixSequences)
         if self.trainModel:
             predict_model, train_history = self.train_model(model_architecture, train_mixSequences, train_maskSequences, val_mixSequences, val_maskSequences)
             if self.plot_train_result:
