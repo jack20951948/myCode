@@ -6,13 +6,13 @@ from cocktail_party_DNN import cocktail_party_DNN
 process_audio_extraction = False
 process_DNN = True
 
-start_path = ""
-# start_path = r"cock_tailk_python/"
+# start_path = ""
+start_path = r"cock_tailk_python/"
 plot_image = False
-trainModel = True
+trainModel = False
 plot_train_result = True
 
-trainset_batch = 20
+trainset_batch = 1
 
 maleValidatingAudioFile = start_path + r"Ted\man1_test.wav"
 femaleValidatingAudioFile = start_path + r"Ted\woman1_test.wav"
@@ -20,7 +20,7 @@ femaleValidatingAudioFile = start_path + r"Ted\woman1_test.wav"
 maleTrainingAudioFile = start_path + r"Ted\man1_train.wav"
 femaleTrainingAudioFile = start_path + r"Ted\woman1_train.wav"
 
-trained_weight_file = start_path + r"model/Weights-003--0.05213.hdf5"
+trained_weight_file = start_path + r"model\Weights-003--0.07728.hdf5"
 
 def main():
     if process_audio_extraction:
