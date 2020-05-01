@@ -55,11 +55,11 @@ LiquidCrystal_I2C lcd(I2C_ADDR,
                       En_pin,Rw_pin,Rs_pin,D4_pin,D5_pin,D6_pin,D7_pin,
                       BACKLIGHT_PIN, POSITIVE);
 
-String todays_date = "22 MAY 2020";
-String exchange_rate = "1 : 0.00128";
+String todays_date = "07 MAY 2020";
+// String exchange_rate = "1 : 0.00128";
 
 int randomRole = 0;
-unsigned long t = 0;
+// unsigned long t = 0;
 
 String currentID;
 int role = 999;
@@ -120,16 +120,16 @@ void readRFID(){
       home_flag = 0;
       stranger_flag = 0;
       currentID = "";
-      lcd.clear();
-      lcd.setCursor ( 0, 1 );
-      lcd.print("    Loading");
-      delay(500);
-      for( int i = 11; i < 16 ; i++ ){
-        lcd.setCursor ( i, 1 );
-        lcd.print(".");
-        delay(500);
-      }
-      delay(2000);
+      // lcd.clear();
+      // lcd.setCursor ( 0, 1 );
+      // lcd.print("    Loading");
+      // delay(500);
+      // for( int i = 11; i < 16 ; i++ ){
+      //   lcd.setCursor ( i, 1 );
+      //   lcd.print(".");
+      //   delay(500);
+      // }
+      // delay(2000);
 
       byte *id = mfrc522.uid.uidByte;   // 取得卡片的UID
       byte idSize = mfrc522.uid.size;   // 取得UID的長度
@@ -153,32 +153,32 @@ void readRFID(){
       Serial.print("currentID: #A");
       Serial.println(currentID);
 
-      status_sign('b');
-      lcd.clear();
-      lcd.setCursor ( 0, 0 );
-      lcd.print("  ID: #A");
-      lcd.setCursor ( 8, 0 );
-      lcd.print(currentID);
-      lcd.setCursor ( 0, 3 );
-      lcd.print("   Return/Comfirm");
+      // status_sign('b');
+      // lcd.clear();
+      // lcd.setCursor ( 0, 0 );
+      // lcd.print("  ID: #A");
+      // lcd.setCursor ( 8, 0 );
+      // lcd.print(currentID);
+      // lcd.setCursor ( 0, 3 );
+      // lcd.print("   Return/Comfirm");
 
       checkIdentity(currentID);
       
       mfrc522.PICC_HaltA();  // 讓卡片進入停止模式
 
-      while (digitalRead(Enter) == HIGH){
-        if (digitalRead(Return) == LOW or stranger_flag == 1){
-          return ;
-        }
-      }
-      while (digitalRead(Enter) == LOW){}
+      // while (digitalRead(Enter) == HIGH){
+      //   if (digitalRead(Return) == LOW or stranger_flag == 1){
+      //     return ;
+      //   }
+      // }
+      // while (digitalRead(Enter) == LOW){}
 
-      lcd.clear();
-      lcd.setCursor ( 0, 1 );
-      lcd.print("Please look at the");
-      lcd.setCursor ( 0, 2 );
-      lcd.print("camera!");
-      delay(2000);
+      // lcd.clear();
+      // lcd.setCursor ( 0, 1 );
+      // lcd.print("Please look at the");
+      // lcd.setCursor ( 0, 2 );
+      // lcd.print("camera!");
+      // delay(2000);
 
       
       for( int j = 0; j < 3; j++ ){
@@ -195,7 +195,7 @@ void readRFID(){
       delay(500);
 
       changeRole(); 
-      printOut(todays_date, exchange_rate, currentID, role, randomRole);
+      printOut(todays_date, currentID, role, randomRole);
     } 
 }
 
@@ -248,27 +248,27 @@ void changeRole(){
      Serial.print("Change from role ");
 
      lcd.clear();
-     lcd.setCursor ( 0, 0 );
-     lcd.print(" Verification pass!");
      lcd.setCursor ( 0, 1 );
+     lcd.print(" Verification pass!");
+     lcd.setCursor ( 0, 2 );
      lcd.print("Switch to zone #");
      
      getRandomRole();
-     lcd.setCursor ( 16, 1 );
+     lcd.setCursor ( 16, 2 );
      lcd.print(randomRole);
-     lcd.setCursor ( 0, 2 );
-     lcd.print("   Return/Comfirm");
+    //  lcd.setCursor ( 0, 2 );
+    //  lcd.print("   Return/Comfirm");
 
-     while (digitalRead(Enter) == HIGH){
-       if (digitalRead(Return) == LOW){
-          getRandomRole();
-          lcd.setCursor ( 16, 1 );
-          lcd.print(randomRole);
-          lcd.setCursor ( 0, 2 );
-          lcd.print("   Return/Comfirm");
-          delay(500);
-       }
-     }
+    //  while (digitalRead(Enter) == HIGH){
+    //    if (digitalRead(Return) == LOW){
+    // getRandomRole();
+    // lcd.setCursor ( 16, 1 );
+    // lcd.print(randomRole);
+    // lcd.setCursor ( 0, 2 );
+    // lcd.print("   Return/Comfirm");
+    delay(2000);
+    //    }
+    //  }
 
      if (currentID == "912112428"){
       Serial.print(roleA);
@@ -310,7 +310,7 @@ void changeRole(){
     delay(1000);
 }
 
-void printOut(String todays_date, String exchange_rate, String currentID, int role, int randomRole){
+void printOut(String todays_date, String currentID, int role, int randomRole){
   lcd.clear();
   lcd.setCursor ( 0, 1 );
   lcd.print("  Switch complete!"); 
@@ -362,11 +362,11 @@ void printOut(String todays_date, String exchange_rate, String currentID, int ro
   printer.print(F("SWITCH TO ZONE "));
   printer.println(randomRole);
   printer.setSize('S');
-  printer.inverseOn();
-  printer.print(F("exchange rate"));
-  printer.inverseOff();
-  printer.print(F(" "));
-  printer.println(exchange_rate);
+  // printer.inverseOn();
+  // printer.print(F("exchange rate"));
+  // printer.inverseOff();
+  // printer.print(F(" "));
+  // printer.println(exchange_rate);
   printer.print(F("Current zone "));
   printer.println(randomRole);
 

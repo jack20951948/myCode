@@ -11,12 +11,13 @@ from keras import regularizers
 from keras import optimizers
 
 class cocktail_party_DNN():
-    def __init__(self, start_path, maleSpeechTrain, femaleSpeechTrain, maleValidateAudioFile, femaleValidateAudioFile, trainset_batch=20, trainModel=True, plot_image=True, plot_train_result=True, trained_weight_file=None):
+    def __init__(self, start_path, maleSpeechTrain, femaleSpeechTrain, maleValidateAudioFile, femaleValidateAudioFile, mix_audioFile, trainset_batch=20, trainModel=True, plot_image=True, plot_train_result=True, trained_weight_file=None):
         self.start_path = start_path
         self.maleSpeechTrain = maleSpeechTrain
         self.femaleSpeechTrain = femaleSpeechTrain
         self.maleValidateAudioFile = maleValidateAudioFile
         self.femaleValidateAudioFile = femaleValidateAudioFile
+        self.mix_audioFile = mix_audioFile
         self.trainset_batch = trainset_batch
         self.trainModel = trainModel
         self.plot_image = plot_image
@@ -32,6 +33,9 @@ class cocktail_party_DNN():
         return wave_data, time, fs
 
     def combine_audio(self, mSpeech, fSpeech):
+        L = min(len(mSpeech),len(fSpeech))
+        mSpeech = mSpeech[0:L]
+        fSpeech = fSpeech[0:L]
         mSpeech = mSpeech/np.linalg.norm(mSpeech)
         fSpeech = fSpeech/np.linalg.norm(fSpeech)
         ampAdj  = max(abs(mSpeech + fSpeech))
@@ -40,9 +44,7 @@ class cocktail_party_DNN():
         mix     = mSpeech + fSpeech
         mix     = mix / max(abs(mix))
 
-        L = min(len(mSpeech),len(fSpeech))
-
-        return mSpeech[0:L], fSpeech[0:L], mix
+        return mSpeech, fSpeech, mix
 
     def plot_audio_wave(self, wave_data1, wave_data2, wave_data3, time):
         plt.figure()
@@ -72,8 +74,16 @@ class cocktail_party_DNN():
         else:
             return Zxx
 
+    def dealwith_nan_inf(self, data):
+        checkinf = np.isneginf(data)
+        checknan = np.isnan(data)
+        data[checkinf] = 0
+        data[checknan] = 0
+        return data
+
     def norm_data(self, data):
-        return (np.log(abs(data)) - np.mean(np.log(abs(data)))) / np.std(np.log(abs(data)))
+        data = self.dealwith_nan_inf(np.log(abs(data)))
+        return (data - np.mean(data)) / np.std(data)
 
     def create_trainnig_frame(self, mix_data, mask, seqLen, seqOverlap):
         if seqOverlap*2 != seqLen:
@@ -86,6 +96,16 @@ class cocktail_party_DNN():
             maskSequences[int(loc/seqLen), :, :] = mask[:,loc:loc+seqLen].T
             loc                      = loc + seqOverlap
         return mixSequences, maskSequences
+
+    def create_trainnig_seq2(self, mix_data, seqLen, seqOverlap):
+        if seqOverlap*2 != seqLen:
+            seqOverlap = seqLen
+        mixSequences  = np.zeros((math.floor(mix_data.shape[1]/seqLen), seqLen, mix_data.shape[0]))
+        loc = 0
+        while loc < mix_data.shape[1] - seqLen:
+            mixSequences[int(loc/seqLen), :, :]  = mix_data[:,loc:loc+seqLen].T
+            loc                      = loc + seqOverlap
+        return mixSequences
 
     def neural_network(self, x_train):
         NN_model = Sequential()
@@ -114,7 +134,7 @@ class cocktail_party_DNN():
     def LSTM_network(self, x_train):
         NN_model = Sequential()
         # The Input Layer :
-        NN_model.add(LSTM(x_train.shape[1], input_shape=(x_train.shape[1], 1), return_sequences=True))
+        NN_model.add(LSTM(x_train.shape[1], input_shape=(x_train.shape[1], 1), return_sequences=True, dropout=0.2, recurrent_dropout=0.2))
 
         # The Hidden Layers :
         
@@ -134,7 +154,7 @@ class cocktail_party_DNN():
         callbacks_list = [earlystop, checkpoint]
 
         # history = NN_model.fit(x_train, y_train, epochs=3, batch_size=64, validation_data=(x_test, y_test), shuffle=True, callbacks=callbacks_list)
-        history = NN_model.fit(x_train, y_train, epochs=5, batch_size=64, validation_data=(x_test, y_test), callbacks=callbacks_list)
+        history = NN_model.fit(x_train, y_train, epochs=10, batch_size=32, validation_data=(x_test, y_test), callbacks=callbacks_list)
 
         return NN_model, history
 
@@ -182,9 +202,12 @@ class cocktail_party_DNN():
         maleSpeechValidate, time_Validate, _ = self.read_wave(self.maleValidateAudioFile)
         femaleSpeechValidate, _, _ = self.read_wave(self.femaleValidateAudioFile)
 
+        targetSpeech, _, _ = self.read_wave(self.mix_audioFile)
+
         ## Combine the two speech sources ##
         maleSpeechTrain, femaleSpeechTrain, mixTrain = self.combine_audio(maleSpeechTrain, femaleSpeechTrain)
         maleSpeechValidate, femaleSpeechValidate, mixValidate = self.combine_audio(maleSpeechValidate, femaleSpeechValidate)
+        _, _, targetSpeech = self.combine_audio(targetSpeech, targetSpeech)
 
         ## Visualize the original and mix signals ##
         if self.plot_image:
@@ -206,6 +229,7 @@ class cocktail_party_DNN():
         P_M_Validate = abs(self.get_stft(maleSpeechValidate, Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Male", plot_image=self.plot_image))
         P_F_Validate = abs(self.get_stft(femaleSpeechValidate, Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Female", plot_image=self.plot_image))
         _, P_mix_Validate0 = self.get_stft(mixValidate, Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Mix", plot_image=self.plot_image, return_f=True)
+        _, P_target_Train0 = self.get_stft(targetSpeech, Fs, WindowLength=128, FFTLength=128, OverlapLength=128-1, image_name="Target", plot_image=self.plot_image, return_f=True)
 
         ## Take the log of the validation mix STFT. 
         ## Normalize the values by their mean and standard deviation.
@@ -213,9 +237,11 @@ class cocktail_party_DNN():
         print("Mean Train mix:", np.mean(P_mix_Validate))
         print("STD Train mix:", np.std(P_mix_Validate))
 
+        P_target_Train = self.norm_data(P_target_Train0)
+
         ## Compute the soft mask
-        maskTrain = P_M_Train / (P_M_Train + P_F_Train)
-        maskValidate = P_M_Validate / (P_M_Validate + P_F_Validate)
+        maskTrain = self.dealwith_nan_inf(P_M_Train / (P_M_Train + P_F_Train))
+        maskValidate = self.dealwith_nan_inf(P_M_Validate / (P_M_Validate + P_F_Validate))
 
         ## Create chunks of size (65,20) from the predictor and target signals. 
         # In order to get more training samples, use an overlap of 10 segments 
@@ -225,11 +251,15 @@ class cocktail_party_DNN():
         ## Create chunks of size (65,20) from the validation predictor and target signals. ##
         val_mixSequences, val_maskSequences = self.create_trainnig_frame(P_mix_Validate, maskValidate, seqLen=self.trainset_batch, seqOverlap=self.trainset_batch)
 
+        target_Sequences = self.create_trainnig_seq2(P_target_Train, seqLen=self.trainset_batch, seqOverlap=self.trainset_batch)
+
         ## Reshape the training and validation signals. ##
         train_mixSequences = np.reshape(train_mixSequences, (len(train_mixSequences), self.trainset_batch*P_mix_Train.shape[0]))    # (81036, 1300)
         train_maskSequences = np.reshape(train_maskSequences, (len(train_maskSequences), self.trainset_batch*P_mix_Train.shape[0])) # (81036, 1300)
-        val_mixSequences = np.reshape(val_mixSequences, (len(val_mixSequences), self.trainset_batch*P_mix_Train.shape[0]))          # (4000, 1300)
+        val_mixSequences = np.reshape(val_mixSequences, (len(val_mixSequences), self.trainset_batch*P_mix_Validate.shape[0]))          # (4000, 1300)
         val_maskSequences = np.reshape(val_maskSequences, (len(val_maskSequences), self.trainset_batch*P_mix_Validate.shape[0]))    # (4000, 1300)
+
+        target_Sequences = np.reshape(target_Sequences, (len(target_Sequences), self.trainset_batch*P_target_Train.shape[0]))          # (4000, 1300)
 
         ## LSTM reshape ##
         train_mixSequences = np.reshape(train_mixSequences, (len(train_mixSequences), train_mixSequences.shape[1], 1))    # (81036, 1300, 1)
@@ -237,6 +267,7 @@ class cocktail_party_DNN():
         val_mixSequences = np.reshape(val_mixSequences, (len(val_mixSequences), val_mixSequences.shape[1], 1))          # (4000, 1300, 1)
         val_maskSequences = np.reshape(val_maskSequences, (len(val_maskSequences), val_maskSequences.shape[1], 1))    # (4000, 1300, 1)       
         
+        target_Sequences = np.reshape(target_Sequences, (len(target_Sequences), target_Sequences.shape[1], 1))          # (4000, 1300, 1)
         ## Deep Learning Network ##
         # model_architecture = self.neural_network(train_mixSequences)
         model_architecture = self.LSTM_network(train_mixSequences)
@@ -252,18 +283,31 @@ class cocktail_party_DNN():
         SoftMaleMask = np.reshape(SoftMaleMask,(len(SoftMaleMask)*self.trainset_batch,int(SoftMaleMask.shape[1]/self.trainset_batch))).T
         SoftFemaleMask = 1 - SoftMaleMask
 
+        SoftMask_target = predict_model.predict(target_Sequences)
+        SoftMask_target = np.reshape(SoftMask_target,(len(SoftMask_target)*self.trainset_batch,int(SoftMask_target.shape[1]/self.trainset_batch))).T
+        SoftMask_target_oppo = 1 - SoftMask_target
+
         ## Shorten the mix STFT to match the size of the estimated mask. ##
         P_mix_Validate = P_mix_Validate0[:, 0:SoftMaleMask.shape[1]]
+        P_target_Train = P_target_Train0[:, 0:SoftMask_target.shape[1]]
 
         ## Multiply the mix STFT by the male soft mask to get the estimated male speech STFT. ##
         P_Male_soft = P_mix_Validate * SoftMaleMask
         P_Female_soft = P_mix_Validate * SoftFemaleMask
+
+        P_target_soft = P_target_Train * SoftMask_target
+        P_target_oppo_soft = P_target_Train * SoftMask_target_oppo
 
         ## Use the ISTFT to get the estimated male audio signal. ##
         maleSpeech_est_soft = signal.istft(P_Male_soft, Fs, nperseg=128, nfft=128, noverlap=128-1)
         femaleSpeech_est_soft = signal.istft(P_Female_soft, Fs, nperseg=128, nfft=128, noverlap=128-1)
         maleSpeech_est_soft = maleSpeech_est_soft / max(abs(maleSpeech_est_soft))
         femaleSpeech_est_soft = femaleSpeech_est_soft / max(abs(femaleSpeech_est_soft))
+
+        targetSpeech_est_soft = signal.istft(P_target_soft, Fs, nperseg=128, nfft=128, noverlap=128-1)
+        target_oppoSpeech_est_soft = signal.istft(P_target_oppo_soft, Fs, nperseg=128, nfft=128, noverlap=128-1)
+        targetSpeech_est_soft = targetSpeech_est_soft / max(abs(targetSpeech_est_soft))
+        target_oppoSpeech_est_soft = target_oppoSpeech_est_soft / max(abs(target_oppoSpeech_est_soft))
 
         if self.plot_image:
             self.plot_extract_compare(maleSpeechValidate, femaleSpeechValidate, maleSpeech_est_soft, femaleSpeech_est_soft, time_Validate)
@@ -272,15 +316,26 @@ class cocktail_party_DNN():
         HardMaleMask = SoftMaleMask >= 0.5
         HardFemaleMask = SoftMaleMask < 0.5
 
+        HardtargetMask = SoftMask_target >= 0.5
+        Hardtarget_oppo_Mask = SoftMask_target_oppo < 0.5
+
         ## Multiply the mix STFT by the male hard mask to get the estimated male speech STFT. ##
         P_Male_hard = P_mix_Validate * HardMaleMask
         P_Female_hard = P_mix_Validate * HardFemaleMask
+
+        P_target_hard = P_target_Train * HardtargetMask
+        P_target_oppo_hard = P_target_Train * Hardtarget_oppo_Mask
 
         ## Use the ISTFT to get the estimated male audio signal. ##
         maleSpeech_est_hard = signal.istft(P_Male_hard, Fs, nperseg=128, nfft=128, noverlap=128-1)
         femaleSpeech_est_hard = signal.istft(P_Female_hard, Fs, nperseg=128, nfft=128, noverlap=128-1)
         maleSpeech_est_hard = maleSpeech_est_hard / max(abs(maleSpeech_est_hard))
         femaleSpeech_est_hard = femaleSpeech_est_hard / max(abs(femaleSpeech_est_hard))
+
+        targetSpeech_est_hard = signal.istft(P_target_hard, Fs, nperseg=128, nfft=128, noverlap=128-1)
+        target_oppoSpeech_est_hard = signal.istft(P_target_oppo_hard, Fs, nperseg=128, nfft=128, noverlap=128-1)
+        targetSpeech_est_hard = targetSpeech_est_hard / max(abs(targetSpeech_est_hard))
+        target_oppoSpeech_est_hard = target_oppoSpeech_est_hard / max(abs(target_oppoSpeech_est_hard))
 
         if self.plot_image:
             self.plot_extract_compare(maleSpeechValidate, femaleSpeechValidate, maleSpeech_est_hard, femaleSpeech_est_hard, time_Validate)
@@ -293,3 +348,21 @@ class cocktail_party_DNN():
         sd.wait()
         sd.play(femaleSpeech_est_hard, Fs)
         sd.wait()
+        
+        # sd.play(targetSpeech_est_soft, Fs)
+        # sd.wait()
+        # sd.play(target_oppoSpeech_est_soft, Fs)
+        # sd.wait()
+        # sd.play(targetSpeech_est_hard, Fs)
+        # sd.wait()
+        # sd.play(target_oppoSpeech_est_hard, Fs)
+        # sd.wait()
+
+        librosa.output.write_wav('maleSpeech_est_soft.wav', maleSpeech_est_soft, Fs)
+        librosa.output.write_wav('maleSpeech_est_hard.wav', maleSpeech_est_hard, Fs)
+        librosa.output.write_wav('femaleSpeech_est_soft.wav', femaleSpeech_est_soft, Fs)
+        librosa.output.write_wav('femaleSpeech_est_hard.wav', femaleSpeech_est_hard, Fs)
+        librosa.output.write_wav('targetSpeech_est_soft.wav', targetSpeech_est_soft, Fs)
+        librosa.output.write_wav('target_oppoSpeech_est_soft.wav', target_oppoSpeech_est_soft, Fs)
+        librosa.output.write_wav('targetSpeech_est_hard.wav', targetSpeech_est_hard, Fs)
+        librosa.output.write_wav('target_oppoSpeech_est_hard.wav', target_oppoSpeech_est_hard, Fs)

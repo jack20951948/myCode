@@ -6,8 +6,8 @@ from matplotlib import pyplot as plt
 from scipy import signal
 from scipy.io.wavfile import write, read
 
-male_audio_file = r"Ted\man1_test.wav"
-female_audio_file = r"Ted\woman1_test.wav"
+male_audio_file = r"maleSpeech_est_hard.wav"
+female_audio_file = r"femaleSpeech_est_hard.wav"
 
 def read_wave(file_path):
     fs, wave_data = read(file_path, mmap=False)
