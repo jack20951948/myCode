@@ -6,8 +6,11 @@ from matplotlib import pyplot as plt
 from scipy import signal
 from scipy.io.wavfile import write, read
 
-male_audio_file = r"output_audio\maleSpeech_est_soft.wav"
-female_audio_file = r"output_audio\femaleSpeech_est_soft.wav"
+# start_path = ""
+start_path = r"cock_tailk_python/"
+
+male_audio_file = start_path + r"output_audio\maleSpeech_est_hard.wav"
+female_audio_file = start_path + r"output_audio\femaleSpeech_est_hard.wav"
 
 def read_wave(file_path):
     fs, wave_data = read(file_path, mmap=False)
