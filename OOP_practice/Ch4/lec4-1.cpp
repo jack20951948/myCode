@@ -59,6 +59,7 @@ int main() {
 	cout << "part 3: " << endl;
 	int (CScore::* ps1) = &CScore::gender; 
 	//[Q] what if? int (CScore::* ps1) = &CScore::score[0];
+	// int (CScore::* ps1) = &CScore::score[0];
 	cout << p1->*ps1 << endl;
 	
 	system("Pause");
