@@ -9,9 +9,9 @@ class CPoint {
 public:
     //this is hidden in setPt() and Print()
     void setPt(int c, int d) { x=c; y=d; } 
-    //void setPt(int x, int y) { this->x=x; this->y=y; } 
+    // void setPt(int x, int y) { this->x=x; this->y=y; } 
     //[Q] What's wrong? 
-	//void setPt(int a, int b) { *this.x=a; *this.y=b; } 
+	// void setPt(int a, int b) { *this.x=a; *this.y=b; } // ==> void setPt(int a, int b) { (*this).x=a; (*this).y=b; } 
    
     void Print() { cout << x << " " << y << endl; }
     //void Print() { cout << this->x << " " << this->y << endl; }

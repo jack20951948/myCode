@@ -28,7 +28,7 @@ public:
         cout << sum[0] << " " << sum[1] << " " << sum[2] << endl;
     }
 //add more const methods
-    char* getName() const { return (char *)name; }
+    char* getName() const { return (char *)name; } // name => CScore::char[], force to transform
     void setName(const char* uname) { strcpy(name, uname);} //not const 
 //add more method for mutable 
 	void showName() const { 
@@ -75,7 +75,7 @@ int main() {
 	//part 3
 	S1.showName();
 	S2.showName();
-	S3.showName();
+	S3.showName(); // & Class only can call const func
 	
 	//part 4
 	//CScore S4 = "Chuck";
