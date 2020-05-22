@@ -7,11 +7,11 @@ using namespace std;
 class CScore {
 	char * name;
 	int score[3];
-public:
-	int gender;
-	double computeAverage();
-	CScore();
-	CScore(char * inName, int * sary);
+	public:
+		int gender;
+		double computeAverage();
+		CScore();
+		CScore(char * inName, int * sary);
 }; 
 
 CScore::CScore()

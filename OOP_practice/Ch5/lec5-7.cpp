@@ -5,23 +5,23 @@ using namespace std;
 
 class CStr
 {
-private:
-    char * line;
-public:    
-	CStr() { ; } //A
-    //CStr() { line = NULL; } //A
-    CStr(char* cline) { 
-        line = new char [strlen(cline)+1];
-        strcpy(line, cline); 
-    } //B
-    ~CStr() {
-        if (line) delete [] line;
-        line = NULL;
-		cout << "clean up CStr object!" << endl;  
-    }
-    
-    //overloading [] as a member function
-    char& operator[](int i);
+    private:
+        char * line;
+    public:    
+        CStr() { ; } //A
+        //CStr() { line = NULL; } //A
+        CStr(char* cline) { 
+            line = new char [strlen(cline)+1];
+            strcpy(line, cline); 
+        } //B
+        ~CStr() {
+            if (line) delete [] line;
+            line = NULL;
+            cout << "clean up CStr object!" << endl;  
+        }
+        
+        //overloading [] as a member function
+        char& operator[](int i);
 };
 
 char& CStr::operator[](int i) {

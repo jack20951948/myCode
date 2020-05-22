@@ -6,20 +6,20 @@ using namespace std;
 
 class CComplex {
     double real, imag;
-public:
-    CComplex() { real=0; imag=0; }
-    CComplex(double r, double i) { 
-        real=r; imag=i; }
-    void display() { cout << "(" << real
-        << "," << imag << "i)" << endl; }
-    //overloading various opetors     
-    CComplex operator+(CComplex& o2); //for o1+o2
-    CComplex operator+(double r);    //for o1+x
-    void operator+=(CComplex& o2);    //for o1+=o2
-    friend CComplex operator+(       //for x+o1   
-                    double r, CComplex& o1);
-    friend CComplex operator-(       //for o2=-o1
-	                CComplex& o1);
+    public:
+        CComplex() { real=0; imag=0; }
+        CComplex(double r, double i) { 
+            real=r; imag=i; }
+        void display() { cout << "(" << real
+            << "," << imag << "i)" << endl; }
+        //overloading various opetors     
+        CComplex operator+(CComplex& o2); //for o1+o2
+        CComplex operator+(double r);    //for o1+x
+        void operator+=(CComplex& o2);    //for o1+=o2
+        friend CComplex operator+(       //for x+o1   
+                        double r, CComplex& o1);
+        friend CComplex operator-(       //for o2=-o1
+                        CComplex& o1);
 };
 
 //overloading as member functions

@@ -7,16 +7,16 @@ using namespace std;
 class CCustomer {
     friend void showAFriend(CCustomer);
     int cid; double balance;
-public:
-    CCustomer(int x=0, double y=0) { 
-        cid=x; balance=y; 
-	}
-	
-	// member function 
-    void showCCustomer() {
-		cout << "===in the member function===" << endl; 
-		cout << cid << " with $"  << balance << endl; 
-	} 
+    public:
+        CCustomer(int x=0, double y=0) { 
+            cid=x; balance=y; 
+        }
+        
+        // member function 
+        void showCCustomer() {
+            cout << "===in the member function===" << endl; 
+            cout << cid << " with $"  << balance << endl; 
+        } 
 };
 
 //friend function

@@ -6,13 +6,13 @@ using namespace std;
 
 class CComplex {
     double real, imag;
-public:
-    CComplex() { real=0; imag=0; }
-    CComplex(double r, double i) { 
-        real=r; imag=i; }
-    CComplex cadd(CComplex & o2);
-    void display() { cout << "(" << real
-        << "," << imag << "i)" << endl; }
+    public:
+        CComplex() { real=0; imag=0; }
+        CComplex(double r, double i) { 
+            real=r; imag=i; }
+        CComplex cadd(CComplex & o2);
+        void display() { cout << "(" << real
+            << "," << imag << "i)" << endl; }
 };
 
 CComplex CComplex::cadd(CComplex & o2) {

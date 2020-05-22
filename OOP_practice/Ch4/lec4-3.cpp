@@ -6,36 +6,36 @@ using namespace std;
 
 class CScore
 {
-private:
-    char id[6];
-    char name[20];
-    int  subj[3];
-    static int sum[3];
-    mutable int sCount;
+	private:
+		char id[6];
+		char name[20];
+		int  subj[3];
+		static int sum[3];
+		mutable int sCount;
 
-protected:
-	static const int Max; 	
+	protected:
+		static const int Max; 	
 
-public:
-	const int & sc;
-    CScore(char *, char *, int *);
-    void showSCore() {
-        cout << id << " " << name << " "
-        << subj[0] << " " << subj[1] << " "
-        << subj[2] << endl;
-    }
-    static void showSum() {
-        cout << sum[0] << " " << sum[1] << " " << sum[2] << endl;
-    }
-//add more const methods
-    char* getName() const { return (char *)name; } // name => CScore::char[], force to transform
-    void setName(const char* uname) { strcpy(name, uname);} //not const 
-//add more method for mutable 
-	void showName() const { 
-    	cout << sCount++ << ": " << name << endl; } 
-//add method for explcit
-	//CScore(const char* cstr):sc(subj[1]), sCount(0) { cout << cstr << endl; }
-	explicit CScore(const char* cstr):sc(subj[1]), sCount(0) { cout << cstr << endl; }
+	public:
+		const int & sc;
+		CScore(char *, char *, int *);
+		void showSCore() {
+			cout << id << " " << name << " "
+			<< subj[0] << " " << subj[1] << " "
+			<< subj[2] << endl;
+		}
+		static void showSum() {
+			cout << sum[0] << " " << sum[1] << " " << sum[2] << endl;
+		}
+	//add more const methods
+		char* getName() const { return (char *)name; } // name => CScore::char[], force to transform
+		void setName(const char* uname) { strcpy(name, uname);} //not const 
+	//add more method for mutable 
+		void showName() const { 
+			cout << sCount++ << ": " << name << endl; } 
+	//add method for explcit
+		//CScore(const char* cstr):sc(subj[1]), sCount(0) { cout << cstr << endl; }
+		explicit CScore(const char* cstr):sc(subj[1]), sCount(0) { cout << cstr << endl; }
 };
 
 CScore::CScore(char *uid, char *uname, int *uscore) : 
