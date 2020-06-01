@@ -1,7 +1,9 @@
 import math
 import gc
 import time
+import os
 import sounddevice as sd
+import soundfile as sf
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy import signal
@@ -11,6 +13,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation, BatchNormalization, Dropout, LSTM, TimeDistributed
 from keras import regularizers
 from keras import optimizers
+import tensorflow as tf
 
 class cocktail_party_DNN():
     def __init__(self, start_path, maleSpeechTrain, femaleSpeechTrain, maleValidateAudioFile, femaleValidateAudioFile, mix_audioFile, trainset_batch=20, model_architecture=None, trainModel=True, plot_image=True, plot_train_result=True, trained_weight_file=None, output_path=None):
@@ -152,16 +155,19 @@ class cocktail_party_DNN():
         if model_architecture == 'LSTM': shuffle_data = False
         else: shuffle_data = True
 
-        NN_model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
+        adam_op = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
+        sgd_op = optimizers.SGD(lr=0.01, momentum=0.0, nesterov=False)
+
+        NN_model.compile(loss='mean_squared_error', optimizer=adam_op, metrics=['accuracy'])
         NN_model.summary()
 
-        checkpoint_name = self.start_path + "model/Weights-{epoch:03d}--{val_loss:.5f}.hdf5"
+        checkpoint_name = self.start_path + "model/Weights-{epoch:03d}--{val_loss:.5f}.h5"
         earlystop = EarlyStopping(monitor="val_loss", patience=2)
         checkpoint = ModelCheckpoint(checkpoint_name, monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
         callbacks_list = [earlystop, checkpoint]
 
         # history = NN_model.fit(x_train, y_train, epochs=3, batch_size=64, validation_data=(x_test, y_test), shuffle=True, callbacks=callbacks_list)
-        history = NN_model.fit(x_train, y_train, epochs=10, batch_size=128, validation_data=(x_test, y_test), callbacks=callbacks_list, shuffle=shuffle_data)
+        history = NN_model.fit(x_train, y_train, epochs=10, batch_size=256, validation_data=(x_test, y_test), callbacks=callbacks_list, shuffle=shuffle_data)
 
         return NN_model, history
 
@@ -202,6 +208,9 @@ class cocktail_party_DNN():
         plt.xlabel("time (seconds)")
 
     def main(self):
+        if self.model_architecture == 'LSTM':
+            self.trainset_batch = 1
+
         ## STFT Targets and Predictors ##
         maleSpeechTrain, time_Train, Fs = self.read_wave(self.maleSpeechTrain)
         femaleSpeechTrain, _, _ = self.read_wave(self.femaleSpeechTrain)
@@ -290,7 +299,8 @@ class cocktail_party_DNN():
             if self.plot_train_result:
                 self.train_result(train_history)
         else:
-            predict_model = self.load_model_weight(model_architecture, self.trained_weight_file)
+            # predict_model = self.load_model_weight(model_architecture, self.trained_weight_file)
+            predict_model = tf.contrib.keras.models.load_model(self.trained_weight_file)
 
         ## Pass the validation predictors to the network. The output is the estimated mask. Reshape the estimated mask. ##
         SoftMaleMask = predict_model.predict(val_mixSequences)
@@ -319,8 +329,8 @@ class cocktail_party_DNN():
         if self.plot_image:
             self.plot_extract_compare(maleSpeechValidate, femaleSpeechValidate, maleSpeech_est_soft, femaleSpeech_est_soft, time_Validate)
 
-        librosa.output.write_wav(self.output_path + 'maleSpeech_est_soft.wav', maleSpeech_est_soft, Fs)
-        librosa.output.write_wav(self.output_path + 'femaleSpeech_est_soft.wav', femaleSpeech_est_soft, Fs)
+        sf.write(self.output_path + 'maleSpeech_est_soft.wav', maleSpeech_est_soft, Fs)
+        sf.write(self.output_path + 'femaleSpeech_est_soft.wav', femaleSpeech_est_soft, Fs)
 
         ## hard Mask ##
         HardMaleMask = SoftMaleMask >= 0.5
@@ -345,8 +355,8 @@ class cocktail_party_DNN():
         if self.plot_image:
             self.plot_extract_compare(maleSpeechValidate, femaleSpeechValidate, maleSpeech_est_hard, femaleSpeech_est_hard, time_Validate)
 
-        librosa.output.write_wav(self.output_path + 'maleSpeech_est_hard.wav', maleSpeech_est_hard, Fs)
-        librosa.output.write_wav(self.output_path + 'femaleSpeech_est_hard.wav', femaleSpeech_est_hard, Fs)
+        sf.write(self.output_path + 'maleSpeech_est_hard.wav', maleSpeech_est_hard, Fs)
+        sf.write(self.output_path + 'femaleSpeech_est_hard.wav', femaleSpeech_est_hard, Fs)
         
         # sd.play(maleSpeech_est_soft, Fs)
         # sd.wait()
@@ -366,7 +376,8 @@ class cocktail_party_DNN():
             target_Sequences = self.create_trainnig_seq2(P_target_Train, seqLen=self.trainset_batch, seqOverlap=self.trainset_batch)
             target_Sequences = np.reshape(target_Sequences, (len(target_Sequences), self.trainset_batch*P_target_Train.shape[0]))          # (4000, 1300)
 
-            target_Sequences = np.reshape(target_Sequences, (len(target_Sequences), target_Sequences.shape[1], 1))          # (4000, 1300, 1)
+            if self.model_architecture == 'LSTM':
+                target_Sequences = np.reshape(target_Sequences, (len(target_Sequences), target_Sequences.shape[1], 1))          # (4000, 1300, 1)
 
             SoftMask_target = predict_model.predict(target_Sequences)
             SoftMask_target = np.reshape(SoftMask_target,(len(SoftMask_target)*self.trainset_batch,int(SoftMask_target.shape[1]/self.trainset_batch))).T
@@ -400,7 +411,58 @@ class cocktail_party_DNN():
             # sd.play(target_oppoSpeech_est_hard, Fs)
             # sd.wait()
 
-            librosa.output.write_wav(self.output_path + 'targetSpeech_est_soft.wav', targetSpeech_est_soft, Fs)
-            librosa.output.write_wav(self.output_path + 'target_oppoSpeech_est_soft.wav', target_oppoSpeech_est_soft, Fs)
-            librosa.output.write_wav(self.output_path + 'targetSpeech_est_hard.wav', targetSpeech_est_hard, Fs)
-            librosa.output.write_wav(self.output_path + 'target_oppoSpeech_est_hard.wav', target_oppoSpeech_est_hard, Fs)
+            sf.write(self.output_path + 'targetSpeech_est_soft.wav', targetSpeech_est_soft, Fs)
+            sf.write(self.output_path + 'target_oppoSpeech_est_soft.wav', target_oppoSpeech_est_soft, Fs)
+            sf.write(self.output_path + 'targetSpeech_est_hard.wav', targetSpeech_est_hard, Fs)
+            sf.write(self.output_path + 'target_oppoSpeech_est_hard.wav', target_oppoSpeech_est_hard, Fs)
+
+        from keras import backend as K
+        from tensorflow.python.framework import graph_io
+
+        def freeze_session(session, keep_var_names=None, output_names=None, clear_devices=True):
+            """
+            Freezes the state of a session into a pruned computation graph.
+
+            Creates a new computation graph where variable nodes are replaced by
+            constants taking their current value in the session. The new graph will be
+            pruned so subgraphs that are not necessary to compute the requested
+            outputs are removed.
+            @param session The TensorFlow session to be frozen.
+            @param keep_var_names A list of variable names that should not be frozen,
+                                or None to freeze all the variables in the graph.
+            @param output_names Names of the relevant graph outputs.
+            @param clear_devices Remove the device directives from the graph for better portability.
+            @return The frozen graph definition.
+            """
+            graph = session.graph
+            with graph.as_default():
+                freeze_var_names = list(set(v.op.name for v in tf.global_variables()).difference(keep_var_names or []))
+                output_names = output_names or []
+                output_names += [v.op.name for v in tf.global_variables()]
+                input_graph_def = graph.as_graph_def()
+                if clear_devices:
+                    for node in input_graph_def.node:
+                        node.device = ""
+                        
+                #print('{}:{}\n{}:{}\n{}:{}'.format(len(freeze_var_names), freeze_var_names, 
+                #                                   len(freeze_var_names), output_names, 
+                #                                   len(freeze_var_names), freeze_var_names))
+                
+                frozen_graph = tf.graph_util.convert_variables_to_constants(
+                    session, input_graph_def, output_names, freeze_var_names)
+                return frozen_graph
+            
+        frozen = freeze_session(K.get_session(),
+                                    output_names=[out.op.name for out in model_architecture.outputs])
+
+        # import graph_def
+        with tf.Graph().as_default() as graph:
+            tf.import_graph_def(frozen)
+            
+        #for op in graph.get_operations():
+        #    print(op.name)
+
+        pb_path = graph_io.write_graph(frozen, self.start_path + 'pb_model', 'inference_graph.pb', as_text=False)
+        pb_path
+
+        # get_ipython().run_cell_magic('bash', '-s "$pb_path"', 'export var1=$1\nexport var2="./vino_model"\n. /opt/intel/openvino/bin/setupvars.sh\nmo.py --input_model $var1 --output_dir $var2 --input_shape [1,28,28,1] --data_type=FP16')

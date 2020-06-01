@@ -1,6 +1,7 @@
 import math
 import wave
 import sounddevice as sd
+import soundfile as sf
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy import signal
@@ -9,8 +10,8 @@ from scipy.io.wavfile import write, read
 # start_path = ""
 start_path = r"cock_tailk_python/"
 
-male_audio_file = start_path + r"output_audio\maleSpeech_est_hard.wav"
-female_audio_file = start_path + r"output_audio\femaleSpeech_est_hard.wav"
+male_audio_file = start_path + r"output_audio\maleSpeech_est_soft.wav"
+female_audio_file = start_path + r"output_audio\femaleSpeech_est_soft.wav"
 
 def read_wave(file_path):
     fs, wave_data = read(file_path, mmap=False)
@@ -25,13 +26,15 @@ male_speech, male_time, male_Fs = read_wave(male_audio_file)
 female_speech, female_time, female_Fs = read_wave(female_audio_file)
 print(male_time)
 
+sf.write(male_audio_file, male_speech, male_Fs)
+sf.write(female_audio_file, female_speech, female_Fs)
+
 print("male speech....")
 sd.play(male_speech, male_Fs)
 sd.wait()
 print("female speech....")
 sd.play(female_speech, female_Fs)
 sd.wait()
-
 
 duration = 5.5  # seconds
 

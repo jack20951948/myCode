@@ -12,21 +12,21 @@ output_path = start_path + r"output_audio/"
 plot_image = False
 
 model_architecture = 'DNN'
-trainModel = False
+trainModel = True
 plot_train_result = True
 
 trainset_batch = 20
 
-maleValidatingAudioFile = start_path + r"Ted\man1_test.wav"
-femaleValidatingAudioFile = start_path + r"Ted\woman1_test.wav"
+femaleValidatingAudioFile = start_path + r"FemaleSpeech-16-4-mono-20secs.wav"
+maleValidatingAudioFile = start_path + r"MaleSpeech-16-4-mono-20secs.wav"
 
-maleTrainingAudioFile = start_path + r"Ted\man1_train.wav"
-femaleTrainingAudioFile = start_path + r"Ted\woman1_train.wav"
+femaleTrainingAudioFile = start_path + r"FemaleSpeech-16-4-mono-405secs.wav"
+maleTrainingAudioFile = start_path + r"MaleSpeech-16-4-mono-405secs.wav"
 
-# mix_audioFile = start_path + r"Ted\man1_test.wav"
+# mix_audioFile = start_path + r"mix3.wav"
 mix_audioFile = None
 
-trained_weight_file = start_path + r"model\Weights-003--0.06457.hdf5"
+trained_weight_file = start_path + r"model\Weights-006--0.05493.h5"
 
 def main():
     if process_audio_extraction:
