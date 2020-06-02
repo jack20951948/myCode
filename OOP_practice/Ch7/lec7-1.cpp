@@ -7,42 +7,42 @@ const double PI = 3.14;
 
 //base class
 class CCircle {
-protected:
-    double radius;
-public:
-    CCircle(double r=1.0):radius(r) { ; }
-    void setR(double r=1.0) { radius=r; }
-    double calVol() const { 
-        return (PI*radius*radius); 
-    } 
-    void showVol() const {
-        cout << "radius=" << radius << " ";
-        cout << "volume=" << calVol() << endl;
-    }
+    protected:
+        double radius;
+    public:
+        CCircle(double r=1.0):radius(r) { ; }
+        void setR(double r=1.0) { radius=r; }
+        double calVol() const { 
+            return (PI*radius*radius); 
+        } 
+        void showVol() const {
+            cout << "radius=" << radius << " ";
+            cout << "volume=" << calVol() << endl;
+        }
 };
 
 //derived class
 class CCylinder : public CCircle {
-protected:
-    double length; //add one data member
-public:
-    CCylinder(double r=5.0, double l=1.0) : CCircle(r),length(l) { ; }
-    //Q: what if using the following statement instaed?
-	//CCylinder(double r=1.0, double l=1.0) : radisu(r),length(l) { ; }
-    
-	void setRL(double r=5.0, double l=1.0){
-        radius = r; length = l;  
-    }
-    //calculate the volume of a cylinder
-    double calVol() const { 
-        return (CCircle::calVol()*length); 
-    } 
-    //inherit showVol() from CCircle
-    
-    void displayVol() const {
-        cout << "d radius=" << radius << " ";
-        cout << "d volume=" << calVol() << endl;
-    }
+    protected:
+        double length; //add one data member
+    public:
+        CCylinder(double r=5.0, double l=1.0) : CCircle(r),length(l) { ; }
+        //Q: what if using the following statement instaed?
+        //CCylinder(double r=1.0, double l=1.0) : radisu(r),length(l) { ; }
+        
+        void setRL(double r=5.0, double l=1.0){
+            radius = r; length = l;  
+        }
+        //calculate the volume of a cylinder
+        double calVol() const { 
+            return (CCircle::calVol()*length); 
+        } 
+        //inherit showVol() from CCircle
+        
+        void displayVol() const {
+            cout << "d radius=" << radius << " ";
+            cout << "d volume=" << calVol() << endl;
+        }
 }; 
 
 int main() {
@@ -61,4 +61,3 @@ int main() {
  	system("pause");
     return 0;
 }
-

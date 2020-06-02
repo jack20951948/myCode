@@ -20,14 +20,15 @@ int main() {
 	//ostringstream usage
 	ostringstream outStr;
 	double number = 2.5;
-	outStr << "number = " << (3 * number/2);
+	outStr << "number = " << (3 * number/2); // out = "number = 3.75"
 	string outs = outStr.str();
 	cout << outs << endl;
 	//stringstream usage
 	stringstream ss;
-	int data=200;
+	int data2=200;
 	int result;
-	ss << data << " Tom"; 	//push data as a stream into ss
+	int t;
+	ss << data2 << " Tom"; 	//push data2 as a stream into ss
 	ss >> result;			//pop a integer from ss 
 	cout << result << " vs. " << ss.str() << endl;
 
