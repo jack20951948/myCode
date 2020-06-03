@@ -10,11 +10,11 @@ class CCircle {
     protected:
         double radius;
     public:
-        CCircle(double r=1.0):radius(r) { ; }
+        CCircle(double r=1.0) : radius(r) { ; }
         void setR(double r=1.0) { radius=r; }
         double calVol() const { 
             return (PI*radius*radius); 
-        } 
+        }
         void showVol() const {
             cout << "radius=" << radius << " ";
             cout << "volume=" << calVol() << endl;
@@ -28,7 +28,14 @@ class CCylinder : public CCircle {
     public:
         CCylinder(double r=5.0, double l=1.0) : CCircle(r),length(l) { ; }
         //Q: what if using the following statement instaed?
-        //CCylinder(double r=1.0, double l=1.0) : radisu(r),length(l) { ; }
+        // CCylinder(double r=1.0, double l=1.0) : radius(r), length(l) { ; } // error!  
+        /*
+            You can't initialize member variables declared in base 
+            classes, because the base class constructor has already 
+            initialized them. All base constructors execute before 
+            member constructors.
+        */
+        // CCylinder(double r=1.0, double l=1.0) : length(l) { radius=r; } // ok!
         
         void setRL(double r=5.0, double l=1.0){
             radius = r; length = l;  
