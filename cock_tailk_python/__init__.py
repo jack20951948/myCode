@@ -9,10 +9,10 @@ process_DNN = True
 # start_path = ""
 start_path = r"cock_tailk_python/"
 output_path = start_path + r"output_audio/"
-plot_image = False
+plot_image = True
 
 model_architecture = 'DNN'
-trainModel = True
+trainModel = False
 plot_train_result = True
 
 trainset_batch = 20
@@ -26,7 +26,7 @@ maleTrainingAudioFile = start_path + r"MaleSpeech-16-4-mono-405secs.wav"
 # mix_audioFile = start_path + r"mix3.wav"
 mix_audioFile = None
 
-trained_weight_file = start_path + r"model\Weights-006--0.05493.h5"
+trained_weight_file = start_path + r"model\Weights-005--0.05592.h5"
 
 def main():
     if process_audio_extraction:

@@ -66,15 +66,19 @@ class cocktail_party_DNN():
         plt.title("Mix")
         plt.xlabel("time (seconds)")
 
+        plt.show()
+
     def get_stft(self, data, fs, WindowLength, FFTLength, OverlapLength, image_name, plot_image=False, return_f=False):
         f, t, Zxx = signal.stft(data, fs, nperseg=WindowLength, nfft=FFTLength, noverlap=OverlapLength)
-        if plot_image:
-            plt.figure()
-            plt.pcolormesh(t, f, np.abs(Zxx))
-            plt.colorbar()
-            plt.title('{} STFT Magnitude'.format(image_name))
-            plt.ylabel('Frequency [Hz]')
-            plt.xlabel('Time [sec]')
+        # if plot_image:
+        #     plt.figure()
+        #     plt.pcolormesh(t, f, np.abs(Zxx))
+        #     plt.colorbar()
+        #     plt.title('{} STFT Magnitude'.format(image_name))
+        #     plt.ylabel('Frequency [Hz]')
+        #     plt.xlabel('Time [sec]')
+
+        #     plt.show()
 
         if return_f:
             return f, Zxx
@@ -191,7 +195,16 @@ class cocktail_party_DNN():
         plt.xlabel("Epoch")
         plt.ylabel("Loss")
 
+        plt.show()
+
     def plot_extract_compare(self, wave_data1, wave_data2, wave_data3, wave_data4, time):
+        step = min(len(wave_data1), len(wave_data2), len(wave_data3), len(wave_data4), len(time))
+        wave_data1 = wave_data1[0:step]
+        wave_data2 = wave_data2[0:step]
+        wave_data3 = wave_data3[0:step]
+        wave_data4 = wave_data4[0:step]
+        time = time[0:step]
+
         plt.figure()
         plt.subplot(221) 
         plt.plot(time, wave_data1, linewidth=0.3)
@@ -206,6 +219,8 @@ class cocktail_party_DNN():
         plt.plot(time, wave_data4, c="r", linewidth=0.3)
         plt.title("Estimated Female Speech")
         plt.xlabel("time (seconds)")
+
+        plt.show()
 
     def main(self):
         if self.model_architecture == 'LSTM':
