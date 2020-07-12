@@ -1,0 +1,3 @@
+mo.py --input_model D:\myCode\cock_tailk_python\pb_model\inference_graph.pb --output_dir D:\myCode\cock_tailk_python\vino_model\ --batch 20 --data_type=FP16
+
+openvino_inference.py -m D:\myCode\cock_tailk_python\vino_model\inference_graph.xml -in_m D:\myCode\cock_tailk_python\MaleSpeech-16-4-mono-20secs.wav -in_f D:\myCode\cock_tailk_python\FemaleSpeech-16-4-mono-20secs.wav -r S -device CPU

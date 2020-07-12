@@ -1,6 +1,7 @@
 import math
 import sounddevice as sd
 import numpy as np
+import librosa
 from matplotlib import pyplot as plt
 from scipy import signal
 from scipy.io.wavfile import write, read
@@ -13,15 +14,17 @@ class audio_extraction():
         self.main()
 
     def read_wave(self, file_path):
-        fs, wave_data = read(file_path, mmap=False)
-        wave_data = wave_data.T
-        if wave_data.ndim > 1:
-            wave_data = wave_data[0,:]
+        wave_data, fs = librosa.load(file_path, sr=8000)
+        wave_data = (wave_data*32768).astype(np.int16)
         time = np.arange(0, len(wave_data)) * (1.0 / fs)
 
         return wave_data, time, fs
 
-    def combine_audio(self, mSpeech, fSpeech):
+    def combine_audio(self, mSpeech, fSpeech, time):
+        L = min(len(mSpeech),len(fSpeech))
+        mSpeech = mSpeech[0:L]
+        fSpeech = fSpeech[0:L]
+        time = time[0:L]
         mSpeech = mSpeech/np.linalg.norm(mSpeech)
         fSpeech = fSpeech/np.linalg.norm(fSpeech)
         ampAdj  = max(abs(mSpeech + fSpeech))
@@ -30,7 +33,7 @@ class audio_extraction():
         mix     = mSpeech + fSpeech
         mix     = mix / max(abs(mix))
 
-        return mSpeech, fSpeech, mix
+        return mSpeech, fSpeech, mix, time
     
     def plot_audio_wave(self, wave_data1, wave_data2, wave_data3, time):
         plt.figure()
@@ -61,6 +64,8 @@ class audio_extraction():
             return Zxx
 
     def plot_extract_compare(self, wave_data1, wave_data2, wave_data3, wave_data4, time):
+        wave_data3 = wave_data3[0:len(wave_data1)]
+        wave_data4 = wave_data4[0:len(wave_data2)]
         plt.figure()
         plt.subplot(221) 
         plt.plot(time, wave_data1, linewidth=0.3)
@@ -81,15 +86,23 @@ class audio_extraction():
         male_speech, male_time, male_Fs = self.read_wave(self.male_audio_file)
         female_speech, female_time, female_Fs = self.read_wave(self.female_audio_file)
 
+        if len(male_time) > len(female_time): time = female_time 
+        else: time = male_time
+
+        # sd.play(male_speech, male_Fs)
+        # sd.wait()
+        # sd.play(female_speech, male_Fs)
+        # sd.wait()
+
         ## Combine the two speech sources ##
-        male_speech, female_speech,  mix = self.combine_audio(male_speech, female_speech)
+        male_speech, female_speech,  mix, time = self.combine_audio(male_speech, female_speech, time)
 
         ## Visualize the original and mix signals ##
         if self.plot_image:
-            self.plot_audio_wave(male_speech, female_speech, mix, male_time)
+            self.plot_audio_wave(male_speech, female_speech, mix, time)
 
-        sd.play(mix, male_Fs)
-        sd.wait()
+        # sd.play(mix, male_Fs)
+        # sd.wait()
 
         ## Source Separation Using Ideal Time-Frequency Masks ##
         P_M = self.get_stft(male_speech, male_Fs, WindowLength=128, FFTLength=128, OverlapLength=96, image_name="Male")
@@ -107,7 +120,7 @@ class audio_extraction():
         fSpeech_Hard = signal.istft(P_F_Hard, f, nperseg=128, nfft=128, noverlap=96)
 
         if self.plot_image:
-            self.plot_extract_compare(male_speech, female_speech, mSpeech_Hard, fSpeech_Hard, male_time)
+            self.plot_extract_compare(male_speech, female_speech, mSpeech_Hard, fSpeech_Hard, time)
 
         # sd.play(mSpeech_Hard, male_Fs)
         # sd.wait()
@@ -124,7 +137,7 @@ class audio_extraction():
         fSpeech_Soft = signal.istft(P_F_Soft, f, nperseg=128, nfft=128, noverlap=96)
 
         if self.plot_image:
-            self.plot_extract_compare(male_speech, female_speech, mSpeech_Soft, fSpeech_Soft, male_time)
+            self.plot_extract_compare(male_speech, female_speech, mSpeech_Soft, fSpeech_Soft, time)
 
         # sd.play(mSpeech_Soft, male_Fs)
         # sd.wait()

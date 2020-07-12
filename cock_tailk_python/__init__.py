@@ -9,25 +9,32 @@ process_DNN = True
 
 # start_path = ""
 start_path = r"cock_tailk_python/"
-plot_image = False
+output_path = start_path + r"output_audio/"
+plot_image = True
+
+model_architecture = 'DNN'
 trainModel = False
 plot_train_result = True
 
-trainset_batch = 1
+trainset_batch = 20
 
-maleValidatingAudioFile = start_path + r"Ted\man1_test.wav"
-femaleValidatingAudioFile = start_path + r"Ted\woman1_test.wav"
+femaleValidatingAudioFile = start_path + r"FemaleSpeech-16-4-mono-20secs.wav"
+maleValidatingAudioFile = start_path + r"MaleSpeech-16-4-mono-20secs.wav"
 
-maleTrainingAudioFile = start_path + r"Ted\man1_train.wav"
-femaleTrainingAudioFile = start_path + r"Ted\woman1_train.wav"
+femaleTrainingAudioFile = start_path + r"FemaleSpeech-16-4-mono-405secs.wav"
+maleTrainingAudioFile = start_path + r"MaleSpeech-16-4-mono-405secs.wav"
 
-trained_weight_file = start_path + r"model\Weights-003--0.07728.hdf5"
+# mix_audioFile = start_path + r"mix3.wav"
+mix_audioFile = None
+
+trained_weight_file = start_path + r"model\Weights-005--0.05592.h5"
 
 def main():
     if process_audio_extraction:
-        audio_extraction(maleValidatingAudioFile, femaleValidatingAudioFile)
+        audio_extraction(maleValidatingAudioFile, femaleValidatingAudioFile, plot_image)
     if process_DNN:
-        cocktail_party_DNN(start_path, maleTrainingAudioFile, femaleTrainingAudioFile, maleValidatingAudioFile, femaleValidatingAudioFile, trainset_batch, trainModel, plot_image, plot_train_result, trained_weight_file)
+        cocktail_party_DNN(start_path, maleTrainingAudioFile, femaleTrainingAudioFile, maleValidatingAudioFile, femaleValidatingAudioFile, mix_audioFile
+                            , trainset_batch, model_architecture, trainModel, plot_image, plot_train_result, trained_weight_file, output_path)
 
 if __name__ == "__main__":
     startTime = time.time()
