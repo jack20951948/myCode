@@ -1,8 +1,9 @@
+#%%
 import time
 from matplotlib import pyplot as plt
 from audio_extraction import audio_extraction
 from cocktail_party_DNN import cocktail_party_DNN
-
+#%%
 process_audio_extraction = False
 process_DNN = True
 
