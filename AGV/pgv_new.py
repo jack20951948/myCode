@@ -92,15 +92,15 @@ class pgv_action():
     def setTrip():
         if mqttTarget[0] != tripData[1]: #if have new mqttTarget
             tripData[1] = mqttTarget[0]
-            tripData[2] = time.time() # reset the start softStartTimer
-            tripData[3]=True
-            tripData[4]=False
-            if tripData[1] > pgvData[1]: # if the direction is forward
-                tripData[0] = 0
-                pgvData[0]=0 #设置PGV00开始读取
+            tripData[2] = time.time() # reset the start softStartTimer, 2=startTimeStamp
+            tripData[3]=True # 3=pauseFlag
+            tripData[4]=False # 4=rollingFlag
+            if tripData[1] > pgvData[1]: # if the direction is forward, pgvData[1]1=XPosition(shifted)
+                tripData[0] = 0 # tripData[0]=direction(forward)
+                pgvData[0]=0 #设置PGV00开始读取, pgvData[0]=which PGV camera
             else: # if the direction is backward
-                tripData[0] = 1
-                pgvData[0]=1 #设置PGV01开始读取
+                tripData[0] = 1 # tripData[0]=direction(backward)
+                pgvData[0]=1 #设置PGV01开始读取, pgvData[0]=which PGV camera
 
     def checkSpeed(sp): # 检查避免超出PWM产生器范围
         if sp >= 100:
@@ -110,7 +110,7 @@ class pgv_action():
         return sp
 
     def goMotors():
-        elapsedTime = time.time() - tripData[2]     #soft start
+        elapsedTime = time.time() - tripData[2]     #soft start, 2=startTimeStamp
         if elapsedTime > softStartTimer:
             softStartSpeed = maxSpeed
         if elapsedTime <= softStartTimer:
