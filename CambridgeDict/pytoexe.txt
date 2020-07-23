@@ -1,0 +1,3 @@
+pyinstaller -F -i "D:\code\CambridgeDict\Icon_0-removebg-preview.ico" --clean \CambridgeDict\\A.C._Lee_High_v1_7.py
+
+icon issue:https://www.guidingtech.com/fix-blank-icons-windows-10/
