@@ -28,170 +28,109 @@ class pgv_action():
         else:
             GPIO.output(brakePin, GPIO.LOW)
 
-    def move_forward(final_speed=10, time_constant=10):
+    def move_forward(final_speed=10, time_constant=10, acc=1):
         GPIO.output(stopPin, GPIO.LOW)
         GPIO.output(brakePin, GPIO.LOW)
-
-        right_speed = 0
-        left_speed = 0
 
         GPIO.output(rightDirPin, GPIO.LOW)
         GPIO.output(leftDirPin, GPIO.HIGH)
 
-        right_speed = (final_speed-final_speed*(math.exp(-i/time_constant))) - (1/250)*final_speed*pgvData[2]
-        left_speed = (final_speed-final_speed*(math.exp(-i/time_constant))) + (1/250)*final_speed*pgvData[2]
+        if right_speed < final_speed:
+            right_speed += acc
+        if left_speed < final_speed:
+            left_speed += acc
         kit.servo[0].angle = pgv_action.checkSpeed(right_speed)
         kit.servo[1].angle = pgv_action.checkSpeed(left_speed)
 
         time.sleep(0.01)
 
-    def move_n_step(direction='forward', step=200, final_speed=10, time_constant=10): # 5*time_constant = step when agv arrive final speed
+    def move_backward(final_speed=10, time_constant=10, acc=1):
         GPIO.output(stopPin, GPIO.LOW)
         GPIO.output(brakePin, GPIO.LOW)
 
-        right_speed = 0
-        left_speed = 0
+        GPIO.output(rightDirPin, GPIO.HIGH)
+        GPIO.output(leftDirPin, GPIO.LOW)
 
-        if direction.lower() == 'forward':
-            pgvData[0] = 0 #设置PGV00开始读取
-            GPIO.output(rightDirPin, GPIO.LOW)
-            GPIO.output(leftDirPin, GPIO.HIGH)
-        elif direction.lower() == 'backward':
-            pgvData[0] = 1 #设置PGV01开始读取
-            GPIO.output(rightDirPin, GPIO.HIGH)
-            GPIO.output(leftDirPin, GPIO.LOW)
-        else:
-            raise NameError('direction should be either "forward" or "fackward"')
+        if right_speed < final_speed:
+            right_speed += acc
+        if left_speed < final_speed:
+            left_speed += acc
+        kit.servo[0].angle = pgv_action.checkSpeed(right_speed)
+        kit.servo[1].angle = pgv_action.checkSpeed(left_speed)
 
-        for i in range(int(step/2)):
-            try:
-                right_speed = (final_speed-final_speed*(math.exp(-i/time_constant))) - (1/250)*final_speed*pgvData[2]
-                left_speed = (final_speed-final_speed*(math.exp(-i/time_constant))) + (1/250)*final_speed*pgvData[2]
-                kit.servo[0].angle = pgv_action.checkSpeed(right_speed)
-                kit.servo[1].angle = pgv_action.checkSpeed(left_speed)
-            except Exception as e:
-                print(e)
-                print("stop agv!")
-                pgv_action.stop_agv()
+        time.sleep(0.01) 
 
-            time.sleep(0.01)
-        for i in range(int(step/2)):
-            try:
-                right_speed = (final_speed*(math.exp(-i/time_constant))) - (1/250)*final_speed*pgvData[2]
-                left_speed = (final_speed*(math.exp(-i/time_constant))) + (1/250)*final_speed*pgvData[2]
-                kit.servo[0].angle = pgv_action.checkSpeed(right_speed)
-                kit.servo[1].angle = pgv_action.checkSpeed(left_speed)
-            except Exception as e:
-                print(e)
-                print("stop agv!")
-                pgv_action.stop_agv()
-
-            time.sleep(0.01)
-
-    def move_to_position(traget_position=0, final_speed=10, time_constant=10, safe_distance=100):
+    def move_left(final_speed=10, time_constant=10, acc=1):
         GPIO.output(stopPin, GPIO.LOW)
         GPIO.output(brakePin, GPIO.LOW)
 
-        # print('read pgv')
-        # pgv_detection.readPGV()
-        # print('read complete')
+        GPIO.output(rightDirPin, GPIO.HIGH)
+        GPIO.output(leftDirPin, GPIO.LOW)
 
-        right_speed = 0
-        left_speed = 0
+        if right_speed < final_speed:
+            right_speed += acc
+        if left_speed < (final_speed / 2):
+            left_speed += (acc / 2)
+        kit.servo[0].angle = pgv_action.checkSpeed(right_speed)
+        kit.servo[1].angle = pgv_action.checkSpeed(left_speed)
 
-        if traget_position - pgvData[1] > 0:
-            pgvData[0] = 0 #设置PGV00开始读取
-            GPIO.output(rightDirPin, GPIO.LOW)
-            GPIO.output(leftDirPin, GPIO.HIGH)
+        time.sleep(0.01) 
 
-        elif traget_position - pgvData[1] < 0:
-            pgvData[0] = 1 #设置PGV01开始读取
-            GPIO.output(rightDirPin, GPIO.HIGH)
-            GPIO.output(leftDirPin, GPIO.LOW)
+    def move_right(final_speed=10, time_constant=10, acc=1):
+        GPIO.output(stopPin, GPIO.LOW)
+        GPIO.output(brakePin, GPIO.LOW)
 
-        else:
-            pgv_action.stop_agv()
+        GPIO.output(rightDirPin, GPIO.HIGH)
+        GPIO.output(leftDirPin, GPIO.LOW)
 
-        time_step = 0
+        if right_speed < (final_speed / 2):
+            right_speed += (acc / 2)
+        if left_speed < final_speed:
+            left_speed += acc
+        kit.servo[0].angle = pgv_action.checkSpeed(right_speed)
+        kit.servo[1].angle = pgv_action.checkSpeed(left_speed)
 
-        while abs(traget_position - pgvData[1]) > safe_distance:
-            try:
-                right_speed = (final_speed-final_speed*(math.exp(-time_step/time_constant))) - (1/250)*final_speed*pgvData[2]
-                left_speed = (final_speed-final_speed*(math.exp(-time_step/time_constant))) + (1/250)*final_speed*pgvData[2]
-                kit.servo[0].angle = pgv_action.checkSpeed(right_speed)
-                kit.servo[1].angle = pgv_action.checkSpeed(left_speed)
-            except Exception as e:
-                print(e)
-                print("stop agv!")
-                pgv_action.stop_agv()
-
-            time.sleep(0.01)
-            time_step += 1
-
-        while abs(traget_position - pgvData[1]) <= safe_distance:
-            if abs(traget_position - pgvData[1]) <= 0:
-                pgv_action.stop_agv()
-
-            try:
-                right_speed = (final_speed*(math.exp(-time_step/time_constant))) - (1/250)*final_speed*pgvData[2]
-                left_speed = (final_speed*(math.exp(-time_step/time_constant))) + (1/250)*final_speed*pgvData[2]
-                kit.servo[0].angle = pgv_action.checkSpeed(right_speed)
-                kit.servo[1].angle = pgv_action.checkSpeed(left_speed)
-            except Exception as e:
-                print(e)
-                print("stop agv!")
-                pgv_action.stop_agv()
-
-            time.sleep(0.01)
-            time_step += 1
+        time.sleep(0.01) 
     
-    def rolling_test():
-        # print('Rolling Start')
-        direction = 0
+    def rolling_L():
         GPIO.output(rollerRun, GPIO.HIGH)
         GPIO.output(rollerDir,GPIO.LOW)
-        # print(GPIO.input(rollerSensorL))
-        if GPIO.input(rollerSensorL) == 1 :
-            print("rolling reverse!")
-            GPIO.output(rollerRun, GPIO.LOW)
-            GPIO.output(rollerDir,GPIO.HIGH)
-            #time.sleep(1.0)
-            GPIO.output(rollerRun, GPIO.HIGH)
-            time.sleep(0.01)
 
-        else :
-            GPIO.output(rollerRun, GPIO.LOW)
-            GPIO.output(rollerDir,GPIO.LOW)
-            #time.sleep(1.0)
-            GPIO.output(rollerRun, GPIO.HIGH)
-            time.sleep(0.01)
         GPIO.output(rollerRun, GPIO.LOW)
+        GPIO.output(rollerDir,GPIO.HIGH)
+        GPIO.output(rollerRun, GPIO.HIGH)
+        time.sleep(0.01)
+
+    def rolling_R():
+        GPIO.output(rollerRun, GPIO.LOW)
+        GPIO.output(rollerDir,GPIO.LOW)
+        GPIO.output(rollerRun, GPIO.HIGH)
+        time.sleep(0.01)
 
     def goMotorsLoop():
-        global kit
+        global kit, right_speed, left_speed
 
-        # print('move!')
-        # for i in range(2):
-        #     if i == 1:
-        #         pgv_action.move_n_step(direction='forward', step=1000, final_speed=10, time_constant=20)
-        #     else:
-        #         pgv_action.move_n_step(direction='backward', step=1000, final_speed=10, time_constant=20)
-
-        #     pgv_action.stop_agv(breaker=False)
-        #     time.sleep(3)
-        # print('stop!')
+        right_speed = 0
+        left_speed = 0
 
         print('move!')
-        while pgvData[1] == 0:
-            # break
-            pass
-        pgv_action.move_to_position(traget_position=38360)
-
-        
-        print('Rolling Start')
         while True:
-            break
-            pgv_action.rolling_test()
+            if event == 'p':
+                pgv_action.stop_agv()
+            elif event == 'w':
+                pgv_action.move_forward()
+            elif event == 's':
+                pgv_action.move_backward()
+            elif event == 'a':
+                pgv_action.move_left()
+            elif event == 'd':
+                pgv_action.move_right()
+            else:
+                GPIO.output(rollerRun, GPIO.LOW)
+                if right_speed > 0:
+                    right_speed -= 0.5
+                if left_speed > 0:
+                    left_speed -= 0.5
 
     # --- move Motors end ---
 
