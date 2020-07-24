@@ -1,0 +1,6 @@
+#!/bin/bash
+cd ~/python
+echo Start program...
+python3 pgv.py
+echo Stop program...
+python3 stop_pgv.py
