@@ -3,7 +3,6 @@
 import time
 
 import math
-import getch
 
 import threading #多线程
 import subprocess as sp
