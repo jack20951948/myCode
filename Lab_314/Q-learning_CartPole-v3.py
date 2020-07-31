@@ -2,13 +2,6 @@ import numpy as np
 import gym
 from gym.wrappers import Monitor
 
-gym.envs.register(
-    id='CartPole-v3',
-    entry_point='gym.envs.classic_control:CartPoleEnv',
-    tags={'wrapper_config.TimeLimit.max_episode_steps': 50000},
-    reward_threshold=195.0,
-)
-
 BOX_DIM = 162
 MAX_STEPS = 100000
 TRAILS = 200
@@ -93,34 +86,33 @@ def Box(ob):
 ### Simulation by using OpenAI Gym
 ### https://gym.openai.com/docs
 
-env = gym.make('CartPole-v3')
-
-# env = Monitor(env, '/home/jack/Desktop/cart-pole', force=True)
+env = gym.make('CartPole-v0')
+env = Monitor(env, '/home/jack/Desktop/cart-pole', force=True)
 
 for i in range(0, TRAILS):
     ob = env.reset()
     p_before = 0
         
     for j in range(0, MAX_STEPS):
-        x_vec = Box(ob)
-        reward_hat, p_before = ACE(learn=0.5, decay=0.8, reward=0, gamma=0.95, p_before=p_before)
-        action = ASE(learn=1000, decay=0.9, reward=reward_hat)
+     x_vec = Box(ob)
+     reward_hat, p_before = ACE(learn=0.5, decay=0.8, reward=0, gamma=0.95, p_before=p_before)
+     action = ASE(learn=1000, decay=0.9, reward=reward_hat)
      
-        if j > 30000: 
-            env.render()
+     if j > 30000: 
+       env.render()
          
-        ob, _, done, _ = env.step(action)
+     ob, _, done, _ = env.step(action)
 
-        if done:
-            x_vec = Box(ob)
-            reward_hat, p_before = ACE(learn=0.5, decay=0.8, reward=-1, gamma=0.95, p_before=p_before)
-            ASE(learn=1000, decay=0.9, reward=reward_hat)
-            break
+     if done:
+         x_vec = Box(ob)
+         reward_hat, p_before = ACE(learn=0.5, decay=0.8, reward=-1, gamma=0.95, p_before=p_before)
+         ASE(learn=1000, decay=0.9, reward=reward_hat)
+         break
 
-    if i % 1 == 0 :
-        print("Trial {0:3} was {1:5} steps".format(i, j))
+    if i % 10 == 0 :
+     print("Trial {0:3} was {1:5} steps".format(i, j))
     if j == MAX_STEPS-1 :
-        print("Pole balanced successfully for at least {} steps at Trail {}".format(MAX_STEPS, i))
-        break
+     print("Pole balanced successfully for at least {} steps at Trail {}".format(MAX_STEPS, i))
+     break
 
 env.close()
