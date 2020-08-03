@@ -66,12 +66,122 @@ class mqtt_client_connection():
             #print(mqttTarget)
     
 class pgv_action():
+    # --- Roller begin ---
+    def rolling():
+        print('Rolling Start')
+        direction = 0
+        GPIO.output(rollerRun, GPIO.HIGH)
+        GPIO.output(rollerDir,GPIO.LOW)
+        rollingTimeStamp = time.time()
+        while time.time()-rollingTimeStamp < 10:
+            # print(GPIO.input(rollerSensorL))
+            if GPIO.input(rollerSensorL) == 1 :
+                GPIO.output(rollerRun, GPIO.LOW)
+                GPIO.output(rollerDir,GPIO.HIGH)
+                #time.sleep(1.0)
+                GPIO.output(rollerRun, GPIO.HIGH)
+                time.sleep(08.01)
+
+            else :
+                GPIO.output(rollerRun, GPIO.LOW)
+                GPIO.output(rollerDir,GPIO.LOW)
+                #time.sleep(1.0)
+                GPIO.output(rollerRun, GPIO.HIGH)
+                time.sleep(14.45)
+        GPIO.output(rollerRun, GPIO.LOW)
+    # --- roller end ---
+
+    def setTrip():
+        if mqttTarget[0] != tripData[1]: #if have new mqttTarget
+            tripData[1] = mqttTarget[0]
+            tripData[2] = time.time() # reset the start softStartTimer
+            tripData[3]=True
+            tripData[4]=False
+            if tripData[1] > pgvData[1]: # if the direction is forward
+                tripData[0] = 0
+                pgvData[0]=0 #设置PGV00开始读取
+            else: # if the direction is backward
+                tripData[0] = 1
+                pgvData[0]=1 #设置PGV01开始读取
+
     def checkSpeed(sp): # 检查避免超出PWM产生器范围
         if sp >= 100:
             sp = 100
         if sp <= 0:
             sp = 0
         return sp
+
+    def goMotors():
+        elapsedTime = time.time() - tripData[2]     #soft start
+        if elapsedTime > softStartTimer:
+            softStartSpeed = maxSpeed
+        if elapsedTime <= softStartTimer:
+            softStartSpeed = elapsedTime/softStartTimer*(maxSpeed-minSpeed)+minSpeed
+        # if lost
+        if pgvData[4] or pgvData[5]:
+            GPIO.output(stopPin, GPIO.HIGH)
+            GPIO.output(brakePin, GPIO.HIGH)
+            safeSpeed = 0
+        else:
+            GPIO.output(stopPin, GPIO.LOW)
+            GPIO.output(brakePin, GPIO.LOW)
+            safeSpeed = maxSpeed
+
+        #if go forward
+        if tripData[0] == 0:
+            GPIO.output(rightDirPin, GPIO.LOW)
+            GPIO.output(leftDirPin, GPIO.HIGH)
+            GPIO.output(brakePin, GPIO.LOW)
+
+            distance = tripData[1]-pgvData[1]
+            if distance > safeDistance:
+                baseSpeed = maxSpeed
+            elif distance <= safeDistance:
+                baseSpeed = (maxSpeed-minSpeed)*(distance/safeDistance)+minSpeed
+
+            speed = min(baseSpeed,safeSpeed,softStartSpeed)
+            rightSpeed = speed - correctYDistanceSpeed*pgvData[2]
+            leftSpeed = speed + correctYDistanceSpeed*pgvData[2]
+
+        #if go backward
+        if tripData[0] == 1:
+            GPIO.output(rightDirPin, GPIO.HIGH)
+            GPIO.output(leftDirPin, GPIO.LOW)
+            GPIO.output(brakePin, GPIO.LOW)
+
+            distance = pgvData[1]-tripData[1]
+            if distance > safeDistance:
+                baseSpeed = maxSpeed
+            elif distance <= safeDistance:
+                baseSpeed = (maxSpeed-minSpeed)*(distance/safeDistance)+minSpeed
+            if distance <= 0:
+                baseSpeed = 0
+            speed = min(baseSpeed,safeSpeed,softStartSpeed)
+            rightSpeed = speed - correctYDistanceSpeed*pgvData[2]
+            leftSpeed = speed + correctYDistanceSpeed*pgvData[2]
+
+        if distance <= 0:
+            rightSpeed = 0
+            leftSpeed = 0
+            GPIO.output(brakePin, GPIO.HIGH)
+            if tripData[4] == False:
+                pgv_action.rolling()
+                tripData[4] = True
+                demo_setting.demoLoop()
+
+        if tripData[3] == True:
+            rightSpeed=0
+            leftSpeed=0
+            tripData[3] = False
+            print('Pause finish')
+
+        #print(distance)
+        #print(pgvData)
+        #print(tripData)
+        #print(mqttTarget)
+        # print(rightSpeed, leftSpeed)
+        kit.servo[0].angle = pgv_action.checkSpeed(rightSpeed)
+        kit.servo[1].angle = pgv_action.checkSpeed(leftSpeed)
 
     def stop_agv(breaker=True):
         GPIO.output(stopPin, GPIO.HIGH)
@@ -125,7 +235,7 @@ class pgv_action():
 
             time.sleep(0.01)
 
-    def move_to_position(traget_position=0, final_speed=10, time_constant=10, safe_distance=100):
+    def move_to_position(traget_position=0, final_speed=10, time_constant=10, safe_distance=200):
         GPIO.output(stopPin, GPIO.LOW)
         GPIO.output(brakePin, GPIO.LOW)
 
@@ -166,8 +276,18 @@ class pgv_action():
             time_step += 1
 
         while abs(traget_position - pgvData[1]) <= safe_distance:
+            print(abs(traget_position - pgvData[1]))
             if abs(traget_position - pgvData[1]) <= 0:
+                left_speed = 0
+                right_speed = 0
                 pgv_action.stop_agv()
+                break
+            
+            # if left_speed < 0.1 and right_speed < 0.1:
+            #     left_speed = 0
+            #     right_speed = 0
+            #     pgv_action.stop_agv()
+            #     break
 
             try:
                 right_speed = (final_speed*(math.exp(-time_step/time_constant))) - (1/250)*final_speed*pgvData[2]
@@ -205,27 +325,30 @@ class pgv_action():
         GPIO.output(rollerRun, GPIO.LOW)
 
     def goMotorsLoop():
-        global kit
+        # print('move!')
+        # for i in range(2):
+        #     if i == 1:
+        #         pgv_action.move_n_step(direction='forward', step=1000, final_speed=10, time_constant=20)
+        #     else:
+        #         pgv_action.move_n_step(direction='backward', step=1000, final_speed=10, time_constant=20)
 
-        print('move!')
-        for i in range(2):
-            if i == 1:
-                pgv_action.move_n_step(direction='forward', step=1000, final_speed=10, time_constant=20)
-            else:
-                pgv_action.move_n_step(direction='backward', step=1000, final_speed=10, time_constant=20)
+        #     pgv_action.stop_agv(breaker=False)
+        #     time.sleep(3)
+        # print('stop!')
 
-            pgv_action.stop_agv(breaker=False)
-            time.sleep(3)
-        print('stop!')
-
+        #####################################################################################################
         print('move!')
         while pgvData[1] == 0:
+            # break
             pass
         pgv_action.move_to_position(traget_position=38360)
 
-        
-        print('Rolling Start')
-        pgv_action.rolling_test()
+        pgv_action.move_to_position(traget_position=35360)
+
+        ####################################################################################################
+        # print('Rolling Start')
+        # while True:
+        #     pgv_action.rolling_test()
 
     # --- move Motors end ---
 
@@ -321,7 +444,7 @@ def motor_config():
     global pgvHeadShift, maxSpeed, minSpeed, safeDistance, correctAngleSpeed, correctYDistanceSpeed, softStartTimer, direction
 
     # --- motor config
-    pgvHeadShift=[72, 511]
+    pgvHeadShift=[40, -60]# [72, 511]
     maxSpeed = 15.0
     minSpeed = 3.0
     safeDistance = 300.0
