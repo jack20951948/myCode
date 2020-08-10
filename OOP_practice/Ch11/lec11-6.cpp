@@ -20,8 +20,8 @@ int main() {
         //insert word to set ignore 
     }
     //-- count from input stream.
-    while (cin >> word) {
-        if (ignore.find(word)==ignore.end())
+    while (cin >> word) { // press "ctrl + d" to stop input
+        if (ignore.find(word)==ignore.end()) // no match, search from head
             freq[word]++; //update map freq 
     }
      //-- write word(key)/count as a pair

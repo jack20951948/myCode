@@ -18,7 +18,7 @@ class CScore
 
 	public:
 		const int & sc;
-		CScore(char *, char *, int *);
+		CScore(const char *, const char *, const int *); // const char * => for char array like "99123", see line 61
 		void showSCore() {
 			cout << id << " " << name << " "
 			<< subj[0] << " " << subj[1] << " "
@@ -28,7 +28,7 @@ class CScore
 			cout << sum[0] << " " << sum[1] << " " << sum[2] << endl;
 		}
 	//add more const methods
-		char* getName() const { return (char *)name; } // name => CScore::char[], force to transform
+		char* getName() const { return (char *)name; } // name => CScore::char[], force to transform (in array)
 		void setName(const char* uname) { strcpy(name, uname);} //not const 
 	//add more method for mutable 
 		void showName() const { 
@@ -38,7 +38,7 @@ class CScore
 		explicit CScore(const char* cstr):sc(subj[1]), sCount(0) { cout << cstr << endl; }
 };
 
-CScore::CScore(char *uid, char *uname, int *uscore) : 
+CScore::CScore(const char *uid, const char *uname, const int *uscore) : 
 	sc(subj[0]), sCount(22)
 {
         strcpy(id, uid); strcpy(name, uname);
@@ -57,7 +57,7 @@ int CScore::sum[3] = {0,0,0};
 int main() {
 
 	//part 1
-	int * ia1 = new int[3]; ia1[0]=43; ia1[1]=62; ia1[2]=85; 
+	int * ia1 = new int[3]; *ia1=43; *(ia1+1)=62; *(ia1+2)=85; 
 	CScore S1("99123", "Tom", ia1);
 	S1.showSCore(); S1.showSum();
     //int ia2[3] = {72,82,23}; 
@@ -75,10 +75,10 @@ int main() {
 	//part 3
 	S1.showName();
 	S2.showName();
-	S3.showName(); // & Class only can call const func
+	S3.showName(); // const & Class only can call const func
 	
 	//part 4
-	//CScore S4 = "Chuck";
+	// CScore S4 = "Chuck";
 	CScore S4("Chuck");
 	 
 	system("Pause");

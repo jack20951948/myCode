@@ -6,14 +6,14 @@ using namespace std;
 
 template <class T>
 class TBase {
-private:
-    T x, y;
-public:
-    TBase() {}	
-    TBase(T a, T b) : x(a), y(b) {}
-    ~TBase() {}
-    T getX();
-    T getY();	
+    private:
+        T x, y;
+    public:
+        TBase() {}	
+        TBase(T a, T b) : x(a), y(b) {}
+        ~TBase() {}
+        T getX();
+        T getY();	
 };
 
 template <class T>
@@ -23,29 +23,29 @@ T TBase<T>::getY() { return y; }
 
 
 class TDerived1: public TBase<int> {
-private:
-    int z;
-public:
-    TDerived1(int a, int b, int c) : TBase<int>(a,b), z(c) {}
-    int getZ() { return z; }
+    private:
+        int z;
+    public:
+        TDerived1(int a, int b, int c) : TBase<int>(a,b), z(c) {}
+        int getZ() { return z; }
 };
 
 template <class T>
 class TDerived2 : public TBase<T> {
-private:
-    T z;
-public:
-    TDerived2(T a, T b, T c) : TBase<T>(a,b), z(c) {}
-    T getZ() { return z; }
+    private:
+        T z;
+    public:
+        TDerived2(T a, T b, T c) : TBase<T>(a,b), z(c) {}
+        T getZ() { return z; }
 };
 
 template <class T>
 class TDerived3 : public TDerived1 {
-private:
-    T w;
-public:
-    TDerived3(int a, int b, int c, T d) : TDerived1(a,b,c), w(d) {}
-    T getW() { return w; }
+    private:
+        T w;
+    public:
+        TDerived3(int a, int b, int c, T d) : TDerived1(a,b,c), w(d) {}
+        T getW() { return w; }
 };
 
 

@@ -11,7 +11,8 @@ class CFig {
         void SetDim(double a=0, double b=0) { 
             x=a; y=b;                       
         } 
-        virtual void Area()=0; //pure virtual! 
+        virtual void Area()=0;  //pure virtual! for derived class use, 
+                                //if exist one or more pure virtual functions, we tent to call it abstract base class
 };
 class CRec: public CFig {
     public: 

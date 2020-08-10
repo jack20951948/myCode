@@ -21,10 +21,10 @@ T FindMax(T x, T y, T z) {
 
 class PhoneCall {
     int minutes;
-public:
-    PhoneCall(int min=0) { minutes = min; }
-    bool operator>(PhoneCall&);
-    friend ostream& operator<<(ostream&, PhoneCall);
+    public:
+        PhoneCall(int min=0) { minutes = min; }
+        bool operator>(PhoneCall&);
+        friend ostream& operator<<(ostream&, PhoneCall);
 };
 bool PhoneCall::operator>(PhoneCall& call){
     bool isTrue = false;

@@ -15,13 +15,13 @@ class Store {
     int  storeid;
     string address;
     string manager;
-public: 
-    Store(int sid, string add, string mgr) {
-         storeid = sid;
-         address = add;
-         manager = mgr;                    
-	}
-    friend ostream& operator<<(ostream&, Store);   
+    public: 
+        Store(int sid, string add, string mgr) {
+            storeid = sid;
+            address = add;
+            manager = mgr;                    
+        }
+        friend ostream& operator<<(ostream&, Store);   
 }; 
 
 ostream& operator<<(ostream& out, 
@@ -35,7 +35,7 @@ ostream& operator<<(ostream& out,
 int main() 
 {
  	double a=3.0; char b='B'; 
-    string c="good";
+    string c = "good";
     Store d(113, "23 Ave. Q", "Jacky");
     repeatValue(a, 3);
     repeatValue(b, 2);

@@ -75,8 +75,8 @@ ostream & operator << (ostream & out, const CCuboid& p) {
 	return out;	
 }
 
-void DisplayObject(const CPoint * p) {
-    cout << p->ToString() << endl;         
+void DisplayObject(const CPoint & p) {
+    cout << p.ToString() << endl;
 }
 
 int main()
@@ -84,9 +84,9 @@ int main()
 	CPoint o1(5,7); 
 	CRect o2(2,4,5,7); 
 	CCuboid o3(1,3,5,7,9); 
-	DisplayObject(&o1); 
-	DisplayObject(&o2);
-	DisplayObject(&o3);
+	DisplayObject(o1); 
+	DisplayObject(o2);
+	DisplayObject(o3);
 	
 	system("pause");
 	return 0;

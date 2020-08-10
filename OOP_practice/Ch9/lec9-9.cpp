@@ -51,6 +51,7 @@ int main()
 	tpet = new Dog;
 	Dog *tdog = dynamic_cast<Dog*>(tpet); 
 	tdog->print(); //Q3: problematic!! => Self study of dynamic_cast<>
+				   //sometimes success, sometimes not, when RAM storage not enough -> fail, need to use try-catch!!
 	*/
 	
 	system("pause");

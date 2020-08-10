@@ -11,7 +11,7 @@ int main(){
 	copy( istream_iterator<string>(cin),         
           istream_iterator<string>(),
     	  back_inserter(vec) );
-    	  
+    // press "ctrl + d" to terminate cin
 	sort( vec.begin(), vec.end() );
 	unique_copy( vec.begin(),vec.end(),	ostream_iterator<string> (cout,"\n") );
 	

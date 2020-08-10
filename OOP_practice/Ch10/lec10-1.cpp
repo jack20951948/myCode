@@ -17,10 +17,10 @@ T FindMax(
 
 class PhoneCall {
     int minutes;
-public:
-    PhoneCall(int min=0) { minutes = min; }
-    bool operator>(PhoneCall&);
-    friend ostream& operator<<(ostream&, PhoneCall);
+    public:
+        PhoneCall(int min=0) { minutes = min; }
+        bool operator>(PhoneCall&);
+        friend ostream& operator<<(ostream&, PhoneCall);
 };
 bool PhoneCall::operator>(PhoneCall& call){
     bool isTrue = false;
@@ -38,7 +38,7 @@ ostream& operator<<(ostream& out, PhoneCall call) {
 
 int main() 
 {
-int a; double b;
+    int a; double b;
     PhoneCall c1(4), c2(6), c3(11), c;
     a = FindMax(3, 5, 4); 
     b = FindMax(12.3, 5.9, 25.4);

@@ -8,21 +8,21 @@ template <class T, int MAXSIZE>
 class CStack {
 	T elems[MAXSIZE];
 	int top;
-public:
-	CStack() { top=0; }
-	bool empty() { return (top==0); }
-	bool full() { return (top==MAXSIZE); }
-	void push(T e) {
-	    if (top==MAXSIZE) {
-	        cout << "full"; return; 
+	public:
+		CStack() { top=0; }
+		bool empty() { return (top==0); }
+		bool full() { return (top==MAXSIZE); }
+		void push(T e) {
+			if (top==MAXSIZE) {
+				cout << "full"; return; 
+			}
+			elems[top++] = e; 		      
 		}
-	    elems[top++] = e; 		      
-	}
-	T pop() {
-	    if (top<=0) { cout << "empty"; exit(-1); }
-	    top--; 
-		return elems[top];          
-	}
+		T pop() {
+			if (top<=0) { cout << "empty"; exit(-1); }
+			top--; 
+			return elems[top];          
+		}
 };
 
 template <class T, int MAXSIZE>

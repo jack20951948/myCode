@@ -20,8 +20,8 @@ class C : public A {
 
 class B { 
     public:   
-        virtual ~B() { cout << "B::~B()\n"; }        
-};
+        virtual ~B() { cout << "B::~B()\n"; }        // always have good habit to use "virtual" Destructor, otherwise would not delete completely.
+};                                                   // if using virtual destrucor, would call derived class's De~ first, then call base class's
 
 class D : public B { 
     int * iary;

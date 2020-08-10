@@ -9,9 +9,9 @@ int main(){
     set<char> s;
     s.insert('A');
     s.insert('D');
-    s.insert('D'); //2nd insertion of ．D・
+    s.insert('D'); //2nd insertion of "D"
     s.insert('C');
-    s.insert('C'); //2nd insertion of ．C・
+    s.insert('C'); //2nd insertion of "C"
     s.insert('B');
 // in main()    
     cout << "The set contains: ";
