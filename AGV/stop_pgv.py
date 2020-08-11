@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from adafruit_servokit import ServoKit
+import time
 
 class GPIO_setting():
     def __setup_motor_pins():
@@ -58,3 +59,4 @@ GPIO_setting.setup_gpio()
 setup_servoKit()
 
 GPIO.output(rollerRun, GPIO.LOW)
+print(time.ctime(), ': Stop AGV...')

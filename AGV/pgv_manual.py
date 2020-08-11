@@ -3,6 +3,7 @@
 import time
 
 import math
+import getch
 
 import threading #多线程
 import subprocess as sp
@@ -181,7 +182,7 @@ class pgv_action():
         right_speed = 0
         left_speed = 0
 
-        print('move!')
+        print(time.ctime(), ': Ready to move...')
         while True:
             if event == 'p':
                 # print("stop")
