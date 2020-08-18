@@ -751,8 +751,8 @@ def fitnessFunction(ls_months,ls_Vn_n):
 
 def pso():
     global table1
-    global change_month
-    change_month_index_only = [months[0] for months in change_month]
+    global biggerThanKeyValueMonth
+    change_month_index_only = [months[0] for months in biggerThanKeyValueMonth]
 
     # 創建點集合
     def rand_VN(Scale=False):
@@ -888,10 +888,10 @@ def pso():
             if k >= mons_append_24[m]:
                 continue
             else:
-                table[d].append(str(gBest.ls_Vn_n[m][0]))
-                table[d].append(str(gBest.ls_Vn_n[m][1]))
-                table[d].append(str(gBest.ls_Vn_n[m][2]))
-                table[d].append(str(gBest.ls_Vn_n[m][3]))
+                table[k].append(str(gBest.ls_Vn_n[m][0]))
+                table[k].append(str(gBest.ls_Vn_n[m][1]))
+                table[k].append(str(gBest.ls_Vn_n[m][2]))
+                table[k].append(str(gBest.ls_Vn_n[m][3]))
     
     for h in range(24):
         maxeachmonth = max(maxtotalflow[h], key=maxtotalflow[h].get)
@@ -1004,7 +1004,6 @@ if __name__ == "__main__":
     capbilitySetUp3 = []
     capbilitySetUp4 = []
     table1 = []
-    Vx_x = []
     data_year, data_month = catch_year_month()
     startyear = data_year 
     startmonth = data_month  
@@ -1025,7 +1024,7 @@ if __name__ == "__main__":
             break
         change_month.append([index+2, abs(table1[index]-table1[index+1])])
     change_month.sort(key=lambda x: x[1])
-    change_month = change_month[-8:]
+    # change_month = change_month[-8:]
     change_month.sort(key=lambda x: x[0])    
     # print(change_month)
     keyValue = 1000
@@ -1033,8 +1032,7 @@ if __name__ == "__main__":
     for i in range(len(change_month)):
         if change_month[i][1] >= keyValue:
             biggerThanKeyValueMonth.append(change_month[i])
-    for i in range(0, len(biggerThanKeyValueMonth)):
-        Vx_x.append([0, 0, 0, 0])
+    # print(biggerThanKeyValueMonth)
     for step in range(5):
         pso()
     # complete = pso()
