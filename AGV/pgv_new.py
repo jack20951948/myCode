@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # coding=utf-8
 import time
-
 import math
 
 import threading #多线程
@@ -17,13 +16,6 @@ from adafruit_servokit import ServoKit
 # from pygame import mixer
 # mixer.init()
 
-# --- Demo loop running begin ---
-## [0= True will continue demo running. 1= demoTrips stop positions
-demoData = [True, 0]
-#station
-#from big 
-demoTrips = [38480,36140,38480,32740,38480,29720]
-
 # tripData = [0=direction, 1=Target, 2=startTimeStamp, 3=pauseFlag, 4=rollingFlag ]
 tripData = [0, 0,time.time(), False, False ]
 
@@ -33,23 +25,6 @@ pgvData = [1, 0, 0, 0, True, True, True, scanTimeStamp, False]
 
 # Define the curve interval
 curve_interval = [[142100, 140700], [139100, 137300], [135700, 134020]]
-
-class demo_setting():
-    def nextDemoTrip():
-        if demoData[1]==len(demoTrips)-1:
-            demoData[1]=0
-        else:
-            demoData[1]+=1
-
-    def demoLoop():
-        if demoData[0]==True:
-            if mqttTarget[0]==demoTrips[demoData[1]]:
-                demo_setting.nextDemoTrip() # 略过重复的站点
-            mqttTarget[0] = demoTrips[demoData[1]]
-            print('set new demo destination %d' % demoTrips[demoData[1]])
-            demo_setting.nextDemoTrip()
-            time.sleep(1)
-    # --- Demo loop running end ---
 
 class mqtt_client_connection():
     def on_connect(client, userdata, flags, rc):
