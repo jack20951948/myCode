@@ -24,7 +24,7 @@ scanTimeStamp = time.time()
 pgvData = [1, 0, 0, 0, True, True, True, scanTimeStamp, False]
 
 # Define the curve interval
-curve_interval = [[142100, 140700], [139100, 137300], [135700, 134020]]
+curve_interval = [[142100, 140700], [139100, 137300], [135700, 134020], [45700, 44000], [51300, 49800], [54800, 52000], [92500, 90400], [98900, 97200]]
 
 class mqtt_client_connection():
     def on_connect(client, userdata, flags, rc):
@@ -210,8 +210,8 @@ class pgv_action():
         # pgv_action.move_n_step(direction='backward', trip=12000, final_speed=5.0, acc=8.0, turn_factor=5/16)
         # pgv_action.move_n_step(direction='forward', trip=12000, final_speed=5.0, acc=8.0, turn_factor=5/16)
 
-        pgv_action.move_to_position(traget_position=132800, final_speed=20.0, acc=10.0, turn_factor=1/20)
-        pgv_action.move_to_position(traget_position=142480, final_speed=20.0, acc=10.0, turn_factor=1/20)
+        pgv_action.move_to_position(traget_position=99800, final_speed=20.0, acc=10.0, turn_factor=1/20)
+        pgv_action.move_to_position(traget_position=42600, final_speed=20.0, acc=10.0, turn_factor=1/20)
         
         # print('Rolling Start')
         # while True:
