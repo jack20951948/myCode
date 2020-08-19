@@ -56,11 +56,11 @@ def fitnessFunction(ls_months,ls_Vn_n):
     capbilitySetUp3 = []
     capbilitySetUp4 = []
     sameVprice = 0
-    months_append_24 = ls_months.copy()
-    months_append_24.append(24)
+    months_append_25 = ls_months.copy()
+    months_append_25.append(25)
     for k in range(24):
-        for m in range(len(months_append_24)):
-            if k >= months_append_24[m]:
+        for m in range(len(months_append_25)):
+            if k >= (months_append_25[m] - 1):
                 continue
             else:
                 if ((totalflow[k]['A'] is not 0) and (maxtotalflow[k]['A'] is not 0)) :
@@ -881,17 +881,18 @@ def pso():
 
     table = [['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10'],['11'],['12'],['13'],['14'],['15'],['16'],['17'],['18'],['19'],['20'],['21'],['22'],['23'],['24']]
     
-    mons_append_24 = gBest.ls_months.copy()
-    mons_append_24.append(24)
+    mons_append_25 = gBest.ls_months.copy()
+    mons_append_25.append(25)
     for k in range(24):
-        for m in range(len(mons_append_24)):
-            if k >= mons_append_24[m]:
+        for m in range(len(mons_append_25)):
+            if k >= (mons_append_25[m] - 1):
                 continue
             else:
                 table[k].append(str(gBest.ls_Vn_n[m][0]))
                 table[k].append(str(gBest.ls_Vn_n[m][1]))
                 table[k].append(str(gBest.ls_Vn_n[m][2]))
                 table[k].append(str(gBest.ls_Vn_n[m][3]))
+                break
     
     for h in range(24):
         maxeachmonth = max(maxtotalflow[h], key=maxtotalflow[h].get)
