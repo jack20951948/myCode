@@ -1,38 +1,52 @@
 from keras.callbacks import ModelCheckpoint, EarlyStopping
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Flatten
+from keras.models import Sequential, Model
+from keras.layers import Dense, Input
 from keras import regularizers
 from keras import optimizers
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error 
 from matplotlib import pyplot as plt
 import seaborn as sb
-import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import warnings 
 warnings.filterwarnings('ignore')
 warnings.filterwarnings('ignore', category=DeprecationWarning)
-from xgboost import XGBRegressor
 import time
-
-# random seed
-np.random.seed(0)
 
 def get_data():
     raw_data = pd.read_csv(r"paperCreater\final_all_zscore\final_all_zscore.csv")
-    raw_data.hist(figsize = (12,10))
+    raw_data = raw_data.fillna(0)
+    raw_data.hist(figsize = (15,12))
 
     return raw_data
 
+def get_mean_centering_data():
+    raw_data = pd.read_csv(r"paperCreater\final_all_zscore\final_all_zscore.csv")
+    raw_data = raw_data.fillna(0)
+    mean_data = raw_data.mean()
+    mean_centering_data = raw_data - mean_data
+    mean_centering_data.hist(figsize = (15,12))
+    
+    return mean_centering_data
+
+def get_normalization_data():
+    raw_data = pd.read_csv(r"paperCreater\final_all_zscore\final_all_zscore.csv")
+    raw_data = raw_data.fillna(0)
+    max_data = raw_data.max()
+    min_data = raw_data.min()
+    range_data = max_data - min_data
+    normalization_data = (raw_data - min_data)/range_data
+    normalization_data.hist(figsize = (15,12))
+
+    return normalization_data
+
 def data_process(data):
     X = data[['wbc', 'temp', 'cre', 'total', 'resp_rate', 'alb', 'hr', 'sys_bp', 'hematocrit', 'pH', 'glucose_blood', 'platelets', 'lactate', 'bun', 'sodium', 'potassium', 'nlr', 'bcd', 'DISCHARGE_LOCATION', 'age', 'GENDER', 'Neoplastic_disease', 'intubation', 'CONGESTIVE_HEART_FAILURE', 'OTHER_NEUROLOGICAL', 'LIVER_DISEASE', 'RENAL_FAILURE', 'glucose_pleural', 'final_O2']]
-    y = data[['duration']] # np.ravel(raw_data[['duration']])
+    y = data[['duration']]
 
-    Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.2, random_state=42)
-    # print(len(Xtrain), len(Xtest), len(ytrain), len(ytest))
+    Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.25, random_state=int(time.time()))
     ytrain = np.ravel(ytrain[['duration']])
+    ytest = np.ravel(ytest[['duration']])
 
     X['Target'] = y
 
@@ -43,48 +57,57 @@ def data_process(data):
 
     return Xtrain, Xtest, ytrain, ytest
 
-def get_cols_with_no_nans(df,col_type):
-    '''
-    Arguments :
-    df : The dataframe to process
-    col_type : 
-          num : to only get numerical columns with no nans
-          no_num : to only get nun-numerical columns with no nans
-          all : to get any columns with no nans    
-    '''
-    if (col_type == 'num'):
-        predictors = df.select_dtypes(exclude=['object'])
-    elif (col_type == 'no_num'):
-        predictors = df.select_dtypes(include=['object'])
-    elif (col_type == 'all'):
-        predictors = df
-    else :
-        print('Error : choose a type (num, no_num, all)')
-        return 0
-    cols_with_no_nans = []
-    for col in predictors.columns:
-        if not df[col].isnull().any():
-            cols_with_no_nans.append(col)
-    return cols_with_no_nans
+def autoencoder(data, test, y_test):
+    data = np.array(data)
+    test = np.array(test)
+    
+    # this is our input placeholder
+    input_img = Input(shape=(data.shape[1],))
+    # encoder layers
+    encoded = Dense(15, activation='relu')(input_img)
+    encoded = Dense(8, activation='relu')(encoded)
+    encoder_output = Dense(2)(encoded)
+    
+    # decoder layers
+    decoded = Dense(8, activation='relu')(encoder_output)
+    decoded = Dense(15, activation='relu')(decoded)
+    decoded = Dense(data.shape[1], activation='linear')(decoded)
+    
+    # construct the autoencoder model
+    autoencoder = Model(input=input_img, output=decoded)
+    
+    # construct the encoder model for plotting
+    encoder = Model(input=input_img, output=encoder_output)
+    
+    # compile autoencoder
+    autoencoder.compile(optimizer='adam', loss='mse')
+    
+    # training
+    autoencoder.fit(data, data,
+                    nb_epoch=200,
+                    batch_size=64,
+                    shuffle=True)
+    
+    # plotting
+    encoded_data = encoder.predict(data)
+    encoded_imgs = encoder.predict(test)
+    plt.figure()
+    plt.scatter(encoded_imgs[:, 0], encoded_imgs[:, 1], c=y_test)
+    plt.colorbar()
+    plt.show()
 
-def oneHotEncode(df,colNames):
-    for col in colNames:
-        if( df[col].dtype == np.dtype('object')):
-            dummies = pd.get_dummies(df[col],prefix=col)
-            df = pd.concat([df,dummies],axis=1)
+    return encoded_data, encoded_imgs
 
-            #drop the encoded column
-            df.drop([col],axis = 1 , inplace=True)
-    return df
-
-def neural_network(train, target):
+def neural_network(train, target, xtest, ytest):
     x_train = np.array(train)
     y_train = target
+    x_test = np.array(xtest)
+    y_test = ytest
 
     NN_model = Sequential()
 
     # The Input Layer :
-    NN_model.add(Dense(29, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),input_dim = x_train.shape[1], activation='relu'))
+    NN_model.add(Dense(x_train.shape[1], kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),input_dim = x_train.shape[1], activation='relu'))
 
     # The Hidden Layers :
     NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
@@ -93,22 +116,20 @@ def neural_network(train, target):
     NN_model.add(Dense(58, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
     NN_model.add(Dense(29, kernel_initializer='normal', kernel_regularizer=regularizers.l2(0.001),activation='relu'))
 
-
-
     # The Output Layer :
     NN_model.add(Dense(1, kernel_initializer='normal',activation='linear'))
 
     # Compile the network :
-    sgd = optimizers.Adadelta(lr=0.33, decay=1e-6)
+    sgd = optimizers.Adadelta(lr=0.2, decay=1e-6)
     NN_model.compile(loss='mean_absolute_error', optimizer=sgd, metrics=['accuracy'])
     NN_model.summary()
 
-    checkpoint_name = "paperCreater/model/Weights-{epoch:03d}--{val_loss:.5f}.hdf5"
-    earlystop = EarlyStopping(monitor="val_loss", patience=10)
+    checkpoint_name = "model/Weights-{epoch:03d}--{val_loss:.5f}.hdf5"
+    earlystop = EarlyStopping(monitor="val_loss", patience=5) 
     checkpoint = ModelCheckpoint(checkpoint_name, monitor='val_loss', verbose = 1, save_best_only = True, mode ='auto')
     callbacks_list = [earlystop, checkpoint]
 
-    history = NN_model.fit(x_train, y_train, epochs=5000, batch_size=5, validation_split = 0.25, callbacks=callbacks_list)
+    history = NN_model.fit(x_train, y_train, epochs=5000, batch_size=64, validation_split=0.33, callbacks=callbacks_list)
 
     return history
 
@@ -124,7 +145,7 @@ def train_result(history):
     plt.legend(["Training Loss", "Test Loss"])
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
-
+    '''
     training_accuracy = history.history["accuracy"]
     test_accuracy = history.history["val_accuracy"]
 
@@ -134,17 +155,24 @@ def train_result(history):
     plt.legend(["Training Accuracy", "Test Accuracy"])
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy Score")
-
+    '''
+    
 def main():
     # load data and target
     df_data = get_data()
-    df_data = df_data.fillna(-1)
-    # print(df_data.isnull().any())
+###    df_data = get_mean_centering_data()
+###    df_data = get_normalization_data()
 
     # split train, test
     X_train, X_test, y_train, y_test = data_process(df_data)
+    
+    encoded_train, encoded_test = autoencoder(X_train, X_test, y_test)
 
-    history = neural_network(X_train, y_train)
+    history = neural_network(X_train, y_train, X_test, y_test)
+
+    train_result(history)
+    
+    history = neural_network(encoded_train, y_train, encoded_test, y_test)
 
     train_result(history)
     
