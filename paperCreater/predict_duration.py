@@ -13,6 +13,8 @@ warnings.filterwarnings('ignore')
 warnings.filterwarnings('ignore', category=DeprecationWarning)
 import time
 
+predictType = 'duration'
+
 def get_data():
     raw_data = pd.read_csv(r"paperCreater\final_all_zscore\final_all_zscore.csv")
     raw_data = raw_data.fillna(0)
@@ -32,21 +34,22 @@ def get_mean_centering_data():
 def get_normalization_data():
     raw_data = pd.read_csv(r"paperCreater\final_all_zscore\final_all_zscore.csv")
     raw_data = raw_data.fillna(0)
+    raw_data = raw_data[raw_data[predictType] < 43]
     max_data = raw_data.max()
     min_data = raw_data.min()
     range_data = max_data - min_data
     normalization_data = (raw_data - min_data)/range_data
     normalization_data.hist(figsize = (15,12))
 
-    return normalization_data
+    return normalization_data, min_data, range_data, raw_data[[predictType]].min(), (raw_data[[predictType]].max()-raw_data[[predictType]].min())
 
 def data_process(data):
     X = data[['wbc', 'temp', 'cre', 'total', 'resp_rate', 'alb', 'hr', 'sys_bp', 'hematocrit', 'pH', 'glucose_blood', 'platelets', 'lactate', 'bun', 'sodium', 'potassium', 'nlr', 'bcd', 'DISCHARGE_LOCATION', 'age', 'GENDER', 'Neoplastic_disease', 'intubation', 'CONGESTIVE_HEART_FAILURE', 'OTHER_NEUROLOGICAL', 'LIVER_DISEASE', 'RENAL_FAILURE', 'glucose_pleural', 'final_O2']]
-    y = data[['duration']]
+    y = data[[predictType]]
 
     Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.25, random_state=int(time.time()))
-    ytrain = np.ravel(ytrain[['duration']])
-    ytest = np.ravel(ytest[['duration']])
+    ytrain = np.ravel(ytrain[[predictType]])
+    ytest = np.ravel(ytest[[predictType]])
 
     X['Target'] = y
 
@@ -124,14 +127,14 @@ def neural_network(train, target, xtest, ytest):
     NN_model.compile(loss='mean_absolute_error', optimizer=sgd, metrics=['accuracy'])
     NN_model.summary()
 
-    checkpoint_name = "model/Weights-{epoch:03d}--{val_loss:.5f}.hdf5"
+    checkpoint_name = r"paperCreater/model/Weights-{epoch:03d}--{val_loss:.5f}.hdf5"
     earlystop = EarlyStopping(monitor="val_loss", patience=5) 
     checkpoint = ModelCheckpoint(checkpoint_name, monitor='val_loss', verbose = 1, save_best_only = True, mode ='auto')
     callbacks_list = [earlystop, checkpoint]
 
     history = NN_model.fit(x_train, y_train, epochs=5000, batch_size=64, validation_split=0.33, callbacks=callbacks_list)
 
-    return history
+    return history, NN_model
 
 def train_result(history):
     training_loss = history.history["loss"]
@@ -159,22 +162,36 @@ def train_result(history):
     
 def main():
     # load data and target
-    df_data = get_data()
-###    df_data = get_mean_centering_data()
-###    df_data = get_normalization_data()
+    # df_data = get_data()
+    # df_data = get_mean_centering_data()
+    df_data, min_data, range_data, m, r = get_normalization_data()
 
     # split train, test
     X_train, X_test, y_train, y_test = data_process(df_data)
     
     encoded_train, encoded_test = autoencoder(X_train, X_test, y_test)
 
-    history = neural_network(X_train, y_train, X_test, y_test)
+    history, NN_model = neural_network(X_train, y_train, X_test, y_test)
 
     train_result(history)
+    raw_data = pd.read_csv(r"paperCreater\test.csv")
+    # print(raw_data)
+    # raw_data = raw_data.fillna(0)
+    # print(raw_data)
+    # max_data = raw_data.max()
+    # min_data = raw_data.min()
+    # range_data = max_data - min_data
+    normalization_data = (raw_data - min_data)/range_data
+    print(normalization_data)
+
+    A = normalization_data[['wbc', 'temp', 'cre', 'total', 'resp_rate', 'alb', 'hr', 'sys_bp', 'hematocrit', 'pH', 'glucose_blood', 'platelets', 'lactate', 'bun', 'sodium', 'potassium', 'nlr', 'bcd', 'DISCHARGE_LOCATION', 'age', 'GENDER', 'Neoplastic_disease', 'intubation', 'CONGESTIVE_HEART_FAILURE', 'OTHER_NEUROLOGICAL', 'LIVER_DISEASE', 'RENAL_FAILURE', 'glucose_pleural', 'final_O2']]
+    print(raw_data[[predictType]])
+    print(r[0])
+    print((NN_model.predict(A)*r[0])+m[0])
     
-    history = neural_network(encoded_train, y_train, encoded_test, y_test)
+    # history, NN_model = neural_network(encoded_train, y_train, encoded_test, y_test)
 
-    train_result(history)
+    # train_result(history)
     
 
 if __name__ == "__main__":
