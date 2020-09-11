@@ -11,6 +11,7 @@ import csv
 import random
 from openpyxl import Workbook
 import configparser
+import copy
 
 class Position:
     def __init__(self,ls_months, ls_Vn_n, futuretotal):
@@ -794,7 +795,7 @@ def pso():
         else:
             v.append(Position(ls_months=randomMonth(), ls_Vn_n=randomSpeed(Scale=True, Value=vmax), futuretotal=fitnessFunction(ls_months=randomMonth(), ls_Vn_n=randomSpeed())))
 
-    pBest = p.copy()
+    pBest = copy.deepcopy(p)
     # 當前個體極值
     gBest = min(p, key=lambda pi: pi.futuretotal)
 
@@ -869,9 +870,9 @@ def pso():
         # 更新個體極值和群體極值
         for j in range(n):
             if pBest[j].futuretotal > p[j].futuretotal:
-                pBest[j]=p[j]
+                pBest[j]=copy.deepcopy(p[j])
             if gBest.futuretotal > p[j].futuretotal  :
-                gBest=p[j]
+                gBest=copy.deepcopy(p[j])
 
         print("====="+str(i+1)+"=====\ngBest:"+gBest.__str__())
     
