@@ -16,25 +16,26 @@ from adafruit_servokit import ServoKit
 # from pygame import mixer
 # mixer.init()
 
-# tripData = [0=direction, 1=Target, 2=startTimeStamp, 3=pauseFlag, 4=rollingFlag ]
-tripData = [0, 0,time.time(), False, False ]
+# tripData = [0=startTimeStamp, 1=Target, 2=finishFlag]
+tripData = [time.time(), 0, False]
 
 scanTimeStamp = time.time()
 # pgvData = [0=which PGV camera,1=XP(shifted),2=YP,3=ANG,4=Error,5=Lost,6=Warn,7=scanTimeStamp, 8=pgv in curve]
 pgvData = [1, 0, 0, 0, True, True, True, scanTimeStamp, False]
 
 # Define the curve interval
-curve_interval = [[142100, 140700], [139100, 137300], [135700, 134020], [45700, 44000], [51300, 49800], [54800, 52000], [92500, 90400], [98900, 97200]]
+curve_interval = [[142100, 140700], [139100, 137300], [135700, 134020], [45700, 44000], [51300, 49800], [54800, 52000], [92500, 90400], [98900, 97200], [104180, 102000], [107000, 105200], [112300, 109560], [115600, 113900], [120000, 118800]]
 
 class mqtt_client_connection():
     def on_connect(client, userdata, flags, rc):
         print("Connected With Result Code "+rc)
 
     def on_message(client, userdata, message):
-        #global mqttTarget
+        global mqttTarget
         #print("Message Recieved: "+message.payload.decode())
-        mqttTarget[0] = int(message.payload.decode())
-        print("MQTT Recieved: %d" % mqttTarget[0])
+        mqttTarget.append(int(message.payload.decode()))
+        print("\nMQTT Recieved: %d" % mqttTarget[-1])
+        print("Task List:", mqttTarget)
         #client.disconnect()
 
     def mqttLoop():
@@ -99,7 +100,7 @@ class pgv_action():
         GPIO.output(brakePin, GPIO.HIGH)
         GPIO.output(stopPin, GPIO.HIGH)
 
-    def move_to_position(traget_position=0, final_speed=10.0, acc=5.0, vel=0.0, time_step=0.01, turn_factor=5/16):
+    def move_to_position(target_position=0, final_speed=10.0, acc=5.0, vel=0.0, time_step=0.01, turn_factor=5/16):
         GPIO.output(brakePin, GPIO.LOW)
         GPIO.output(stopPin, GPIO.LOW)
 
@@ -110,31 +111,37 @@ class pgv_action():
         while pgvData[1] == 0:
             pass
 
-        if traget_position - pgvData[1] > 0: # forward
+        if target_position - pgvData[1] > 0: # forward
             direction = "Forward"
             pgvData[0] = 0 #设置PGV00开始读取
             GPIO.output(rightDirPin, GPIO.LOW)
             GPIO.output(leftDirPin, GPIO.HIGH)
 
-        elif traget_position - pgvData[1] < 0: # backward
+        elif target_position - pgvData[1] < 0: # backward
             direction = "Backward"
             pgvData[0] = 1 #设置PGV01开始读取
             GPIO.output(rightDirPin, GPIO.HIGH)
             GPIO.output(leftDirPin, GPIO.LOW)
         print(time.ctime(), ': Setting direction to "{}"...'.format(direction))
 
-        trip = abs(traget_position - pgvData[1])
+        trip = abs(target_position - pgvData[1])
         safe_distance = (0.5 * ((final_speed / acc)) * final_speed )
 
         print(time.ctime(), ': Begin to move...')
-        while (((traget_position - pgvData[1]) / 35.2) > 0 and direction == "Forward") or (((traget_position - pgvData[1]) / 35.2) < 0 and direction == "Backward"):
+        while (((target_position - pgvData[1]) / 35.2) > 0 and direction == "Forward") or (((target_position - pgvData[1]) / 35.2) < 0 and direction == "Backward"):
             if pgvData[8]:
                 acc = 8
                 final_speed = 5
                 turn_factor = 5/16
-            elif (abs(traget_position - pgvData[1]) / 35.2) < safe_distance:
+            elif pgvData[1] < 49600 and pgvData[1] > 45700 and direction == "Backward":  # agv on the ramp
+                if pgvData[1] < 48000:
+                    final_speed = 10
+                    turn_factor = 1/10
+                else:
+                    turn_factor = 1/8
+            elif (abs(target_position - pgvData[1]) / 35.2) < safe_distance:
                 acc = -abs(acc)
-                if vel <= 0 and (abs(traget_position - pgvData[1]) / 35.2) > 0:
+                if vel <= 0 and (abs(target_position - pgvData[1]) / 35.2) > 0:
                     acc = 0
                     vel = 3
             else:
@@ -148,76 +155,78 @@ class pgv_action():
                 vel = vel + acc*time_step
             right_speed = pgv_action.checkSpeed(vel - turn_factor*(1/final_speed)*vel*pgvData[2], final_speed)
             left_speed = pgv_action.checkSpeed(vel + turn_factor*(1/final_speed)*vel*pgvData[2], final_speed)
-            print("\r%s : trip: %8.2f / %8.2f, safe disdance: %6.2f, right_vel: %6.3f, left_vel: %6.3f, y-bias:%+6.2f, AGV in curve: %5r" %(time.ctime(), abs(traget_position - pgvData[1]), trip, safe_distance*35.2, right_speed, left_speed, pgvData[2], pgvData[8]), end="")
+            print("\r%s : trip: %8.2f / %8.2f, target: %6d, safe disdance: %6.2f, right_vel: %6.3f, left_vel: %6.3f, y-bias:%+6.2f, AGV in curve: %5r" %(time.ctime(), abs(target_position - pgvData[1]), trip, target_position, safe_distance*35.2, right_speed, left_speed, pgvData[2], pgvData[8]), end="")
             kit.servo[0].angle = right_speed
             kit.servo[1].angle = left_speed
             time.sleep(time_step)
         print()
-        print(time.ctime(), ': Arrived position', traget_position)
+        print(pgvData[1], (target_position - pgvData[1]) / 35.2)
+        print(time.ctime(), ': Arrived position', target_position)
         GPIO.output(brakePin, GPIO.HIGH)
         GPIO.output(stopPin, GPIO.HIGH)
 
-    def rolling():
-        # print('Rolling Start')
-        direction = 0
-        GPIO.output(rollerRun, GPIO.HIGH)
-        GPIO.output(rollerDir,GPIO.LOW)
-        # print(GPIO.input(rollerSensorL))
-        if GPIO.input(rollerSensorL) == 1 :
-            print(time.ctime(), ': Rolling reverse!')
+    def rollUntilGet():
+        if GPIO.input(rollerSensorL) == 0 or GPIO.input(rollerSensorR) == 0:
             GPIO.output(rollerRun, GPIO.LOW)
-            GPIO.output(rollerDir,GPIO.HIGH)
-            #time.sleep(1.0)
-            GPIO.output(rollerRun, GPIO.HIGH)
-            time.sleep(0.01)
-
-        else :
+            while GPIO.input(rollerSensorL) == 0 or GPIO.input(rollerSensorR) == 0:
+                GPIO.output(rollerDir,GPIO.HIGH)
+                GPIO.output(rollerRun, GPIO.HIGH)
+                time.sleep(0.01)
+            tmpTime = time.time()
+            while GPIO.input(rollerSensorL) == 1 and GPIO.input(rollerSensorR) == 1:
+                pass
+            tmpTime = time.time()-tmpTime
             GPIO.output(rollerRun, GPIO.LOW)
             GPIO.output(rollerDir,GPIO.LOW)
-            #time.sleep(1.0)
+            GPIO.output(rollerRun, GPIO.HIGH)
+            time.sleep(tmpTime/2)
+            GPIO.output(rollerRun, GPIO.LOW)
+
+    
+    def rollUntilRelease():
+        GPIO.output(rollerRun, GPIO.LOW)
+        while GPIO.input(rollerSensorL) == 1 or GPIO.input(rollerSensorR) == 1:
+            GPIO.output(rollerDir,GPIO.LOW)
             GPIO.output(rollerRun, GPIO.HIGH)
             time.sleep(0.01)
         GPIO.output(rollerRun, GPIO.LOW)
 
+    def pickUpItemToCheck(target=None):
+        global tripData
+        if target == 35680:
+            pgv_action.move_to_position(target_position=37060, final_speed=20.0, acc=10.0, turn_factor=1/20)    
+            pgv_action.rollUntilGet()
+            time.sleep(1)
+        pgv_action.move_to_position(target_position=target, final_speed=20.0, acc=10.0, turn_factor=1/20)
+        if target == 35680:
+            pgv_action.rollUntilRelease()
+            time.sleep(1)
+        pgv_action.rollUntilGet()
+        time.sleep(1)
+        if target == 35680:
+            pgv_action.move_to_position(target_position=38380, final_speed=20.0, acc=10.0, turn_factor=1/20)
+        else:
+            pgv_action.move_to_position(target_position=42100, final_speed=20.0, acc=10.0, turn_factor=1/20)
+        time.sleep(1)
+        pgv_action.rollUntilRelease()
+        time.sleep(1)
+
     def goMotorsLoop():
-
-        # GPIO.output(brakePin, GPIO.LOW)
-        # GPIO.output(stopPin, GPIO.LOW)
-        # GPIO.output(rightDirPin, GPIO.LOW)
-        # GPIO.output(leftDirPin, GPIO.HIGH)
-
-        # vel = 0
-        # acc = 1
-        # time_rate = 0.01
-        # final_speed = 10
-
-        # for i in range(3000):
-        #     if i == 1999:
-        #         acc = -acc
-        #     else:
-        #         if (vel + acc*time_rate) > final_speed:
-        #             vel = final_speed
-        #         else:
-        #             vel += acc*time_rate
-        #     print("\rspeed: %.3f" %(vel), end="")
-        #     kit.servo[0].angle = vel
-        #     kit.servo[1].angle = vel
-        #     time.sleep(time_rate)
-        # GPIO.output(brakePin, GPIO.HIGH)
-        # GPIO.output(stopPin, GPIO.HIGH)
-
-        # pgv_action.move_n_step(direction='backward', trip=1800, final_speed=5.0, acc=8.0, turn_factor=5/16)
-        # pgv_action.move_n_step(direction='backward', trip=12000, final_speed=5.0, acc=8.0, turn_factor=5/16)
-        # pgv_action.move_n_step(direction='forward', trip=12000, final_speed=5.0, acc=8.0, turn_factor=5/16)
-
-        pgv_action.move_to_position(traget_position=99800, final_speed=20.0, acc=10.0, turn_factor=1/20)
-        pgv_action.move_to_position(traget_position=42600, final_speed=20.0, acc=10.0, turn_factor=1/20)
+        global tripData, mqttTarget
         
-        # print('Rolling Start')
-        # while True:
-        #     break
-        #     pgv_action.rolling()
-
+        pgv_action.move_to_position(target_position=43115, final_speed=20.0, acc=10.0, turn_factor=1/20)
+        publish_mqtt(1)
+                
+        while True:
+            pgv_action.rollUntilGet()
+            time.sleep(1)
+            publish_mqtt(0)
+            pgv_action.move_to_position(target_position=109600, final_speed=20.0, acc=10.0, turn_factor=1/20)
+            while GPIO.input(rollerSensorL) == 1 or GPIO.input(rollerSensorR) == 1:
+                pass
+            time.sleep(2)
+            pgv_action.move_to_position(target_position=43115, final_speed=20.0, acc=10.0, turn_factor=1/20)
+            publish_mqtt(1)
     # --- move Motors end ---
 
 class pgv_detection():  
@@ -305,7 +314,7 @@ def subscribe_mqtt():
     broker_url = "127.0.0.1"
     broker_port = 1883  #设置 MQTT broker 的 port
     mqttTopic = "pgv01/target"  #设置订阅的 topic
-    mqttTargetInit = 600  #设置mqttTarget 的初始值
+    mqttTargetInit = 42100  #设置mqttTarget 的初始值
     mqttTarget = [0,]
     mqttTarget[0] = mqttTargetInit  #定义mqttTarget
 
@@ -314,8 +323,28 @@ def subscribe_mqtt():
     client.on_message = mqtt_client_connection.on_message
     client.connect(broker_url, broker_port)
 
-    client.subscribe(mqttTopic, qos=0)
+    client.subscribe(mqttTopic, qos=1)
     # --- subscribe mqtt end ---
+
+def publish_mqtt(Flag):
+    # --- subscribe mqtt begin ---
+    #设置 MQTT broker 的 IP 位置（预设为本机树莓派IP位置，固定IP设置在 /etc/dhcpcd.conf
+    #或外其他 broker 位置，遥控器也需要设置向同ip发送
+    Broker_IP = "192.168.68.129"
+    Broker_Port = 1883  #设置 MQTT broker 的 port
+    TopName = "pgv01/storeSignal"  #设置订阅的 topic
+
+    while True:
+        try:
+            mqttc = mqtt.Client(clean_session=True)
+            mqttc.connect(Broker_IP, Broker_Port)
+            mqttc.publish(TopName, Flag, qos=1)
+        except:
+            print(time.ctime(), ": Can't connect to {}, try again...".format(Broker_IP))
+            time.sleep(1)
+        else:
+            print(time.ctime(), ": Successfully connect to {}".format(Broker_IP))
+            break
 
 def motor_config():
     global pgvHeadShift, maxSpeed, minSpeed, safeDistance, correctAngleSpeed, correctYDistanceSpeed, softStartTimer, direction
