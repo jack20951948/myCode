@@ -12,7 +12,8 @@ import tkinter as tk
 from tkinter.font import Font
 from googletrans import Translator
 from functools import partial
-from GoogleTranslator import GoogleTranslator
+# from GoogleTranslator import GoogleTranslator
+from googletrans import Translator
 # import time
 
 def testUrl(url):
@@ -41,8 +42,8 @@ def press(event):
     window.quit()
     
 def googleTranslate(content):
-    translator = GoogleTranslator()
-    return translator.translate(content)
+    translator = Translator()
+    return translator.translate(content, dest='zh-tw').text
 
 def play(url):
     try:
@@ -172,14 +173,14 @@ if __name__ == "__main__":
                                     context += '\n'
                                     # print('\n')
                     else:
-                        # context += '\n' + googleTranslate(Word)
-                        context += '\n' + 'Can\'t find the word "' + Word + '"\n(Does not support sentence translation yet!)'
+                        context += '\n' + googleTranslate(Word)
+                        # context += '\n' + 'Can\'t find the word "' + Word + '"\n(Does not support sentence translation yet!)'
             else:
-                # context += '\n' + googleTranslate(Word)
-                context += '\n' + 'Can\'t find the word "' + Word + '"\n(Does not support sentence translation yet!)'
+                context += '\n' + googleTranslate(Word)
+                # context += '\n' + 'Can\'t find the word "' + Word + '"\n(Does not support sentence translation yet!)'
         else:
-            # context += '\n' + googleTranslate(Word)
-            context += '\n' + 'Can\'t find the word "' + Word + '"\n(Does not support sentence translation yet!)'
+            context += '\n' + googleTranslate(Word)
+            # context += '\n' + 'Can\'t find the word "' + Word + '"\n(Does not support sentence translation yet!)'
 
         # print('\n###### Programe End / Process time: %.2f seconds ######' % (time.time() - startTime))
  
@@ -272,7 +273,8 @@ if __name__ == "__main__":
 
         ####################################       GUI       ####################################
 
-# Export to exe: pyinstaller -F ./CambridgeDict/A.C._Lee_High_v1_7_2.py
+# Export to exe: pyinstaller -F ./CambridgeDict/A.C._Lee_High_v1_7_2.py -i ./CambridgeDict/Icon_0-removebg-preview.ico 
 
 # v1_7_2 Update: 
 # function of google translator is broken!!
+# use python library
