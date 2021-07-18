@@ -1,2 +1,0 @@
-/home/jack/Desktop/dl_course/mcut_dl_day2_2/python/CMakeFiles/rebuild_cache.dir
-/home/jack/Desktop/dl_course/mcut_dl_day2_2/python/CMakeFiles/edit_cache.dir

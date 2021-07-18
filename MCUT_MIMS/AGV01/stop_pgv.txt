@@ -1,5 +1,0 @@
-ps -ef | grep python
-kill -9 (PID)
-
-
-chmod -x XXX.sh
